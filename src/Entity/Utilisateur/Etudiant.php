@@ -9,27 +9,33 @@ use App\Repository\Utilisateur\EtudiantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EtudiantRepository::class)
  * @ORM\Table(name="Etudiants")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class Etudiant extends Utilisateur
 {
     /**
      * @ORM\ManyToOne(targetEntity=Filiere::class, inversedBy="etudiants")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private Filiere $filiere;
 
     /**
      * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="etudiants")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="veillez renseigner votre niveau")
      */
     private Niveau $niveau;
 
     /**
      * @ORM\ManyToMany(targetEntity=UE::class, inversedBy="etudiants")
+     * @Assert\NotBlank(message="Veuillez renseigner votre filliere")
      */
     private Collection $UE;
 

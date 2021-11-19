@@ -2,11 +2,10 @@
 
 namespace App\Entity\Utilisateur;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
@@ -20,21 +19,30 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4)
      */
     protected string $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4)
      */
     protected string $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     protected string $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/^6[5-9][0-9]{7}$/", message="numero de telephone non valide")
+     *
      */
     protected ?string $numero_telephone;
 
@@ -45,13 +53,16 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
 
     /**
      * @ORM\Column(type="string", length=255, name="mot_de_passe")
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9]{8,}$/", message="8 caractères au minimum")
      */
     protected string $password;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @var string
+     * @Assert\EqualTo(propertyPath="password", message="Les mots de passes saisie ne sont pas identique")
      */
-    protected DateTimeImmutable $date_naissance;
+    protected string $confirmPassword;
 
     public function getId(): ?int
     {
@@ -156,18 +167,21 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
         return $this;
     }
 
-    public function getDateNaissance(): DateTimeImmutable
+    /**
+     * @return string
+     */
+    public function getConfirmPassword(): string
     {
-        return $this->date_naissance;
+        return $this->confirmPassword;
     }
 
-    public function setDateNaissance(DateTimeImmutable $date_naissance): self
+    /**
+     * @param string $confirmPassword
+     */
+    public function setConfirmPassword(string $confirmPassword): void
     {
-        $this->date_naissance = $date_naissance;
-
-        return $this;
+        $this->confirmPassword = $confirmPassword;
     }
-
 
     public function getSalt()
     {
