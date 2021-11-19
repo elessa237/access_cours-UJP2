@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 
 
-class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
+abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id

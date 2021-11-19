@@ -3,6 +3,7 @@
 namespace App\Entity\Enseignement;
 
 use App\Entity\InfoEtudiant\Niveau;
+use App\Entity\Utilisateur\Etudiant;
 use App\Repository\Enseignement\UERepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -35,11 +36,17 @@ class UE
     /**
      * @ORM\OneToMany(targetEntity=Cour::class, mappedBy="UE")
      */
-    private $cours;
+    private Collection $cours;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Etudiant::class, mappedBy="UE")
+     */
+    private Collection $etudiants;
 
     public function __construct()
     {
         $this->cours = new ArrayCollection();
+        $this->etudiants = new ArrayCollection();
     }
 
     public function getId(): int
@@ -96,6 +103,33 @@ class UE
             if ($cour->getUE() === $this) {
                 $cour->setUE(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Etudiant[]
+     */
+    public function getEtudiants(): Collection
+    {
+        return $this->etudiants;
+    }
+
+    public function addEtudiant(Etudiant $etudiant): self
+    {
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->addUE($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiant(Etudiant $etudiant): self
+    {
+        if ($this->etudiants->removeElement($etudiant)) {
+            $etudiant->removeUE($this);
         }
 
         return $this;
