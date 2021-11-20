@@ -1,6 +1,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+@import "css/style.css";
 @import "./css/pages/error.css";
 @import "./css/pages/dripicons.css";
 @import "./css/pages/auth.css";
-@import "css/style.css";
