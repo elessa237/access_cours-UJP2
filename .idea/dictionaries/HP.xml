@@ -2,6 +2,8 @@
   <dictionary name="HP">
     <words>
       <w>acceuil</w>
+      <w>csrf</w>
+      <w>décommenter</w>
       <w>elessa</w>
       <w>etudiant</w>
       <w>etudiants</w>
