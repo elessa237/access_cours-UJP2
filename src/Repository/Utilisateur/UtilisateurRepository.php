@@ -2,25 +2,25 @@
 
 namespace App\Repository\Utilisateur;
 
-use App\Entity\Utilisateur\Administration;
+use App\Entity\Utilisateur\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Administration|null find($id, $lockMode = null, $lockVersion = null)
- * @method Administration|null findOneBy(array $criteria, array $orderBy = null)
- * @method Administration[]    findAll()
- * @method Administration[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Utilisateur|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Utilisateur|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Utilisateur[]    findAll()
+ * @method Utilisateur[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AdministrationRepository extends ServiceEntityRepository
+class UtilisateurRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Administration::class);
+        parent::__construct($registry, Utilisateur::class);
     }
 
     // /**
-    //  * @return Administration[] Returns an array of Administration objects
+    //  * @return Utilisateur[] Returns an array of Utilisateur objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class AdministrationRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Administration
+    public function findOneBySomeField($value): ?Utilisateur
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')

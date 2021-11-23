@@ -2,14 +2,17 @@
   <dictionary name="HP">
     <words>
       <w>acceuil</w>
+      <w>elessa</w>
       <w>etudiant</w>
       <w>etudiants</w>
+      <w>etudinat</w>
       <w>filiere</w>
       <w>hasher</w>
       <w>mazer</w>
       <w>navbar</w>
       <w>numero</w>
       <w>prenom</w>
+      <w>toggler</w>
     </words>
   </dictionary>
 </component>

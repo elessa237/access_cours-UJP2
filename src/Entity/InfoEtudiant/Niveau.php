@@ -4,7 +4,7 @@ namespace App\Entity\InfoEtudiant;
 
 use App\Entity\Enseignement\Cour;
 use App\Entity\Enseignement\UE;
-use App\Entity\Utilisateur\Etudiant;
+use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\InfoEtudiant\NiveauRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -33,7 +33,7 @@ class Niveau
     private string $alias;
 
     /**
-     * @ORM\OneToMany(targetEntity=Etudiant::class, mappedBy="niveau")
+     * @ORM\OneToMany(targetEntity=Utilisateur::class, mappedBy="niveau")
      */
     private Collection $etudiants;
 
@@ -84,14 +84,14 @@ class Niveau
     }
 
     /**
-     * @return Collection|Etudiant[]
+     * @return Collection|Utilisateur[]
      */
     public function getEtudiants(): Collection
     {
         return $this->etudiants;
     }
 
-    public function addEtudiant(Etudiant $etudiant): self
+    public function addEtudiant(Utilisateur $etudiant): self
     {
         if (!$this->etudiants->contains($etudiant)) {
             $this->etudiants[] = $etudiant;
@@ -101,7 +101,7 @@ class Niveau
         return $this;
     }
 
-    public function removeEtudiant(Etudiant $etudiant): self
+    public function removeEtudiant(Utilisateur $etudiant): self
     {
         if ($this->etudiants->removeElement($etudiant)) {
             // set the owning side to null (unless already changed)

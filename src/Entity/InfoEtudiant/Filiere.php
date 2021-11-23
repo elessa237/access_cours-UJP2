@@ -3,7 +3,7 @@
 namespace App\Entity\InfoEtudiant;
 
 use App\Entity\Enseignement\Cour;
-use App\Entity\Utilisateur\Etudiant;
+use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\InfoEtudiant\FiliereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,7 +32,7 @@ class Filiere
     private string $alias;
 
     /**
-     * @ORM\OneToMany(targetEntity=Etudiant::class, mappedBy="filiere")
+     * @ORM\OneToMany(targetEntity=Utilisateur::class, mappedBy="filiere")
      */
     private Collection $etudiants;
 
@@ -77,14 +77,14 @@ class Filiere
     }
 
     /**
-     * @return Collection|Etudiant[]
+     * @return Collection|Utilisateur[]
      */
     public function getEtudiants(): Collection
     {
         return $this->etudiants;
     }
 
-    public function addEtudiant(Etudiant $etudiant): self
+    public function addEtudiant(Utilisateur $etudiant): self
     {
         if (!$this->etudiants->contains($etudiant)) {
             $this->etudiants[] = $etudiant;
@@ -94,7 +94,7 @@ class Filiere
         return $this;
     }
 
-    public function removeEtudiant(Etudiant $etudiant): self
+    public function removeEtudiant(Utilisateur $etudiant): self
     {
         if ($this->etudiants->removeElement($etudiant)) {
             // set the owning side to null (unless already changed)

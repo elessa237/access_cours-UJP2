@@ -4,7 +4,7 @@ namespace App\Entity\Enseignement;
 
 use App\Entity\InfoEtudiant\Filiere;
 use App\Entity\InfoEtudiant\Niveau;
-use App\Entity\Utilisateur\Professeur;
+use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\Enseignement\CourRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,10 +38,10 @@ class Cour
     private DateTimeImmutable $UpdatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Professeur::class, inversedBy="cours")
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
      */
-    private Professeur $professeur;
+    private Utilisateur $professeur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Filiere::class, inversedBy="cours")
@@ -102,12 +102,12 @@ class Cour
         return $this;
     }
 
-    public function getProfesseur(): Professeur
+    public function getProfesseur(): Utilisateur
     {
         return $this->professeur;
     }
 
-    public function setProfesseur(Professeur $professeur): self
+    public function setProfesseur(Utilisateur $professeur): self
     {
         $this->professeur = $professeur;
 

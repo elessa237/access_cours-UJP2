@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\InfoEtudiant\Filiere;
 use App\Entity\InfoEtudiant\Niveau;
-use App\Entity\Utilisateur\Etudiant;
+use App\Entity\Utilisateur\Utilisateur;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegistrationFormType extends AbstractType
+class RegistrationEtudiantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -83,7 +83,7 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Etudiant::class,
+            'data_class' => Utilisateur::class,
         ]);
     }
 }
