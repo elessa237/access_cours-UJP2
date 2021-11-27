@@ -1,0 +1,53 @@
+{% extends 'base/base.html.twig' %}
+{% block title %}Dashboard{% endblock %}
+{% block page %}accueil{% endblock %}
+{% block page_title %}Statistique des profiles{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-user-plus"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>{{ enseignants|length }}</h3>
+                        <span>Professeurs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>{{ etudiants|length }}</h3>
+                        <span>Etudiants</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-graduation-cap"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>{{ filieres|length }}</h3>
+                        <span>Filières</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon"><i class="fa fa-book"></i></span>
+                    <div class="dash-widget-info">
+                        <h3>218</h3>
+                        <span>Cours uploader</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity\InfoEtudiant;
 
 use App\Entity\Enseignement\Cour;
+use App\Entity\Enseignement\UE;
 use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\InfoEtudiant\FiliereRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -37,14 +38,18 @@ class Filiere
     private Collection $etudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cour::class, mappedBy="filiere")
+     * @ORM\ManyToOne(targetEntity=UE::class, inversedBy="filiere")
      */
-    private Collection $cours;
+    private ?UE $unite_enseign;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Cour::class, inversedBy="filiere")
+     */
+    private ?Cour $cour;
 
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
-        $this->cours = new ArrayCollection();
     }
 
     public function getId(): int
@@ -106,32 +111,14 @@ class Filiere
         return $this;
     }
 
-    /**
-     * @return Collection|Cour[]
-     */
-    public function getCours(): Collection
+    public function getUniteEnseign(): ?UE
     {
-        return $this->cours;
+        return $this->unite_enseign;
     }
 
-    public function addCour(Cour $cour): self
+    public function setUniteEnseign(?UE $unite_enseign): self
     {
-        if (!$this->cours->contains($cour)) {
-            $this->cours[] = $cour;
-            $cour->setFiliere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCour(Cour $cour): self
-    {
-        if ($this->cours->removeElement($cour)) {
-            // set the owning side to null (unless already changed)
-            if ($cour->getFiliere() === $this) {
-                $cour->setFiliere(null);
-            }
-        }
+        $this->unite_enseign = $unite_enseign;
 
         return $this;
     }
@@ -139,5 +126,17 @@ class Filiere
     public function __toString() : ?string
     {
         return $this->nom;
+    }
+
+    public function getCour(): ?Cour
+    {
+        return $this->cour;
+    }
+
+    public function setCour(?Cour $cour): self
+    {
+        $this->cour = $cour;
+
+        return $this;
     }
 }

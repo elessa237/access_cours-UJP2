@@ -1,0 +1,43 @@
+{% extends 'base/base.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+{% block style %}style="min-height: 647px;"{% endblock %}
+{% block page_title %}Gestion des cours{% endblock %}
+{% block page %}cours{% endblock %}
+
+{% block add %}
+    <div class="col-auto float-right ml-auto">
+        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_cour"><i class="fa fa-plus"></i>
+            Ajouter un cour</a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped custom-table mb-0">
+                    <thead>
+                    <tr>
+                        <th>Nom </th>
+                        <th>Taille </th>
+                        <th class="text-right">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cour in cours %}
+                        <tr>
+                            <td>{{ cour.nom }}</td>
+                            <td>{{ cour.tailleCour }}</td>
+                            <td class="text-right">
+                                {{ include('admin/enseignement/cour/includes/_delete.html.twig') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{ include('admin/enseignement/cour/includes/_form.html.twig') }}
+{% endblock %}

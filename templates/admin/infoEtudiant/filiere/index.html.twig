@@ -1,0 +1,43 @@
+{% extends 'base/base.html.twig' %}
+
+{% block title %}Filiere{% endblock %}
+{% block style %}style="min-height: 647px;"{% endblock %}
+{% block page_title %}Gestion Filières{% endblock %}
+{% block page %}filiere{% endblock %}
+
+{% block add %}
+    <div class="col-auto float-right ml-auto">
+        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_filiere"><i class="fa fa-plus"></i>
+            Ajouter une filiere</a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped custom-table mb-0">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Alias</th>
+                        <th class="text-right">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for filiere in filieres %}
+                        <tr>
+                            <td>{{ filiere.nom }}</td>
+                            <td>{{ filiere.alias }}</td>
+                            <td class="text-right">
+                                {{ include('admin/infoEtudiant/filiere/includes/_delete.html.twig') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{ include('admin/infoEtudiant/filiere/includes/_form.html.twig') }}
+{% endblock %}

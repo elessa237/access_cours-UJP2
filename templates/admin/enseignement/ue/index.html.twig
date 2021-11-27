@@ -1,0 +1,41 @@
+{% extends 'base/base.html.twig' %}
+
+{% block title %}Unite d'enseignement{% endblock %}
+{% block style %}style="min-height: 647px;"{% endblock %}
+{% block page_title %}Unite d'enseignement{% endblock %}
+{% block page %}UE{% endblock %}
+
+{% block add %}
+    <div class="col-auto float-right ml-auto">
+        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_ue"><i class="fa fa-plus"></i>
+            Ajouter une UE</a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped custom-table mb-0">
+                    <thead>
+                    <tr>
+                        <th>Nom UE</th>
+                        <th class="text-right">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ue in ues %}
+                        <tr>
+                            <td>{{ ue.nom }}</td>
+                            <td class="text-right">
+                                {{ include('admin/enseignement/ue/includes/_delete.html.twig') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{ include('admin/enseignement/ue/includes/_form.html.twig') }}
+{% endblock %}

@@ -19,22 +19,22 @@ class UtilisateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Utilisateur::class);
     }
 
-    // /**
-    //  * @return Utilisateur[] Returns an array of Utilisateur objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $poste
+     * @return Utilisateur[] Returns an array of Utilisateur objects
+     */
+
+    public function findAllByPoste($poste)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+
+        return $this->createQueryBuilder('u')
+            ->Where('u.poste = :val')
+            ->setParameter('val', $poste)
+            ->orderBy('u.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Utilisateur

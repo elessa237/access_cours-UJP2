@@ -2,16 +2,22 @@
 
 namespace App\Entity\Enseignement;
 
-use App\Entity\InfoEtudiant\Filiere;
 use App\Entity\InfoEtudiant\Niveau;
 use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\Enseignement\CourRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use \App\Entity\InfoEtudiant\Filiere;
 
 /**
  * @ORM\Entity(repositoryClass=CourRepository::class)
  * @ORM\Table(name="Cours")
+ * @Vich\Uploadable
  */
 class Cour
 {
@@ -23,9 +29,25 @@ class Cour
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      */
     private string $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private ?string $nomCour = null;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="cours", fileNameProperty="nomCour", size="tailleCour")
+     */
+    private ?File $cour;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private ?int $tailleCour;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -44,12 +66,6 @@ class Cour
     private Utilisateur $professeur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Filiere::class, inversedBy="cours")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private Filiere $filiere;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -61,21 +77,29 @@ class Cour
      */
     private UE $UE;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Filiere::class, mappedBy="cour")
+     */
+    private Collection $filiere;
+
+    public function __construct()
+    {
+        $this->filiere = new ArrayCollection();
+    }
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNom(): string
+    public function getNomCour(): ?string
     {
-        return $this->nom;
+        return $this->nomCour;
     }
 
-    public function setNom(string $nom): self
+    public function setNomCour(?string $nomCour): void
     {
-        $this->nom = $nom;
-
-        return $this;
+        $this->nomCour = $nomCour;
     }
 
     public function getPublishedAt(): DateTimeImmutable
@@ -114,18 +138,6 @@ class Cour
         return $this;
     }
 
-    public function getFiliere(): Filiere
-    {
-        return $this->filiere;
-    }
-
-    public function setFiliere(Filiere $filiere): self
-    {
-        $this->filiere = $filiere;
-
-        return $this;
-    }
-
     public function getNiveau(): Niveau
     {
         return $this->niveau;
@@ -146,6 +158,88 @@ class Cour
     public function setUE(UE $UE): self
     {
         $this->UE = $UE;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getCour(): ?File
+    {
+        return $this->cour;
+    }
+
+    /**
+     * @param File|UploadedFile|null $cour
+     */
+    public function setCour(?File $cour = null): void
+    {
+        $this->cour = $cour;
+        if (null !== $cour)
+        {
+            $this->UpdatedAt = new DateTimeImmutable('now');
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getTailleCour(): int
+    {
+        return $this->tailleCour;
+    }
+
+    /**
+     * @param int $tailleCour
+     */
+    public function setTailleCour(?int $tailleCour): void
+    {
+        $this->tailleCour = $tailleCour;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param string $nom
+     */
+    public function setNom(string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    /**
+     * @return Collection|Filiere[]
+     */
+    public function getFiliere(): Collection
+    {
+        return $this->filiere;
+    }
+
+    public function addFiliere(Filiere $filiere): self
+    {
+        if (!$this->filiere->contains($filiere)) {
+            $this->filiere[] = $filiere;
+            $filiere->setCour($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFiliere(Filiere $filiere): self
+    {
+        if ($this->filiere->removeElement($filiere)) {
+            // set the owning side to null (unless already changed)
+            if ($filiere->getCour() === $this) {
+                $filiere->setCour(null);
+            }
+        }
 
         return $this;
     }

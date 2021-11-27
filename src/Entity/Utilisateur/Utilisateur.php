@@ -82,25 +82,22 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Filiere::class, inversedBy="etudiants")
      * @ORM\JoinColumn(nullable=true)
-     * @Assert\NotBlank()
      */
     private Filiere $filiere;
 
     /**
      * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="etudiants")
      * @ORM\JoinColumn(nullable=true)
-     * @Assert\NotBlank(message="veillez renseigner votre niveau")
      */
     private Niveau $niveau;
 
     /**
      * @ORM\ManyToMany(targetEntity=UE::class, inversedBy="etudiants")
-     * @Assert\NotBlank(message="Veuillez renseigner votre filliere")
      */
     private Collection $UE;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private string $numero_cni;
 

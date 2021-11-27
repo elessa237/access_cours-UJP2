@@ -2,6 +2,7 @@
 
 namespace App\Entity\Enseignement;
 
+use App\Entity\InfoEtudiant\Filiere;
 use App\Entity\InfoEtudiant\Niveau;
 use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\Enseignement\UERepository;
@@ -43,10 +44,16 @@ class UE
      */
     private Collection $etudiants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Filiere::class, mappedBy="unite_enseign")
+     */
+    private Collection $filiere;
+
     public function __construct()
     {
         $this->cours = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
+        $this->filiere = new ArrayCollection();
     }
 
     public function getId(): int
@@ -133,5 +140,40 @@ class UE
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Filiere[]
+     */
+    public function getFiliere(): Collection
+    {
+        return $this->filiere;
+    }
+
+    public function addFiliere(Filiere $filiere): self
+    {
+        if (!$this->filiere->contains($filiere)) {
+            $this->filiere[] = $filiere;
+            $filiere->setUniteEnseign($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFiliere(Filiere $filiere): self
+    {
+        if ($this->filiere->removeElement($filiere)) {
+            // set the owning side to null (unless already changed)
+            if ($filiere->getUniteEnseign() === $this) {
+                $filiere->setUniteEnseign(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString() : string
+    {
+        return $this->nom;
     }
 }
