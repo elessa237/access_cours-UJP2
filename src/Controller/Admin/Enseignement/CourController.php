@@ -34,11 +34,16 @@ class CourController extends AbstractController
         $form = $this->createForm(CourType::class, $cour);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Utilisateur $user */
-            $user = $this->getUser();
+        /** @var Utilisateur $professeur */
+        $professeur = $this->getUser();
+        $cours = $courRepo->findBy(
+            ['professeur' => $professeur],
+            ['publishedAt' => 'DESC']
+        );
 
-            $cour->setProfesseur($user)
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $cour->setProfesseur($professeur)
                 ->setPublishedAt(new DateTimeImmutable('now'));
             $manager = $this->getDoctrine()->getManager();
 
@@ -50,7 +55,7 @@ class CourController extends AbstractController
 
         return $this->renderForm("/admin/enseignement/cour/index.html.twig", [
             "form" => $form,
-            "cours" => $courRepo->findAll(),
+            "cours" => $cours,
         ]);
     }
 
