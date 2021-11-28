@@ -52,6 +52,7 @@ class RegistrationEtudiantType extends AbstractType
                 'multiple' => false,
                 'label' => false,
                 'attr' => [
+                    "style" => "width: 100%",
                     'class'=> 'custom-select'
                 ]
             ])
@@ -60,6 +61,7 @@ class RegistrationEtudiantType extends AbstractType
                 'multiple' => false,
                 'label' => false,
                 'attr' => [
+                    "style" => "width: 100%",
                     'class'=> 'custom-select'
                 ]
             ])

@@ -32,6 +32,7 @@ class CourType extends AbstractType
                 "label" => false,
                 "multiple" => true,
                 "attr" => [
+                    "style" => "width: 100%",
                     "class" => "custom-select"
                 ]
             ])
@@ -40,6 +41,7 @@ class CourType extends AbstractType
                 "label" => false,
                 "required" => true,
                 "attr" => [
+                    "style" => "width: 100%",
                     "class" => "custom-select"
                 ]
             ])
@@ -48,6 +50,7 @@ class CourType extends AbstractType
                 "label" => false,
                 "required" => true,
                 "attr" => [
+                    "style" => "width: 100%",
                     "class" => "custom-select"
                 ]
             ])

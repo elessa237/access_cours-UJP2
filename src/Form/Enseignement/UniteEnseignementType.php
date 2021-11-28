@@ -29,6 +29,7 @@ class UniteEnseignementType extends AbstractType
                 'label' => false,
                 'multiple' => false,
                 'attr' => [
+                    "style" => "width: 100%",
                     'class' => 'custom-form',
                 ]
             ])
@@ -37,6 +38,7 @@ class UniteEnseignementType extends AbstractType
                 'label' => false,
                 'multiple' => true,
                 'attr' => [
+                    "style" => "width: 100%",
                     'class' => 'custom-form',
                 ]
             ])
