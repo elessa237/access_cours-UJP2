@@ -39,14 +39,14 @@ class RegistrationController extends AbstractController
                 ->setPassword(
             $this->hash->hashPassword(
                 $etudinat,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 
             $entityManager->persist($etudinat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register_etudiant.html.twig', [
