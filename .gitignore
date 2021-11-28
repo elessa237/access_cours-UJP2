@@ -20,3 +20,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> dowload document ###
+/public/documents/
+###< dowload document ###
