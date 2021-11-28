@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Accès_Cours - Login</title>
 
     {% block stylesheets %}
@@ -12,8 +15,7 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body>
-{% block body %}
+<body class="account-page">
     <div class="main-wrapper">
         <div class="account-content">
             <div class="container">
@@ -74,6 +76,5 @@
             </div>
         </div>
     </div>
-{% endblock %}
 </body>
 </html>
