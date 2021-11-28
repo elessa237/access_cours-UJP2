@@ -43,13 +43,14 @@ class Filiere
     private ?UE $unite_enseign;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cour::class, inversedBy="filiere")
+     * @ORM\ManyToMany(targetEntity=Cour::class, mappedBy="filiere")
      */
-    private ?Cour $cour;
+    private $cours;
 
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
     public function getId(): int
@@ -128,15 +129,31 @@ class Filiere
         return $this->nom;
     }
 
-    public function getCour(): ?Cour
+    /**
+     * @return Collection|Cour[]
+     */
+    public function getCours(): Collection
     {
-        return $this->cour;
+        return $this->cours;
     }
 
-    public function setCour(?Cour $cour): self
+    public function addCour(Cour $cour): self
     {
-        $this->cour = $cour;
+        if (!$this->cours->contains($cour)) {
+            $this->cours[] = $cour;
+            $cour->addFiliere($this);
+        }
 
         return $this;
     }
+
+    public function removeCour(Cour $cour): self
+    {
+        if ($this->cours->removeElement($cour)) {
+            $cour->removeFiliere($this);
+        }
+
+        return $this;
+    }
+
 }

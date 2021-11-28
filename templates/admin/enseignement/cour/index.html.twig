@@ -21,6 +21,7 @@
                     <tr>
                         <th>Nom </th>
                         <th>Taille </th>
+                        <th>Filieres</th>
                         <th class="text-right">Action</th>
                     </tr>
                     </thead>
@@ -29,6 +30,18 @@
                         <tr>
                             <td>{{ cour.nom }}</td>
                             <td>{{ cour.tailleCour }}</td>
+                            <td>
+                                <div class="dropdown action-label">
+                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-dot-circle-o text-white"></i> Filieres
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-left" style="">
+                                        {% for filiere in cour.filieres  %}
+                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>{{filiere.nom }}</li>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </td>
                             <td class="text-right">
                                 {{ include('admin/enseignement/cour/includes/_delete.html.twig') }}
                             </td>

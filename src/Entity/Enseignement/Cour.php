@@ -78,14 +78,15 @@ class Cour
     private UE $UE;
 
     /**
-     * @ORM\OneToMany(targetEntity=Filiere::class, mappedBy="cour")
+     * @ORM\ManyToMany(targetEntity=Filiere::class, inversedBy="cours")
      */
-    private Collection $filiere;
+    private Collection $filieres;
 
     public function __construct()
     {
-        $this->filiere = new ArrayCollection();
+        $this->filieres = new ArrayCollection();
     }
+
 
     public function getId(): int
     {
@@ -217,30 +218,25 @@ class Cour
     /**
      * @return Collection|Filiere[]
      */
-    public function getFiliere(): Collection
+    public function getFilieres(): Collection
     {
-        return $this->filiere;
+        return $this->filieres;
     }
 
-    public function addFiliere(Filiere $filiere): self
+    public function addFiliere(Filiere $filieres): self
     {
-        if (!$this->filiere->contains($filiere)) {
-            $this->filiere[] = $filiere;
-            $filiere->setCour($this);
+        if (!$this->filieres->contains($filieres)) {
+            $this->filieres[] = $filieres;
         }
 
         return $this;
     }
 
-    public function removeFiliere(Filiere $filiere): self
+    public function removeFiliere(Filiere $filieres): self
     {
-        if ($this->filiere->removeElement($filiere)) {
-            // set the owning side to null (unless already changed)
-            if ($filiere->getCour() === $this) {
-                $filiere->setCour(null);
-            }
-        }
+        $this->filieres->removeElement($filieres);
 
         return $this;
     }
+
 }

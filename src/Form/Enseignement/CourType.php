@@ -27,7 +27,7 @@ class CourType extends AbstractType
                     'class' => 'form-control',
                 ]
             ])
-            ->add('filiere', EntityType::class, [
+            ->add('filieres', EntityType::class, [
                 "class" => Filiere::class,
                 "label" => false,
                 "multiple" => true,
