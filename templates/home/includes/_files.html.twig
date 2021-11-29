@@ -1,0 +1,17 @@
+<h4>Cours</h4>
+<div class="row row-sm">
+    {% for cour in cours %}
+        <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+            <div class="card card-file">
+                <div class="card-file-thumb">
+                    <i class="fa fa-file-pdf-o"></i>
+                </div>
+                <div class="card-body">
+                    <h6><a href="{{vich_uploader_asset(cour, 'cour')}}" download>{{ cour.nom }} - {{ cour.UE }}</a></h6>
+                    <span>{{ cour.tailleCour }}</span>
+                </div>
+                <div class="card-footer">{{ cour.publishedAt|date }}</div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

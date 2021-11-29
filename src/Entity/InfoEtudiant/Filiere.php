@@ -38,19 +38,20 @@ class Filiere
     private Collection $etudiants;
 
     /**
-     * @ORM\ManyToOne(targetEntity=UE::class, inversedBy="filiere")
+     * @ORM\ManyToMany(targetEntity=Cour::class, mappedBy="filieres")
      */
-    private ?UE $unite_enseign;
+    private Collection $cours;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Cour::class, mappedBy="filiere")
+     * @ORM\ManyToMany(targetEntity=UE::class, mappedBy="filieres")
      */
-    private $cours;
+    private Collection $unite_enseignements;
 
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
         $this->cours = new ArrayCollection();
+        $this->unite_enseignements = new ArrayCollection();
     }
 
     public function getId(): int
@@ -112,19 +113,7 @@ class Filiere
         return $this;
     }
 
-    public function getUniteEnseign(): ?UE
-    {
-        return $this->unite_enseign;
-    }
-
-    public function setUniteEnseign(?UE $unite_enseign): self
-    {
-        $this->unite_enseign = $unite_enseign;
-
-        return $this;
-    }
-
-    public function __toString() : ?string
+    public function __toString() : string
     {
         return $this->nom;
     }
@@ -151,6 +140,33 @@ class Filiere
     {
         if ($this->cours->removeElement($cour)) {
             $cour->removeFiliere($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UE[]
+     */
+    public function getUniteEnseignements(): Collection
+    {
+        return $this->unite_enseignements;
+    }
+
+    public function addUniteEnseignement(UE $uniteEnseignement): self
+    {
+        if (!$this->unite_enseignements->contains($uniteEnseignement)) {
+            $this->unite_enseignements[] = $uniteEnseignement;
+            $uniteEnseignement->addFiliere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUniteEnseignement(UE $uniteEnseignement): self
+    {
+        if ($this->unite_enseignements->removeElement($uniteEnseignement)) {
+            $uniteEnseignement->removeFiliere($this);
         }
 
         return $this;

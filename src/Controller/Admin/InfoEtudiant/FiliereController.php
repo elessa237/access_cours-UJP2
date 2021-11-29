@@ -35,6 +35,9 @@ class FiliereController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $manager = $this->getDoctrine()->getManager();
+            $filiere->setNom(strtoupper($form->get('nom')->getData()))
+                    ->setAlias(strtoupper($form->get('alias')->getData()));
+
             $manager->persist($filiere);
             $manager->flush();
 

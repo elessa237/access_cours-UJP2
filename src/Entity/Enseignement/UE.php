@@ -2,13 +2,13 @@
 
 namespace App\Entity\Enseignement;
 
-use App\Entity\InfoEtudiant\Filiere;
 use App\Entity\InfoEtudiant\Niveau;
 use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\Enseignement\UERepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use \App\Entity\InfoEtudiant\Filiere;
 
 /**
  * @ORM\Entity(repositoryClass=UERepository::class)
@@ -45,15 +45,15 @@ class UE
     private Collection $etudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Filiere::class, mappedBy="unite_enseign")
+     * @ORM\ManyToMany(targetEntity=Filiere::class, inversedBy="unite_enseignements")
      */
-    private Collection $filiere;
+    private Collection $filieres;
 
     public function __construct()
     {
         $this->cours = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
-        $this->filiere = new ArrayCollection();
+        $this->filieres = new ArrayCollection();
     }
 
     public function getId(): int
@@ -145,16 +145,15 @@ class UE
     /**
      * @return Collection|Filiere[]
      */
-    public function getFiliere(): Collection
+    public function getFilieres(): Collection
     {
-        return $this->filiere;
+        return $this->filieres;
     }
 
     public function addFiliere(Filiere $filiere): self
     {
-        if (!$this->filiere->contains($filiere)) {
-            $this->filiere[] = $filiere;
-            $filiere->setUniteEnseign($this);
+        if (!$this->filieres->contains($filiere)) {
+            $this->filieres[] = $filiere;
         }
 
         return $this;
@@ -162,18 +161,14 @@ class UE
 
     public function removeFiliere(Filiere $filiere): self
     {
-        if ($this->filiere->removeElement($filiere)) {
-            // set the owning side to null (unless already changed)
-            if ($filiere->getUniteEnseign() === $this) {
-                $filiere->setUniteEnseign(null);
-            }
-        }
+        $this->filieres->removeElement($filiere);
 
         return $this;
     }
 
-    public function __toString() : string
+    public function __toString()
     {
         return $this->nom;
     }
+
 }

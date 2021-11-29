@@ -20,6 +20,7 @@
                     <thead>
                     <tr>
                         <th>Nom UE</th>
+                        <th>Filières</th>
                         <th class="text-right">Action</th>
                     </tr>
                     </thead>
@@ -27,6 +28,29 @@
                     {% for ue in ues %}
                         <tr>
                             <td>{{ ue.nom }}</td>
+                            <td>
+                                {% if ue.filieres|length < 2 %}
+                                    {% for filiere in ue.filieres %}
+                                        <i class="fa fa-dot-circle-o text-success"></i>
+                                        {{ filiere }}
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="dropdown action-label">
+                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
+                                           data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-dot-circle-o text-white"></i> Filieres
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-left" style="">
+                                            {% for filiere in ue.filieres %}
+                                                <li class="dropdown-item">
+                                                    <i class="fa fa-dot-circle-o text-success"></i>
+                                                    {{ filiere.nom }}
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </td>
                             <td class="text-right">
                                 {{ include('admin/enseignement/ue/includes/_delete.html.twig') }}
                             </td>

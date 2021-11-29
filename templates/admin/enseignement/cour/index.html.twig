@@ -18,17 +18,20 @@
             <div class="table-responsive">
                 <table class="table table-striped custom-table mb-0">
                     <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>Nom </th>
+                        <th>U.E</th>
                         <th>Taille </th>
                         <th>Filieres</th>
+                        <th>Niveau</th>
                         <th class="text-right">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for cour in cours %}
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ cour.nom }}</td>
+                            <td>{{ cour.UE }}</td>
                             <td>{{ cour.tailleCour }}</td>
                             <td>
                                 <div class="dropdown action-label">
@@ -42,6 +45,7 @@
                                     </div>
                                 </div>
                             </td>
+                            <td>{{ cour.niveau }}</td>
                             <td class="text-right">
                                 {{ include('admin/enseignement/cour/includes/_delete.html.twig') }}
                             </td>

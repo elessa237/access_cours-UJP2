@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use \App\Entity\InfoEtudiant\Filiere;
 
@@ -41,6 +42,10 @@ class Cour
     /**
      * @var File|null
      * @Vich\UploadableField(mapping="cours", fileNameProperty="nomCour", size="tailleCour")
+     * @Assert\File(
+     *     mimeTypes = {"application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "Seul les pdf sont accepter"
+     * )
      */
     private ?File $cour;
 
@@ -237,6 +242,11 @@ class Cour
         $this->filieres->removeElement($filieres);
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nomCour;
     }
 
 }

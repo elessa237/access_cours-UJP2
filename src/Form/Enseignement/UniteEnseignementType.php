@@ -33,7 +33,7 @@ class UniteEnseignementType extends AbstractType
                     'class' => 'custom-form',
                 ]
             ])
-            ->add("filiere", EntityType::class, [
+            ->add("filieres", EntityType::class, [
                 'class' => Filiere::class,
                 'label' => false,
                 'multiple' => true,

@@ -1,21 +1,50 @@
 {% extends "base/base.html.twig" %}
 
 {% block title %}Acceuil{% endblock %}
+{% block page %}{% endblock %}
+{% block hey %}{% endblock %}
+{% block page_title %}{% endblock %}
 
 {% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="file-wrap file-sidebar-toggle">
+                {{ include('home/includes/_file_sidebar.html.twig') }}
+                <div class="file-cont-wrap">
+                    <div class="file-cont-inner">
+                        <div class="file-cont-header">
+                            <div class="file-options">
+                                <a href="javascript:void(0)" id="file_sidebar_toggle" class="file-sidebar-toggle">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                            </div>
+                            <span>File Manager</span>
+                            <div class="file-options">
+                                <span class="btn-file"><input type="file" class="upload"><i class="fa fa-upload"></i></span>
+                            </div>
+                        </div>
+                        <div class="file-content">
+                            <form class="file-search">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Rechercher...">
+                                </div>
+                            </form>
+                            <div class="file-body">
+                                <div class="file-scroll">
+                                    <div class="file-content-inner">
+                                        {{ include('home/includes/_recent_file.html.twig') }}
 
-    <section class="section mb-5">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Default Layout</h4>
-            </div>
-            <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam, commodi? Ullam quaerat
-                similique iusto
-                temporibus, vero aliquam praesentium, odit deserunt eaque nihil saepe hic deleniti? Placeat
-                delectus
-                quibusdam ratione ullam!
+                                        {{ include('home/includes/_files.html.twig') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

@@ -21,11 +21,11 @@
         {% include "base/includes/_slidebar.html.twig" %}
         <div class="content container-fluid">
             <div class="page-header">
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-1 align-items-center">
                     <div class="col-sm-12">
                         <h3 class="page-title">{% block page_title %}Blank Page{% endblock %}</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">Dashboard</a></li>
+                            {% block hey %}<li class="breadcrumb-item"><a href="{{ path('dashboard') }}">Dashboard</a></li>{% endblock %}
                             <li class="breadcrumb-item active">{% block page %}Blank Page{% endblock %}</li>
                         </ul>
                     </div>

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class CourController
  * @package App\Controller\Admin\Enseignement
  * @author Maxime Elessa <elessamaxime@icloud.com>
- * @Route("/admin")
+ * @Route("/enseignant")
  */
 class CourController extends AbstractController
 {

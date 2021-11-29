@@ -31,13 +31,13 @@ class UniteEnseignementController extends AbstractController
         $ue = new UE();
         $form = $this->createForm(UniteEnseignementType::class, $ue);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid())
         {
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($ue);
             $manager->flush();
-
-            $this->redirectToRoute('unite_enseign');
+            return $this->redirectToRoute('unite_enseign');
         }
         return $this->renderForm("admin/enseignement/ue/index.html.twig",[
             'form' => $form,
