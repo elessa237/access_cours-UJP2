@@ -3,6 +3,7 @@
 namespace App\Repository\Enseignement;
 
 use App\Entity\Enseignement\Cour;
+use App\Entity\InfoEtudiant\Filiere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,22 +20,21 @@ class CourRepository extends ServiceEntityRepository
         parent::__construct($registry, Cour::class);
     }
 
-    // /**
-    //  * @return Cour[] Returns an array of Cour objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param Filiere $filieres
+     * @return Cour[] Returns an array of Cour objects
+     */
+
+    public function findAllByFiliere(Filiere $filieres)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->where(':filieres MEMBER OF c.filieres')
+            ->setParameter('filieres', $filieres)
+            ->orderBy('c.publishedAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Cour

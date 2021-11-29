@@ -3,8 +3,6 @@
 
 namespace App\Controller\Home;
 
-
-use App\Entity\InfoEtudiant\Filiere;
 use App\Entity\Utilisateur\Utilisateur;
 use App\Repository\Enseignement\CourRepository;
 use App\Repository\Enseignement\UERepository;
@@ -40,7 +38,7 @@ class HomeController extends AbstractController
 
             return $this->render("home/index.html.twig", [
                 'ues' => $ues,
-                'cours' => $filiere->getCours(),
+                'cours' => $courRepo->findAllByFiliere($filiere),
             ]);
         }else
         {
