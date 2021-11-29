@@ -6,6 +6,7 @@ use App\Entity\Enseignement\Cour;
 use App\Entity\InfoEtudiant\Filiere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Symfony\Component\String\u;
 
 /**
  * @method Cour|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,20 +23,72 @@ class CourRepository extends ServiceEntityRepository
 
     /**
      * @param Filiere $filieres
+     * @param string $search
      * @return Cour[] Returns an array of Cour objects
      */
 
-    public function findAllByFiliere(Filiere $filieres)
+    public function findAllByFiliere(Filiere $filieres, string $search)
     {
-        return $this->createQueryBuilder('c')
+
+        $query = $this->createQueryBuilder('c')
             ->where(':filieres MEMBER OF c.filieres')
             ->setParameter('filieres', $filieres)
-            ->orderBy('c.publishedAt', 'DESC')
-            ->getQuery()
-            ->getResult()
+            ->orderBy('c.publishedAt', 'DESC');
+
+        if ($search) {
+
+            $searchTerms = $this->extractSearchTerms($search);
+
+            foreach ($searchTerms as $key => $term) {
+                $query = $query
+                    ->andWhere('c.nom LIKE :t_' . $key)
+                    ->setParameter('t_' . $key, '%' . $term . '%');
+            }
+
+        }
+
+        return
+            $query
+                ->getQuery()
+                ->getResult()
         ;
     }
+/**
+* @param string $search
+* @return Cour[] Returns an array of Cour objects
+*/
 
+    public function findAllCours(string $search)
+    {
+
+        $query = $this->createQueryBuilder('c')
+            ->orderBy('c.publishedAt', 'DESC');
+
+        if ($search) {
+
+            $searchTerms = $this->extractSearchTerms($search);
+
+            foreach ($searchTerms as $key => $term) {
+                $query = $query
+                    ->orWhere('c.nom LIKE :t_' . $key)
+                    ->setParameter('t_' . $key, '%' . $term . '%');
+            }
+
+        }
+
+        return
+            $query
+                ->getQuery()
+                ->getResult()
+            ;
+    }
+
+    private function extractSearchTerms(string $searchQuery): array
+    {
+        $searchQuery = u($searchQuery)->replaceMatches('/[[:space:]]+/', ' ')->trim();
+        // ignore the search terms that are too short
+        return array_unique($searchQuery->split(' '));
+    }
     /*
     public function findOneBySomeField($value): ?Cour
     {
