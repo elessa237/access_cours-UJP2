@@ -43,11 +43,13 @@ class HomeController extends AbstractController
             return $this->render("home/index.html.twig", [
                 'ues' => $ues,
                 'cours' => $courRepo->findAllByFiliere($filiere, $search),
+                'lastCours' => $courRepo->findLastFour(4, $filiere)
             ]);
         }else
         {
             return $this->render("home/index.html.twig", [
                 "cours" => $courRepo->findAllCours($search),
+                "lastCours"=>$courRepo->findLastFour(4),
                 "ues" => $ueRepo->findAll(),
             ]);
         }

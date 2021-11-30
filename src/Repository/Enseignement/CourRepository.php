@@ -89,15 +89,26 @@ class CourRepository extends ServiceEntityRepository
         // ignore the search terms that are too short
         return array_unique($searchQuery->split(' '));
     }
-    /*
-    public function findOneBySomeField($value): ?Cour
+
+    /**
+     * @param Filiere $filieres|null
+     * @param int $limit
+     * @return Cour[]
+     */
+    public function findLastFour(int $limit, ?Filiere $filieres = null)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+       $query = $this->createQueryBuilder('c');
+            if($filieres)
+            {
+                $query->where(':filieres MEMBER OF c.filieres')
+                    ->setParameter('filieres', $filieres);
+            }
+
+           $query ->orderBy('c.publishedAt', 'ASC')
+            ->setMaxResults($limit)
+
         ;
+       return  $query->getQuery()
+           ->getResult();
     }
-    */
 }
