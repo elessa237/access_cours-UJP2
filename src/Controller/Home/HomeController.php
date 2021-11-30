@@ -20,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends AbstractController
 {
+
     /**
      * @param UERepository $ueRepo
      * @param CourRepository $courRepo
@@ -34,6 +35,8 @@ class HomeController extends AbstractController
         $etudiant = $this->getUser();
 
         $search = $request->get('search', '');
+        $filter = $request->get('filter', '');
+        $filter = $ueRepo->findOneBy(['nom' => $filter]);
 
         if (in_array("ROLE_ETUDIANT", $etudiant->getRoles()))
         {
@@ -42,13 +45,13 @@ class HomeController extends AbstractController
 
             return $this->render("home/index.html.twig", [
                 'ues' => $ues,
-                'cours' => $courRepo->findAllByFiliere($filiere, $search),
+                'cours' => $courRepo->findAllByFiliere($filiere, $search, $filter),
                 'lastCours' => $courRepo->findLastFour(4, $filiere)
             ]);
         }else
         {
             return $this->render("home/index.html.twig", [
-                "cours" => $courRepo->findAllCours($search),
+                "cours" => $courRepo->findAllCours($search, $filter),
                 "lastCours"=>$courRepo->findLastFour(4),
                 "ues" => $ueRepo->findAll(),
             ]);
