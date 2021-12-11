@@ -8,7 +8,7 @@ use App\Entity\Enseignement\Cour;
 use App\Entity\Utilisateur\Utilisateur;
 use App\Form\Enseignement\CourType;
 use App\Repository\Enseignement\CourRepository;
-use DateTimeImmutable;
+use App\Service\Enseignement\CourService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +22,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CourController extends AbstractController
 {
+    private CourService $courService;
+
+    public function __construct(CourService $courService)
+    {
+        $this->courService = $courService;
+    }
+
     /**
      * @param Request $request
      * @param CourRepository $courRepo
@@ -42,13 +49,7 @@ class CourController extends AbstractController
         );
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $cour->setProfesseur($professeur)
-                ->setPublishedAt(new DateTimeImmutable('now'));
-            $manager = $this->getDoctrine()->getManager();
-
-            $manager->persist($cour);
-            $manager->flush();
+            $this->courService->create($cour, $professeur);
 
             return $this->redirectToRoute("gestion_cour");
         }
@@ -68,9 +69,7 @@ class CourController extends AbstractController
     public function delete(Request $request, Cour $cour): Response
     {
         if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($cour);
-            $manager->flush();
+            $this->courService->delete($cour);
         }
 
         return $this->redirectToRoute("gestion_cour");

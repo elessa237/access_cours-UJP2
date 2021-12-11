@@ -7,6 +7,7 @@ namespace App\Controller\Admin\Enseignement;
 use App\Entity\Enseignement\UE;
 use App\Form\Enseignement\UniteEnseignementType;
 use App\Repository\Enseignement\UERepository;
+use App\Service\Enseignement\UeService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UniteEnseignementController extends AbstractController
 {
+    private UeService $UeService;
+
+    public function __construct(UeService $UeService)
+    {
+        $this->UeService = $UeService;
+    }
+
     /**
      * @param Request $request
      * @param UERepository $UERepository
@@ -34,9 +42,7 @@ class UniteEnseignementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($ue);
-            $manager->flush();
+            $this->UeService->create($ue);
             return $this->redirectToRoute('unite_enseign');
         }
         return $this->renderForm("admin/enseignement/ue/index.html.twig",[
@@ -54,11 +60,8 @@ class UniteEnseignementController extends AbstractController
     public function delete(Request $request, UE $UE): Response
     {
         if ($this->isCsrfTokenValid('delete'.$UE->getId(), $request->request->get('_token'))) {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($UE);
-            $manager->flush();
+            $this->UeService->delete($UE);
         }
-
         return $this->redirectToRoute('unite_enseign', [], Response::HTTP_SEE_OTHER);
     }
 }

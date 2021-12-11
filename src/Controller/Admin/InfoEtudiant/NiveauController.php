@@ -7,6 +7,7 @@ namespace App\Controller\Admin\InfoEtudiant;
 use App\Entity\InfoEtudiant\Niveau;
 use App\Form\InfoEtudiant\NiveauType;
 use App\Repository\InfoEtudiant\NiveauRepository;
+use App\Service\InfoEtudiant\NiveauService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NiveauController extends AbstractController
 {
+    private NiveauService $niveauService;
+    public function __construct(NiveauService $niveauService)
+    {
+        $this->niveauService = $niveauService;
+    }
+
     /**
      * @param NiveauRepository $niveauRepository
      * @param Request $request
@@ -33,9 +40,7 @@ class NiveauController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-           $manager =  $this->getDoctrine()->getManager();
-           $manager->persist($niveau);
-           $manager->flush();
+           $this->niveauService->create($niveau);
            return $this->redirectToRoute("niveau");
         }
 
@@ -55,9 +60,7 @@ class NiveauController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$niveau->getId(), $request->request->get('_token')))
         {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($niveau);
-            $manager->flush();
+            $this->niveauService->delete($niveau);
         }
         return $this->redirectToRoute("niveau");
     }

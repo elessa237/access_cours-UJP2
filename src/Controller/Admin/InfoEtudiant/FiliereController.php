@@ -7,6 +7,7 @@ namespace App\Controller\Admin\InfoEtudiant;
 use App\Entity\InfoEtudiant\Filiere;
 use App\Form\InfoEtudiant\FiliereType;
 use App\Repository\InfoEtudiant\FiliereRepository;
+use App\Service\InfoEtudiant\FiliereService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FiliereController extends AbstractController
 {
+    private FiliereService $filiereService;
+    public function __construct(FiliereService $filiereService)
+    {
+        $this->filiereService = $filiereService;
+    }
+
     /**
      * @param FiliereRepository $filiereRepo
      * @param Request $request
@@ -34,13 +41,7 @@ class FiliereController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $manager = $this->getDoctrine()->getManager();
-            $filiere->setNom(strtoupper($form->get('nom')->getData()))
-                    ->setAlias(strtoupper($form->get('alias')->getData()));
-
-            $manager->persist($filiere);
-            $manager->flush();
-
+            $this->filiereService->create($filiere, $form);
             return $this->redirectToRoute("filiere");
         }
 
@@ -60,9 +61,7 @@ class FiliereController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $filiere->getId(), $request->request->get('_token')))
         {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($filiere);
-            $manager->flush();
+            $this->filiereService->delete($filiere);
         }
 
         return $this->redirectToRoute("filiere");
