@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller\RegAuth;
+namespace App\Http\App\Controller\RegAuth;
 
+use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +37,6 @@ class SecurityController extends AbstractController
      */
     public function logout(): void
     {
-        throw new \LogicException('This method can be blank');
+        throw new LogicException('This method can be blank');
     }
 }
