@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Form\Utilisateur;
+namespace App\Http\Form\Utilisateur;
 
-use App\Entity\InfoEtudiant\Filiere;
-use App\Entity\InfoEtudiant\Niveau;
-use App\Entity\Utilisateur\Utilisateur;
+
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Filiere\Entity\Filiere;
+use App\Domain\Niveau\Entity\Niveau;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

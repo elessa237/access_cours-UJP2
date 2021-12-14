@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Form\Enseignement;
+namespace App\Http\Form;
 
 
-use App\Entity\Enseignement\Cour;
-use App\Entity\Enseignement\UE;
-use App\Entity\InfoEtudiant\Filiere;
-use App\Entity\InfoEtudiant\Niveau;
+use App\Domain\Cour\Entity\Cour;
+use App\Domain\Filiere\Entity\Filiere;
+use App\Domain\Niveau\Entity\Niveau;
+use App\Domain\Ue\Entity\Ue;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -46,7 +46,7 @@ class CourType extends AbstractType
                 ]
             ])
             ->add("UE", EntityType::class, [
-                "class" => UE::class,
+                "class" => Ue::class,
                 "label" => false,
                 "required" => true,
                 "attr" => [

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Form\Utilisateur;
+namespace App\Http\Form\Utilisateur;
 
-use App\Entity\Utilisateur\Utilisateur;
+
+use App\Domain\Auth\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

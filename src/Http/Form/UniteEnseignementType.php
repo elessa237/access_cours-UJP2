@@ -1,12 +1,13 @@
 <?php
 
 
-namespace App\Form\Enseignement;
+namespace App\Http\Form;
 
 
-use App\Entity\Enseignement\UE;
-use App\Entity\InfoEtudiant\Filiere;
-use App\Entity\InfoEtudiant\Niveau;
+
+use App\Domain\Filiere\Entity\Filiere;
+use App\Domain\Niveau\Entity\Niveau;
+use App\Domain\Ue\Entity\Ue;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -48,7 +49,7 @@ class UniteEnseignementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver) : void
     {
         $resolver->setDefaults([
-                'data_class' => UE::class,
+                'data_class' => Ue::class,
             ]);
     }
 }
