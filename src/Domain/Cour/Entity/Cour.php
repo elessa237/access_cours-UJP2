@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Entity\Enseignement;
+namespace App\Domain\Cour\Entity;
 
-use App\Entity\InfoEtudiant\Niveau;
-use App\Entity\Utilisateur\Utilisateur;
-use App\Repository\Enseignement\CourRepository;
+use App\Domain\Niveau\Entity\Niveau;
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Cour\Repository\CourRepository;
+use App\Domain\Ue\Entity\Ue;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use \App\Entity\InfoEtudiant\Filiere;
+use \App\Domain\Filiere\Entity\Filiere;
 
 /**
  * @ORM\Entity(repositoryClass=CourRepository::class)
@@ -77,7 +78,7 @@ class Cour
     private Niveau $niveau;
 
     /**
-     * @ORM\ManyToOne(targetEntity=UE::class, inversedBy="cours")
+     * @ORM\ManyToOne(targetEntity=Ue::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
      */
     private UE $UE;
@@ -156,12 +157,12 @@ class Cour
         return $this;
     }
 
-    public function getUE(): UE
+    public function getUE(): Ue
     {
         return $this->UE;
     }
 
-    public function setUE(UE $UE): self
+    public function setUE(Ue $UE): self
     {
         $this->UE = $UE;
 

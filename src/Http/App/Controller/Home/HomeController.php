@@ -1,11 +1,12 @@
 <?php
 
 
-namespace App\Controller\Home;
+namespace App\Http\App\Controller\Home;
 
-use App\Entity\Utilisateur\Utilisateur;
-use App\Repository\Enseignement\CourRepository;
-use App\Repository\Enseignement\UERepository;
+
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Cour\Repository\CourRepository;
+use App\Domain\Ue\Repository\UeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,13 @@ class HomeController extends AbstractController
 {
 
     /**
-     * @param UERepository $ueRepo
+     * @param UeRepository $ueRepo
      * @param CourRepository $courRepo
      * @param Request $request
      * @return Response
      * @Route("/", name="home")
      */
-    public function Index(UERepository $ueRepo,CourRepository $courRepo,Request $request) : Response
+    public function Index(UeRepository $ueRepo,CourRepository $courRepo,Request $request) : Response
     {
 
         /** @var Utilisateur $etudiant */

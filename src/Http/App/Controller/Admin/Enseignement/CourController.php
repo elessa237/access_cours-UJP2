@@ -1,13 +1,14 @@
 <?php
 
 
-namespace App\Controller\Admin\Enseignement;
+namespace App\Http\App\Controller\Admin\Enseignement;
 
 
-use App\Entity\Enseignement\Cour;
-use App\Entity\Utilisateur\Utilisateur;
-use App\Form\Enseignement\CourType;
-use App\Repository\Enseignement\CourRepository;
+
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Cour\Entity\Cour;
+use App\Domain\Cour\Repository\CourRepository;
+use App\Http\Form\CourType;
 use App\Service\Enseignement\CourService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

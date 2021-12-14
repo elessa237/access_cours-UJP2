@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controller\RegAuth;
+namespace App\Http\App\Controller\RegAuth;
 
-use App\Entity\Utilisateur\Utilisateur;
-use App\Form\Utilisateur\RegistrationEtudiantType;
+
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Http\Form\Utilisateur\RegistrationEtudiantType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

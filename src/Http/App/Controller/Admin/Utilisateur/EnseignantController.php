@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Controller\Admin\Utilisateur;
+namespace App\Http\App\Controller\Admin\Utilisateur;
 
 
-use App\Entity\Utilisateur\Utilisateur;
-use App\Form\Utilisateur\RegistrationEnseignantType;
-use App\Repository\Utilisateur\UtilisateurRepository;
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Auth\Repository\UtilisateurRepository;
+use App\Http\Form\Utilisateur\RegistrationEnseignantType;
 use App\Service\UtilisateurService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -1,12 +1,13 @@
 <?php
 
 
-namespace App\Controller\Admin\InfoEtudiant;
+namespace App\Http\App\Controller\Admin\InfoEtudiant;
 
 
-use App\Entity\InfoEtudiant\Filiere;
-use App\Form\InfoEtudiant\FiliereType;
-use App\Repository\InfoEtudiant\FiliereRepository;
+
+use App\Domain\Filiere\Entity\Filiere;
+use App\Domain\Filiere\Repository\FiliereRepository;
+use App\Http\Form\FiliereType;
 use App\Service\InfoEtudiant\FiliereService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

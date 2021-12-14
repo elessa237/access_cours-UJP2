@@ -1,12 +1,13 @@
 <?php
 
 
-namespace App\Controller\Admin\InfoEtudiant;
+namespace App\Http\App\Controller\Admin\InfoEtudiant;
 
 
-use App\Entity\InfoEtudiant\Niveau;
-use App\Form\InfoEtudiant\NiveauType;
-use App\Repository\InfoEtudiant\NiveauRepository;
+
+use App\Domain\Niveau\Entity\Niveau;
+use App\Domain\Niveau\Repository\NiveauRepository;
+use App\Http\Form\NiveauType;
 use App\Service\InfoEtudiant\NiveauService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

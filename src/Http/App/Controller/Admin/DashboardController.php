@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Http\App\Controller\Admin;
 
-use App\Repository\Enseignement\CourRepository;
-use App\Repository\InfoEtudiant\FiliereRepository;
-use App\Repository\Utilisateur\UtilisateurRepository;
+
+use App\Domain\Auth\Repository\UtilisateurRepository;
+use App\Domain\Cour\Repository\CourRepository;
+use App\Domain\Filiere\Repository\FiliereRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
