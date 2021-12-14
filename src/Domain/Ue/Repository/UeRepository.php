@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Repository\Enseignement;
+namespace App\Domain\Ue\Repository;
 
-use App\Entity\Enseignement\UE;
+use App\Domain\Ue\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method UE|null find($id, $lockMode = null, $lockVersion = null)
- * @method UE|null findOneBy(array $criteria, array $orderBy = null)
- * @method UE[]    findAll()
- * @method UE[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Ue|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Ue|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Ue[]    findAll()
+ * @method Ue[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UERepository extends ServiceEntityRepository
+class UeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

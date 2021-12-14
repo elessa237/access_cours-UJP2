@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\InfoEtudiant;
+namespace App\Domain\Filiere\Repository;
 
-use App\Entity\InfoEtudiant\Filiere;
+use App\Domain\Filiere\Entity\Filiere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

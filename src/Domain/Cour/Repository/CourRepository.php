@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repository\Enseignement;
+namespace App\Domain\Cour\Repository;
 
-use App\Entity\Enseignement\Cour;
-use App\Entity\Enseignement\UE;
-use App\Entity\InfoEtudiant\Filiere;
+use App\Domain\Cour\Entity\Cour;
+use App\Domain\Ue\Entity\Ue;
+use App\Domain\Filiere\Entity\Filiere;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use function Symfony\Component\String\u;

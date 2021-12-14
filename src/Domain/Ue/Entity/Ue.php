@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Entity\Enseignement;
-
-use App\Entity\InfoEtudiant\Niveau;
-use App\Entity\Utilisateur\Utilisateur;
-use App\Repository\Enseignement\UERepository;
+namespace App\Domain\Ue\Entity;
+use App\Domain\Cour\Entity\Cour;
+use App\Domain\Niveau\Entity\Niveau;
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Ue\Repository\UeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use \App\Entity\InfoEtudiant\Filiere;
+use \App\Domain\Filiere\Entity\Filiere;
 
 /**
- * @ORM\Entity(repositoryClass=UERepository::class)
+ * @ORM\Entity(repositoryClass=UeRepository::class)
  * @ORM\Table(name="Unite_enseignement")
  */
-class UE
+class Ue
 {
     /**
      * @ORM\Id

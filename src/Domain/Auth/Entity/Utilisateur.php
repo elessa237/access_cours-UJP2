@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity\Utilisateur;
+namespace App\Domain\Auth\Entity;
 
-use App\Repository\Utilisateur\UtilisateurRepository;
-use App\Entity\InfoEtudiant\Filiere;
-use App\Entity\InfoEtudiant\Niveau;
-use App\Entity\Enseignement\UE;
-use App\Entity\Enseignement\Cour;
+use App\Domain\Auth\Repository\UtilisateurRepository;
+use App\Domain\Filiere\Entity\Filiere;
+use App\Domain\Niveau\Entity\Niveau;
+use App\Domain\Ue\Entity\Ue;
+use App\Domain\Cour\Entity\Cour;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -92,7 +92,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private Niveau $niveau;
 
     /**
-     * @ORM\ManyToMany(targetEntity=UE::class, inversedBy="etudiants")
+     * @ORM\ManyToMany(targetEntity=Ue::class, inversedBy="etudiants")
      */
     private Collection $UE;
 

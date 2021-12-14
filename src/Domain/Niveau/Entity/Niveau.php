@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Entity\InfoEtudiant;
+namespace App\Domain\Niveau\Entity;
 
-use App\Entity\Enseignement\Cour;
-use App\Entity\Enseignement\UE;
-use App\Entity\Utilisateur\Utilisateur;
-use App\Repository\InfoEtudiant\FiliereRepository;
+use App\Domain\Cour\Entity\Cour;
+use App\Domain\Ue\Entity\Ue;
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Niveau\Repository\NiveauRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=FiliereRepository::class)
+ * @ORM\Entity(repositoryClass=NiveauRepository::class)
  */
-class Filiere
+class Niveau
 {
     /**
      * @ORM\Id
@@ -28,30 +28,30 @@ class Filiere
     private string $nom;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=5)
      */
     private string $alias;
 
     /**
-     * @ORM\OneToMany(targetEntity=Utilisateur::class, mappedBy="filiere")
+     * @ORM\OneToMany(targetEntity=Utilisateur::class, mappedBy="niveau")
      */
     private Collection $etudiants;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Cour::class, mappedBy="filieres")
+     * @ORM\OneToMany(targetEntity=Ue::class, mappedBy="niveau")
      */
-    private Collection $cours;
+    private Collection $uEs;
 
     /**
-     * @ORM\ManyToMany(targetEntity=UE::class, mappedBy="filieres")
+     * @ORM\OneToMany(targetEntity=Cour::class, mappedBy="niveau")
      */
-    private Collection $unite_enseignements;
+    private Collection $cours;
 
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
+        $this->uEs = new ArrayCollection();
         $this->cours = new ArrayCollection();
-        $this->unite_enseignements = new ArrayCollection();
     }
 
     public function getId(): int
@@ -95,7 +95,7 @@ class Filiere
     {
         if (!$this->etudiants->contains($etudiant)) {
             $this->etudiants[] = $etudiant;
-            $etudiant->setFiliere($this);
+            $etudiant->setNiveau($this);
         }
 
         return $this;
@@ -105,17 +105,42 @@ class Filiere
     {
         if ($this->etudiants->removeElement($etudiant)) {
             // set the owning side to null (unless already changed)
-            if ($etudiant->getFiliere() === $this) {
-                $etudiant->setFiliere(null);
+            if ($etudiant->getNiveau() === $this) {
+                $etudiant->setNiveau(null);
             }
         }
 
         return $this;
     }
 
-    public function __toString() : string
+    /**
+     * @return Collection|UE[]
+     */
+    public function getUEs(): Collection
     {
-        return $this->nom;
+        return $this->uEs;
+    }
+
+    public function addUE(UE $uE): self
+    {
+        if (!$this->uEs->contains($uE)) {
+            $this->uEs[] = $uE;
+            $uE->setNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUE(UE $uE): self
+    {
+        if ($this->uEs->removeElement($uE)) {
+            // set the owning side to null (unless already changed)
+            if ($uE->getNiveau() === $this) {
+                $uE->setNiveau(null);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -130,7 +155,7 @@ class Filiere
     {
         if (!$this->cours->contains($cour)) {
             $this->cours[] = $cour;
-            $cour->addFiliere($this);
+            $cour->setNiveau($this);
         }
 
         return $this;
@@ -139,37 +164,17 @@ class Filiere
     public function removeCour(Cour $cour): self
     {
         if ($this->cours->removeElement($cour)) {
-            $cour->removeFiliere($this);
+            // set the owning side to null (unless already changed)
+            if ($cour->getNiveau() === $this) {
+                $cour->setNiveau(null);
+            }
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|UE[]
-     */
-    public function getUniteEnseignements(): Collection
+    public function __toString() : ?string
     {
-        return $this->unite_enseignements;
+        return $this->nom;
     }
-
-    public function addUniteEnseignement(UE $uniteEnseignement): self
-    {
-        if (!$this->unite_enseignements->contains($uniteEnseignement)) {
-            $this->unite_enseignements[] = $uniteEnseignement;
-            $uniteEnseignement->addFiliere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUniteEnseignement(UE $uniteEnseignement): self
-    {
-        if ($this->unite_enseignements->removeElement($uniteEnseignement)) {
-            $uniteEnseignement->removeFiliere($this);
-        }
-
-        return $this;
-    }
-
 }
