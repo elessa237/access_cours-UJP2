@@ -5,7 +5,7 @@ namespace App\Http\Form;
 
 
 
-use App\Domain\Niveau\Entity\Niveau;
+use App\Application\Niveau\Dto\NiveauDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,7 +33,7 @@ class NiveauType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Niveau::class,
+            'data_class' => NiveauDto::class,
         ]);
     }
 }

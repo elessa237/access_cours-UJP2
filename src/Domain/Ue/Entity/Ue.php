@@ -26,13 +26,13 @@ class Ue
     /**
      * @ORM\Column(type="string", length=255, name="nom_UE")
      */
-    private string $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="uEs")
      * @ORM\JoinColumn(nullable=false)
      */
-    private Niveau $niveau;
+    private ?Niveau $niveau = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Cour::class, mappedBy="UE")
@@ -61,7 +61,7 @@ class Ue
         return $this->id;
     }
 
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -73,7 +73,7 @@ class Ue
         return $this;
     }
 
-    public function getNiveau(): Niveau
+    public function getNiveau(): ?Niveau
     {
         return $this->niveau;
     }

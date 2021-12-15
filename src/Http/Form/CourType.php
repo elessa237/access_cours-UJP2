@@ -4,7 +4,7 @@
 namespace App\Http\Form;
 
 
-use App\Domain\Cour\Entity\Cour;
+use App\Application\Cour\Dto\CourDto;
 use App\Domain\Filiere\Entity\Filiere;
 use App\Domain\Niveau\Entity\Niveau;
 use App\Domain\Ue\Entity\Ue;
@@ -68,7 +68,7 @@ class CourType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => Cour::class,
+                'data_class' => CourDto::class,
             ]);
     }
 }

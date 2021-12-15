@@ -5,10 +5,11 @@ namespace App\Http\App\Controller\Admin\InfoEtudiant;
 
 
 
+use App\Application\Filiere\Command\FiliereCommand;
+use App\Application\Filiere\Dto\FiliereDto;
 use App\Domain\Filiere\Entity\Filiere;
 use App\Domain\Filiere\Repository\FiliereRepository;
 use App\Http\Form\FiliereType;
-use App\Service\InfoEtudiant\FiliereService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,27 +23,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FiliereController extends AbstractController
 {
-    private FiliereService $filiereService;
-    public function __construct(FiliereService $filiereService)
-    {
-        $this->filiereService = $filiereService;
-    }
 
     /**
      * @param FiliereRepository $filiereRepo
      * @param Request $request
+     * @param FiliereCommand $filiereCommand
      * @return Response
      * @Route("/filiere", name="filiere")
      */
-    public function filiere(FiliereRepository $filiereRepo, Request $request): Response
+    public function filiere(FiliereRepository $filiereRepo, Request $request, FiliereCommand $filiereCommand): Response
     {
-        $filiere = new Filiere();
-        $form = $this->createForm(FiliereType::class, $filiere);
+        $filiereDto = new FiliereDto();
+        $form = $this->createForm(FiliereType::class, $filiereDto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $this->filiereService->create($filiere, $form);
+            $filiereCommand->create($filiereDto);
             return $this->redirectToRoute("filiere");
         }
 
@@ -55,14 +52,15 @@ class FiliereController extends AbstractController
     /**
      * @param Filiere $filiere
      * @param Request $request
+     * @param FiliereCommand $filiereCommand
      * @return Response
      * @Route("/delete/filiere-{id}", name="delete_filiere", methods={"POST"})
      */
-    public function delete(Filiere $filiere, Request $request) : Response
+    public function delete(Filiere $filiere, Request $request, FiliereCommand $filiereCommand) : Response
     {
         if ($this->isCsrfTokenValid('delete' . $filiere->getId(), $request->request->get('_token')))
         {
-            $this->filiereService->delete($filiere);
+            $filiereCommand->delete($filiere);
         }
 
         return $this->redirectToRoute("filiere");

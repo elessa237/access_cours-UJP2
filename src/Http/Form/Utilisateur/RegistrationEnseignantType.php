@@ -3,7 +3,7 @@
 namespace App\Http\Form\Utilisateur;
 
 
-use App\Domain\Auth\Entity\Utilisateur;
+use App\Application\Auth\Dto\UtilisateurDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -38,7 +38,7 @@ class RegistrationEnseignantType extends AbstractType
                     'placeholder' => 'Email'
                 ]
             ])
-            ->add('numeroTelephone', TelType::class, [
+            ->add('numero_telephone', TelType::class, [
                 'label' => false,
                 'attr' => [
                     'class' => 'form-control',
@@ -72,7 +72,7 @@ class RegistrationEnseignantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Utilisateur::class,
+            'data_class' => UtilisateurDto::class,
         ]);
     }
 }

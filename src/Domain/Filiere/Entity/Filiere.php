@@ -25,12 +25,12 @@ class Filiere
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private string $alias;
+    private ?string $alias = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Utilisateur::class, mappedBy="filiere")
@@ -59,7 +59,7 @@ class Filiere
         return $this->id;
     }
 
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -71,7 +71,7 @@ class Filiere
         return $this;
     }
 
-    public function getAlias(): string
+    public function getAlias(): ?string
     {
         return $this->alias;
     }

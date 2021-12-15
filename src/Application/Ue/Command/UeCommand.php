@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 class UeCommand
 {
     private EntityManagerInterface $manager;
-
     public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
@@ -24,10 +23,13 @@ class UeCommand
     public function create(UeDto $ueDto) : void
     {
         $ue = new Ue();
+
         $ue->setNom($ueDto->nom)
-            ->setNiveau($ueDto->niveau)
-            ->addFiliere($ueDto->filieres)
-        ;
+            ->setNiveau($ueDto->niveau);
+            foreach($ueDto->filieres as $filiere)
+            {
+                $ue->addFiliere($filiere);
+            }
 
         $this->manager->persist($ue);
         $this->manager->flush();

@@ -5,11 +5,12 @@ namespace App\Http\App\Controller\Admin\Enseignement;
 
 
 
+use App\Application\Cour\Command\CourCommand;
+use App\Application\Cour\Dto\CourDto;
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Cour\Entity\Cour;
 use App\Domain\Cour\Repository\CourRepository;
 use App\Http\Form\CourType;
-use App\Service\Enseignement\CourService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,35 +24,31 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CourController extends AbstractController
 {
-    private CourService $courService;
-
-    public function __construct(CourService $courService)
-    {
-        $this->courService = $courService;
-    }
 
     /**
      * @param Request $request
      * @param CourRepository $courRepo
+     * @param CourCommand $courCommand
      * @return Response
      * @Route("/cour", name="gestion_cour")
      */
-    public function cour(Request $request,CourRepository $courRepo): Response
+    public function create(Request $request,CourRepository $courRepo,CourCommand $courCommand): Response
     {
-        $cour = new Cour();
-        $form = $this->createForm(CourType::class, $cour);
+        $courDto = new CourDto();
+        $form = $this->createForm(CourType::class, $courDto);
         $form->handleRequest($request);
 
         /** @var Utilisateur $professeur */
         $professeur = $this->getUser();
+
         $cours = $courRepo->findBy(
             ['professeur' => $professeur],
             ['publishedAt' => 'DESC']
         );
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->courService->create($cour, $professeur);
 
+            $courCommand->create($courDto, $professeur);
             return $this->redirectToRoute("gestion_cour");
         }
 
@@ -64,13 +61,14 @@ class CourController extends AbstractController
     /**
      * @param Request $request
      * @param Cour $cour
+     * @param CourCommand $courCommand
      * @return Response
      * @Route("/delete/cour-{id}", name="delete_cour", methods={"POST"})
      */
-    public function delete(Request $request, Cour $cour): Response
+    public function delete(Request $request, Cour $cour, CourCommand $courCommand): Response
     {
         if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
-            $this->courService->delete($cour);
+            $courCommand->delete($cour);
         }
 
         return $this->redirectToRoute("gestion_cour");

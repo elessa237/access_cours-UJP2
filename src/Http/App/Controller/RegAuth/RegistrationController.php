@@ -3,50 +3,32 @@
 namespace App\Http\App\Controller\RegAuth;
 
 
-use App\Domain\Auth\Entity\Utilisateur;
+use App\Application\Auth\Command\UtilisateurCommand;
+use App\Application\Auth\Dto\UtilisateurDto;
 use App\Http\Form\Utilisateur\RegistrationEtudiantType;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
-    private UserPasswordHasherInterface $hash;
-
-    public function __construct(UserPasswordHasherInterface $hash)
-    {
-        $this->hash = $hash;
-    }
 
     /**
      * @Route("/register_etudiant", name="etudiant_register")
      * @param Request $request
-     * @param EntityManagerInterface $entityManager
+     * @param UtilisateurCommand $utilisateurCommand
      * @return Response
      */
-    public function register_etudiant(Request $request, EntityManagerInterface $entityManager): Response
+    public function register_etudiant(Request $request, UtilisateurCommand $utilisateurCommand): Response
     {
-        $etudinat = new Utilisateur();
-        $form = $this->createForm(RegistrationEtudiantType::class, $etudinat);
+        $etudiantDto = new UtilisateurDto();
+        $form = $this->createForm(RegistrationEtudiantType::class, $etudiantDto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $etudinat->setRoles(["ROLE_ETUDIANT"])
-                ->setPoste("ETUDIANT")
-                ->setPassword(
-            $this->hash->hashPassword(
-                $etudinat,
-                    $form->get('password')->getData()
-                )
-            );
-
-            $entityManager->persist($etudinat);
-            $entityManager->flush();
-
+            $utilisateurCommand->createStudent($etudiantDto);
             return $this->redirectToRoute('app_login');
         }
 

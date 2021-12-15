@@ -66,7 +66,7 @@ class UtilisateurCommand
             ->setNumeroTelephone($enseignantDto->numero_telephone)
             ->setNumeroCni($enseignantDto->numero_cni)
             ->setRoles(["ROLE_ENSEIGNANT"])
-            ->setPoste($enseignantDto->poste)
+            ->setPoste("Enseignant")
             ->setPassword(
                 $this->hasher->hashPassword(
                     $enseignant,
@@ -80,10 +80,10 @@ class UtilisateurCommand
     }
 
     /**
-     * @param UtilisateurDto $utilisateur
+     * @param Utilisateur $utilisateur
      * @return void
      */
-    public function removeUser(UtilisateurDto $utilisateur) : void
+    public function removeUser(Utilisateur $utilisateur) : void
     {
         $this->manager->remove($utilisateur);
         $this->manager->flush();

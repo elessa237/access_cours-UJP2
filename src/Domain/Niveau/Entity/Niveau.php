@@ -25,12 +25,12 @@ class Niveau
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private string $alias;
+    private ?string $alias = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Utilisateur::class, mappedBy="niveau")
@@ -59,7 +59,7 @@ class Niveau
         return $this->id;
     }
 
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -71,7 +71,7 @@ class Niveau
         return $this;
     }
 
-    public function getAlias(): string
+    public function getAlias(): ?string
     {
         return $this->alias;
     }

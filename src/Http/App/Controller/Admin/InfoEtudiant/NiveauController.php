@@ -5,10 +5,11 @@ namespace App\Http\App\Controller\Admin\InfoEtudiant;
 
 
 
+use App\Application\Niveau\Command\NiveauCommand;
+use App\Application\Niveau\Dto\NiveauDto;
 use App\Domain\Niveau\Entity\Niveau;
 use App\Domain\Niveau\Repository\NiveauRepository;
 use App\Http\Form\NiveauType;
-use App\Service\InfoEtudiant\NiveauService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,26 +23,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NiveauController extends AbstractController
 {
-    private NiveauService $niveauService;
-    public function __construct(NiveauService $niveauService)
-    {
-        $this->niveauService = $niveauService;
-    }
-
     /**
      * @param NiveauRepository $niveauRepository
      * @param Request $request
+     * @param NiveauCommand $niveauCommand
      * @return Response
      * @Route("/niveau", name="niveau")
      */
-    public function niveau(NiveauRepository $niveauRepository,Request $request) : Response
+    public function niveau(NiveauRepository $niveauRepository,Request $request, NiveauCommand $niveauCommand) : Response
     {
-        $niveau = new Niveau();
-        $form = $this->createForm(NiveauType::class, $niveau);
+        $niveauDto = new NiveauDto();
+        $form = $this->createForm(NiveauType::class, $niveauDto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-           $this->niveauService->create($niveau);
+           $niveauCommand->create($niveauDto);
            return $this->redirectToRoute("niveau");
         }
 
@@ -54,14 +50,15 @@ class NiveauController extends AbstractController
     /**
      * @param Niveau $niveau
      * @param Request $request
+     * @param NiveauCommand $niveauCommand
      * @return Response
      * @Route("/delete/niveau-{id}", name="delete_niveau", methods={"POST"})
      */
-    public function delete (Niveau $niveau, Request $request) : Response
+    public function delete (Niveau $niveau, Request $request, NiveauCommand $niveauCommand) : Response
     {
         if ($this->isCsrfTokenValid('delete'.$niveau->getId(), $request->request->get('_token')))
         {
-            $this->niveauService->delete($niveau);
+            $niveauCommand->delete($niveau);
         }
         return $this->redirectToRoute("niveau");
     }

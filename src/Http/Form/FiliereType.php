@@ -4,7 +4,7 @@
 namespace App\Http\Form;
 
 
-use App\Domain\Filiere\Entity\Filiere;
+use App\Application\Filiere\Dto\FiliereDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,7 +33,7 @@ class FiliereType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
        $resolver->setDefaults([
-          'data_class' => Filiere::class,
+          'data_class' => FiliereDto::class,
        ]);
     }
 }

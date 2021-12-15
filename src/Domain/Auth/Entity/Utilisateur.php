@@ -37,21 +37,21 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank()
      * @Assert\Length(min=4)
      */
-    private string $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min=4)
      */
-    private string $prenom;
+    private ?string $prenom = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private string $email;
+    private ?string $email = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -59,7 +59,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Regex(pattern="/^6[5-9][0-9]{7}$/", message="numero de telephone non valide")
      *
      */
-    private ?string $numero_telephone;
+    private ?string $numero_telephone = null;
 
     /**
      * @ORM\Column(type="json")
@@ -71,25 +71,25 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(pattern="/^[a-zA-Z0-9]{8,}$/", message="8 caractères au minimum")
      */
-    private string $password;
+    private ?string $password = null;
 
     /**
      * @var string
      * @Assert\EqualTo(propertyPath="password", message="Les mots de passes saisie ne sont pas identique")
      */
-    private string $confirmPassword;
+    private ?string $confirmPassword = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Filiere::class, inversedBy="etudiants")
      * @ORM\JoinColumn(nullable=true)
      */
-    private Filiere $filiere;
+    private ?Filiere $filiere = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="etudiants")
      * @ORM\JoinColumn(nullable=true)
      */
-    private Niveau $niveau;
+    private ?Niveau $niveau = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Ue::class, inversedBy="etudiants")
@@ -99,7 +99,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $numero_cni;
+    private ?string $numero_cni = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Cour::class, mappedBy="professeur")
@@ -109,7 +109,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $poste;
+    private ?string $poste = null;
 
     public function __construct()
     {
@@ -140,7 +140,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->nom;
     }
 
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -152,7 +152,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPrenom(): string
+    public function getPrenom(): ?string
     {
         return $this->prenom;
     }
@@ -164,7 +164,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -208,7 +208,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return string|null
      */
-    public function getPassword() : string
+    public function getPassword() : ?string
     {
         return $this->password;
     }
@@ -223,20 +223,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return string
      */
-    public function getConfirmPassword(): string
+    public function getConfirmPassword(): ?string
     {
         return $this->confirmPassword;
     }
 
-    /**
-     * @param string $confirmPassword
-     */
-    public function setConfirmPassword(string $confirmPassword): void
-    {
-        $this->confirmPassword = $confirmPassword;
-    }
     
-    public function getFiliere(): Filiere
+    public function getFiliere(): ?Filiere
     {
         return $this->filiere;
     }
@@ -248,7 +241,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getNiveau(): Niveau
+    public function getNiveau(): ?Niveau
     {
         return $this->niveau;
     }
@@ -326,7 +319,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPoste(): string
+    public function getPoste(): ?string
     {
         return $this->poste;
     }

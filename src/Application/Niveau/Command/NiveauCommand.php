@@ -36,7 +36,7 @@ class NiveauCommand
      * @param NiveauDto $niveau
      * @return void
      */
-    public function delete(NiveauDto $niveau) : void
+    public function delete(Niveau $niveau) : void
     {
         $this->manager->remove($niveau);
         $this->manager->flush();

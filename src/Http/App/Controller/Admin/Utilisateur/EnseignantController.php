@@ -4,10 +4,11 @@
 namespace App\Http\App\Controller\Admin\Utilisateur;
 
 
+use App\Application\Auth\Command\UtilisateurCommand;
+use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Auth\Repository\UtilisateurRepository;
 use App\Http\Form\Utilisateur\RegistrationEnseignantType;
-use App\Service\UtilisateurService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,27 +23,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EnseignantController extends AbstractController
 {
-    private UtilisateurService $utilisateurService;
-
-    public function __construct(UtilisateurService $utilisateurService){
-        $this->utilisateurService = $utilisateurService;
-    }
 
     /**
      * @param UtilisateurRepository $enseignantRepo
      * @param Request $request
+     * @param UtilisateurCommand $utilisateurCommand
      * @return Response
      * @Route("/", name="show_enseignant")
      */
-    public function home (UtilisateurRepository $enseignantRepo,Request $request) : Response
+    public function home (UtilisateurRepository $enseignantRepo,Request $request, UtilisateurCommand $utilisateurCommand) : Response
     {
-        $enseignant = new Utilisateur();
-        $form = $this->createForm(RegistrationEnseignantType::class, $enseignant);
+        $enseignantDto = new UtilisateurDto();
+        $form = $this->createForm(RegistrationEnseignantType::class, $enseignantDto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->utilisateurService->createTeacher($enseignant, $form);
+            $utilisateurCommand->createTeacher($enseignantDto);
             $this->addFlash('success', "L'enseignant a bien ete ajouter");
             return $this->redirectToRoute("show_enseignant");
 
@@ -59,12 +56,13 @@ class EnseignantController extends AbstractController
      * @Route("/delete/enseignant-{id}", name="delete_enseignant", methods={"POST"})
      * @param Request $request
      * @param Utilisateur $enseignant
+     * @param UtilisateurCommand $utilisateurCommand
      * @return Response
      */
-    public function delete(Request $request, Utilisateur $enseignant): Response
+    public function delete(Request $request, Utilisateur $enseignant, UtilisateurCommand $utilisateurCommand): Response
     {
         if ($this->isCsrfTokenValid('delete'.$enseignant->getId(), $request->request->get('_token'))) {
-           $this->utilisateurService->removeTeacher($enseignant);
+           $utilisateurCommand->removeUser($enseignant);
         }
 
         return $this->redirectToRoute('show_enseignant', [], Response::HTTP_SEE_OTHER);

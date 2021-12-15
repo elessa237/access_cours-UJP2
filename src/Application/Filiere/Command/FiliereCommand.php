@@ -33,10 +33,10 @@ class FiliereCommand
     }
 
     /**
-     * @param FiliereDto $filiere
+     * @param Filiere $filiere
      * @return void
      */
-    public function delete(FiliereDto $filiere): void
+    public function delete(Filiere $filiere): void
     {
         $this->manager->remove($filiere);
         $this->manager->flush();
