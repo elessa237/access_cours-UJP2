@@ -42,12 +42,13 @@ class HomeController extends AbstractController
         if (in_array("ROLE_ETUDIANT", $etudiant->getRoles()))
         {
             $filiere = $etudiant->getFiliere();
-            $ues = $filiere->getUniteEnseignements();
+            $niveau = $etudiant->getNiveau();
+            $ues = $niveau->getUEs();
 
             return $this->render("home/index.html.twig", [
                 'ues' => $ues,
-                'cours' => $courRepo->findAllByFiliere($filiere, $search, $filter),
-                'lastCours' => $courRepo->findLastFour(4, $filiere)
+                'cours' => $courRepo->findAllByFiliereAndNiveau($niveau,$filiere, $search, $filter),
+                'lastCours' => $courRepo->findLastFour(4,$niveau, $filiere)
             ]);
         }else
         {
