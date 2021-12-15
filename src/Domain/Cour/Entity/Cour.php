@@ -33,7 +33,7 @@ class Cour
     /**
      * @ORM\Column(type="string")
      */
-    private string $nom;
+    private ?string $nom = null;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,7 +48,7 @@ class Cour
      *     mimeTypesMessage = "Seul les pdf sont accepter"
      * )
      */
-    private ?File $cour;
+    private ?File $cour = null;
 
     /**
      * @ORM\Column(type="integer")
@@ -58,35 +58,35 @@ class Cour
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private DateTimeImmutable $publishedAt;
+    private ?DateTimeImmutable $publishedAt = null;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private DateTimeImmutable $UpdatedAt;
+    private ?DateTimeImmutable $UpdatedAt = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
      */
-    private Utilisateur $professeur;
+    private ?Utilisateur $professeur = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
      */
-    private Niveau $niveau;
+    private ?Niveau $niveau = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Ue::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
      */
-    private UE $UE;
+    private ?UE $UE = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=Filiere::class, inversedBy="cours")
      */
-    private Collection $filieres;
+    private ?Collection $filieres = null;
 
     public function __construct()
     {
@@ -109,7 +109,7 @@ class Cour
         $this->nomCour = $nomCour;
     }
 
-    public function getPublishedAt(): DateTimeImmutable
+    public function getPublishedAt(): ?DateTimeImmutable
     {
         return $this->publishedAt;
     }
@@ -121,7 +121,7 @@ class Cour
         return $this;
     }
 
-    public function getUpdatedAt(): DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->UpdatedAt;
     }
@@ -133,7 +133,7 @@ class Cour
         return $this;
     }
 
-    public function getProfesseur(): Utilisateur
+    public function getProfesseur(): ?Utilisateur
     {
         return $this->professeur;
     }
@@ -145,7 +145,7 @@ class Cour
         return $this;
     }
 
-    public function getNiveau(): Niveau
+    public function getNiveau(): ?Niveau
     {
         return $this->niveau;
     }
@@ -157,7 +157,7 @@ class Cour
         return $this;
     }
 
-    public function getUE(): Ue
+    public function getUE(): ?Ue
     {
         return $this->UE;
     }
@@ -180,13 +180,14 @@ class Cour
     /**
      * @param File|UploadedFile|null $cour
      */
-    public function setCour(?File $cour = null): void
+    public function setCour(?File $cour = null): self
     {
         $this->cour = $cour;
         if (null !== $cour)
         {
             $this->UpdatedAt = new DateTimeImmutable('now');
         }
+        return $this;
     }
 
     /**
@@ -208,7 +209,7 @@ class Cour
     /**
      * @return string
      */
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -216,15 +217,16 @@ class Cour
     /**
      * @param string $nom
      */
-    public function setNom(string $nom): void
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
+        return $this;
     }
 
     /**
      * @return Collection|Filiere[]
      */
-    public function getFilieres(): Collection
+    public function getFilieres(): ?Collection
     {
         return $this->filieres;
     }
