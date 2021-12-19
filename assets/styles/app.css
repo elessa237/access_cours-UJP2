@@ -4,6 +4,8 @@
 
 @import "css/line-awesome.min.css";
 
+@import '~datatables.net-bs4/css/dataTables.bootstrap4.css';
+
 @import '~select2/dist/css/select2.min.css';
 
 @import "css/style.css";

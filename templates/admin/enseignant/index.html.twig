@@ -19,7 +19,7 @@
                 <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table class="table table-striped custom-table no-footer">
+                            <table id="datatable" class="table table-striped custom-table no-footer">
                                 <thead>
                                 <tr role="row">
                                     <th style="width: 145.766px;">Name</th>
@@ -58,16 +58,11 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-5">
-                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
-                                 aria-live="polite">Showing 1 to 7 of 7 entries
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
     {{ include('admin/enseignant/includes/_form.html.twig') }}
 {% endblock %}

@@ -1,5 +1,6 @@
 {
     "devDependencies": {
+        "@babel/preset-react": "7.0.0",
         "@symfony/stimulus-bridge": "^2.0.0",
         "@symfony/webpack-encore": "^1.0.0",
         "core-js": "^3.0.0",
@@ -19,9 +20,13 @@
         "@popperjs/core": "^2.10.2",
         "bootstrap": "4.6",
         "bootstrap-icons": "^1.7.1",
+        "datatables.net": "^1.11.3",
+        "datatables.net-bs4": "^1.11.3",
         "jquery": "^3.6.0",
         "perfect-scrollbar": "^1.5.3",
         "popper.js": "1.16.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "select2": "^4.1.0-rc.0"
     }
 }
