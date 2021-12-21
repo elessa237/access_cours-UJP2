@@ -2,9 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Accès_Cours - Login</title>
 
     {% block stylesheets %}
@@ -15,66 +13,64 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body class="account-page">
-    <div class="main-wrapper">
-        <div class="account-content">
-            <div class="container">
-
-                <!-- Account Logo -->
-                <div class="account-logo">
-                    <img src="img/logo2.png">
-                </div>
-                <!-- /Account Logo -->
-
-                <div class="account-box">
-                    <div class="account-wrapper">
+<body class="bg-light">
+<div class="container d-flex flex-column">
+    <div class="row align-items-center justify-content-center g-0 min-vh-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xxl-4 py-8 py-xl-0">
+            <!-- Card -->
+            <div class="card smooth-shadow-md">
+                <!-- Card body -->
+                <div class="card-body p-6">
+                    <div class="mb-4">
+                        <a href=""><img src="../assets/images/brand/logo/logo-primary.svg" class="mb-2" alt=""></a>
                         {% if app.user %}
                             <div class="mb-2 text-center">
                                 Vous êtes connecter en tant que
                                 {{ app.user.username }},
                                 <a href="{{ path('app_logout') }}">Deconnexion</a>
                             </div>
+                        {% else %}
+                            <p class="mb-6">Veillez entrer vos identifiants.</p>
                         {% endif %}
-
-                        <h3 class="account-title">Login</h3>
-                        <p class="account-subtitle">Acceder a la bibliotheque</p>
-
-                        <!-- Account Form -->
-                        <form method="post">
-                            {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %}
-
-                            <div class="form-group">
-                                <label for="inputEmail">Adresse Email</label>
-
-                                <input class="form-control" type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
-
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword">Mot de passe</label>
-
-                                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-                            </div>
-
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                            <div class="form-group text-center">
-                                <button class="btn btn-primary account-btn" type="submit">Connexion</button>
-                            </div>
-                            <div class="account-footer">
-                                <p>Vous n'avez pas de compte?
-                                    <a href="{{path("etudiant_register")}}">S'inscrire</a>
-                                </p>
-                            </div>
-                        </form>
-                        <!-- /Account Form -->
-
                     </div>
+                    <!-- Form -->
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Adresse Email</label>
+                            <input type="email" id="email" class="form-control" name="email"
+                                   placeholder="Email address here" required="">
+                        </div>
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" id="password" class="form-control" name="password"
+                                   placeholder="**************" required="">
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div>
+                            <!-- Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Connexion</button>
+                            </div>
+
+                            <div class="d-md-flex justify-content-between mt-4">
+                                <div class="mb-2 mb-md-0">
+                                    <a href="{{ path('etudiant_register') }}" class="fs-5">Cree un compte</a>
+                                </div>
+                                <div>
+                                    <a href="#" class="text-inherit fs-5">Mot de passe oublié?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
