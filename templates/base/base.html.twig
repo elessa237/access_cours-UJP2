@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>USJP-II | PSE - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} - Université Jean Paul 2</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -13,32 +12,21 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
+
 <body>
-<div class="main-wrapper">
-    <div class="page-wrapper" {% block style %}{% endblock %}>
+<div id="db-wrapper" class="toggled">
+    <!-- navbar vertical  -->
+    {% include "base/includes/sidebar.html.twig" %}
+    <!-- page content  -->
+    <div id="page-content">
+        <!-- Page content -->
+        {% include "base/includes/_navbar.html.twig" %}
+        {% block body %}
 
-        {% include "base/includes/_header.html.twig" %}
-        {% include "base/includes/_slidebar.html.twig" %}
-        <div class="content container-fluid">
-            <div class="page-header">
-                <div class="row mb-1 align-items-center">
-                    <div class="col-sm-12">
-                        <h3 class="page-title">{% block page_title %}Blank Page{% endblock %}</h3>
-                        <ul class="breadcrumb">
-                            {% block hey %}<li class="breadcrumb-item"><a href="{{ path('dashboard') }}">Dashboard</a></li>{% endblock %}
-                            <li class="breadcrumb-item active">{% block page %}Blank Page{% endblock %}</li>
-                        </ul>
-                    </div>
-                    {% block add %}
-                    {% endblock %}
-                </div>
-
-                {% block body %}
-
-                {% endblock %}
-            </div>
-        </div>
+        {% endblock %}
     </div>
+
 </div>
 </body>
+
 </html>

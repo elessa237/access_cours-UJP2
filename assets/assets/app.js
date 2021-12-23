@@ -1,20 +1,13 @@
 import 'jquery';
-import $ from 'jquery';
-import 'popper.js';
-import 'bootstrap/dist/js/bootstrap.min';
-import 'datatables.net/js/jquery.dataTables';
+import 'bootstrap/dist/js/bootstrap.bundle';
 import 'jquery-slimscroll/jquery.slimscroll';
-import 'datatables.net-bs4/js/dataTables.bootstrap4';
-import 'feather-icons/dist/feather.min.js';
-import 'prismjs/components/prism-core.min.js';
-import 'prismjs/components/prism-markup.min.js';
-import 'prismjs/plugins/line-numbers/prism-line-numbers.min.js';
+import 'perfect-scrollbar/dist/perfect-scrollbar';
 import './js/main';
 import './js/sidebarMenu';
 import './js/feather';
 import './js/copyButton';
-import './styles/app.scss';
-import 'select2/dist/js/select2';
+import './app.scss';
+
 $('select').select2();
 
 let french = {
@@ -46,14 +39,17 @@ let french = {
             "1": "1 ligne sélectionnée"
         }
     }
-}
-$(document).ready(function() {
-    $('#datatable').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": false,
-        "info": false,
-        "language" : french,
-    });
-} );
+};
+
+
+$('#datatable').DataTable({
+    "paging": true,
+    "lengthChange": false,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "responsive": true,
+    "language": french,
+    "pageLength": 20
+});

@@ -1,36 +1,58 @@
 {% extends 'base/base.html.twig' %}
 
 {% block title %}Filiere{% endblock %}
-{% block style %}style="min-height: 647px;"{% endblock %}
-{% block page_title %}Gestion Filières{% endblock %}
-{% block page %}filiere{% endblock %}
-
-{% block add %}
-    <div class="col-auto float-right ml-auto">
-        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_filiere"><i class="fa fa-plus"></i>
-            Ajouter une filiere</a>
-    </div>
-{% endblock %}
 
 {% block body %}
+    <div class="bg-primary pt-10 pb-21"></div>
+    <div class="container-fluid mt-n22 px-6">
     <div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table id="datatable" class="table table-striped custom-table mb-0">
+        <div class="col-12">
+            <!-- Page header -->
+            <div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-2 mb-lg-0">
+                        <h3 class="mb-0 fw-bold text-white">Tableau de bord</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-6 mb-3">
+    <div class="col-md-12 col-12">
+        <!-- card  -->
+        <div class="card">
+            <!-- card header  -->
+            <div class="card-header border-bottom-0 w-100 py-4">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="mb-0 w-50">Les Filieres</h4>
+                    </div>
+                    <div class="ms-auto col-12 col-md-3  text-end">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal-2">
+                            Ajouter une filiere
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- table  -->
+            <div class="card-body">
+                <table id="datatable" class="table table-responsive table-striped">
                     <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th>Nom</th>
                         <th>Alias</th>
-                        <th class="text-right">Action</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for filiere in filieres %}
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ filiere.nom }}</td>
                             <td>{{ filiere.alias }}</td>
-                            <td class="text-right">
-                                {{ include('admin/infoEtudiant/filiere/includes/_delete.html.twig') }}
+                            <td>
+                                <i class="fa fa-cog"></i>
                             </td>
                         </tr>
                     {% endfor %}

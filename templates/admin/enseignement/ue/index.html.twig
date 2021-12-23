@@ -1,49 +1,68 @@
 {% extends 'base/base.html.twig' %}
 
 {% block title %}Unite d'enseignement{% endblock %}
-{% block style %}style="min-height: 647px;"{% endblock %}
-{% block page_title %}Unite d'enseignement{% endblock %}
-{% block page %}UE{% endblock %}
-
-{% block add %}
-    <div class="col-auto float-right ml-auto">
-        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_ue"><i class="fa fa-plus"></i>
-            Ajouter une UE</a>
-    </div>
-{% endblock %}
 
 {% block body %}
+    <div class="bg-primary pt-10 pb-21"></div>
+    <div class="container-fluid mt-n22 px-6">
     <div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table id="datatable" class="table table-striped custom-table mb-0">
+        <div class="col-12">
+            <!-- Page header -->
+            <div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mb-2 mb-lg-0">
+                        <h3 class="mb-0 fw-bold text-white">Tableau de bord</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-6 mb-3">
+    <div class="col-md-12 col-12">
+        <!-- card  -->
+        <div class="card">
+            <!-- card header  -->
+            <div class="card-header border-bottom-0 w-100 py-4">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="mb-0 w-50">Les Unités d'enseignement</h4>
+                    </div>
+                    <div class="ms-auto col-12 col-md-3  text-end">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal-2">
+                            Ajouter une U.E
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- table  -->
+            <div class="card-body">
+                <table id="datatable" class="table table-responsive table-striped">
                     <thead>
                     <tr>
-                        <th>Nom UE</th>
-                        <th>Filières</th>
-                        <th class="text-right">Action</th>
+                        <th class="text-center">Nom UE</th>
+                        <th class="text-center">Filières</th>
+                        <th class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for ue in ues %}
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ ue.nom }}</td>
                             <td>
                                 {% if ue.filieres|length < 2 %}
                                     {% for filiere in ue.filieres %}
-                                        <i class="fa fa-dot-circle-o text-success"></i>
                                         {{ filiere }}
                                     {% endfor %}
                                 {% else %}
-                                    <div class="dropdown action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                           data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-white"></i> Filieres
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-left" style="">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Filiere
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             {% for filiere in ue.filieres %}
                                                 <li class="dropdown-item">
-                                                    <i class="fa fa-dot-circle-o text-success"></i>
                                                     {{ filiere.nom }}
                                                 </li>
                                             {% endfor %}
@@ -51,8 +70,8 @@
                                     </div>
                                 {% endif %}
                             </td>
-                            <td class="text-right">
-                                {{ include('admin/enseignement/ue/includes/_delete.html.twig') }}
+                            <td>
+                                <i class="fa fa-cog"></i>
                             </td>
                         </tr>
                     {% endfor %}
