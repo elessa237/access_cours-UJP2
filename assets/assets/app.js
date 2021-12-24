@@ -1,12 +1,16 @@
-import 'jquery';
+import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import 'jquery-slimscroll/jquery.slimscroll';
-import 'perfect-scrollbar/dist/perfect-scrollbar';
+import 'datatables.net/js/jquery.dataTables.min';
+import 'datatables.net-responsive/js/dataTables.responsive.min';
+import 'datatables.net-bs5/js/dataTables.bootstrap5.min';
+import 'datatables.net-responsive-bs5/js/responsive.bootstrap5.min';
+import 'select2/dist/js/select2';
 import './js/main';
 import './js/sidebarMenu';
-import './js/feather';
-import './js/copyButton';
 import './app.scss';
+
+window.$ = $;
 
 $('select').select2();
 
