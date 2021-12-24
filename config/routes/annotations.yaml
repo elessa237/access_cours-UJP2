@@ -1,5 +1,9 @@
 controllers:
-    resource: ../../src/Controller/
+    resource: ../../src/Http/App/Controller/
+    type: annotation
+
+api_controllers:
+    resource: ../../src/Http/Api/Controller/
     type: annotation
 
 kernel:

@@ -1,50 +1,22 @@
 {% extends "base/base.html.twig" %}
 
 {% block title %}Acceuil{% endblock %}
-{% block page %}{% endblock %}
-{% block hey %}{% endblock %}
-{% block page_title %}{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="file-wrap file-sidebar-toggle">
-                {{ include('home/includes/_file_sidebar.html.twig') }}
-                <div class="file-cont-wrap">
-                    <div class="file-cont-inner">
-                        <div class="file-cont-header">
-                            <div class="file-options">
-                                <a href="javascript:void(0)" id="file_sidebar_toggle" class="file-sidebar-toggle">
-                                    <i class="fa fa-bars"></i>
-                                </a>
-                            </div>
-                            <span>File Manager</span>
-                            <div class="file-options">
-                                <span class="btn-file"><input type="file" class="upload"><i class="fa fa-upload"></i></span>
-                            </div>
-                        </div>
-                        <div class="file-content">
-                            <form class="file-search" method="get">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <i class="fa fa-search"></i>
-                                    </div>
-                                    <input type="text" class="form-control" name="search" placeholder="Rechercher...">
-                                </div>
-                            </form>
-                            <div class="file-body">
-                                <div class="file-scroll">
-                                    <div class="file-content-inner">
-                                        {{ include('home/includes/_recent_file.html.twig') }}
-
-                                        {{ include('home/includes/_files.html.twig') }}
-                                    </div>
-                                </div>
-                            </div>
+    <div class="bg-primary pt-10 pb-21"></div>
+    <div class="container-fluid mt-n22 px-6">
+        <div class="row">
+            <div class="col-12">
+                <!-- Page header -->
+                <div>
+                    <div class="d-flex justify-content-between align-items-center" >
+                        <div class="mb-2 mb-lg-0">
+                            <h3 class="mb-0 fw-bold text-white">Cours</h3>
                         </div>
                     </div>
                 </div>
             </div>
+            <cours-pdf data-user="{{ app.user.id }}"/>
         </div>
     </div>
 {% endblock %}

@@ -1,73 +1,54 @@
 {% extends 'base/base.html.twig' %}
 
 {% block title %}Enseignant{% endblock %}
-{% block style %}style="min-height: 647px;"{% endblock %}
-{% block page_title %}Enseignant{% endblock %}
-{% block page %}enseignant{% endblock %}
-
-{% block add %}
-    <div class="col-auto float-right ml-auto">
-        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i>
-            Ajouter enseignant</a>
-    </div>
-{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive-md">
-                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table table-striped custom-table no-footer">
-                                <thead>
-                                <tr role="row">
-                                    <th style="width: 145.766px;">Name</th>
-                                    <th style="width: 187.391px;">Email</th>
-                                    <th style="width: 88.6719px;">N° CNI</th>
-                                    <th style="width: 65.4219px;">Mobile</th>
-                                    <th style="width: 112.875px;">Role</th>
-                                    <th style="width: 46.8281px;">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for enseignant in enseignants %}
-                                    <tr>
-                                        <td class="sorting_1">
-                                            <h2 class="table-avatar">
-                                                <li class="list-unstyled">
-                                                    {{ enseignant.nom }} {{ enseignant.prenom }}
-                                                    <span>Web Developer</span>
-                                                </li>
-                                            </h2>
-                                        </td>
-                                        <td>{{ enseignant.email }}</td>
-                                        <td>{{ enseignant.numeroCni }}</td>
-                                        <td>{{ enseignant.numeroTelephone }}</td>
-                                        <td>
+    <div class="bg-primary pt-10 pb-21"></div>
+    <div class="container-fluid mt-n22 px-6">
+        <div class="row">
+            {% include 'components/_page_header.html.twig' with { title : 'Tableau de bord' } %}
+        </div>
+        <div class="row mt-6 mb-3">
+            <div class="col-md-12 col-12">
+                <!-- card  -->
+                <div class="card">
+                    <!-- card header  -->
+                    {% include 'components/_card_title.html.twig' with {
+                        title: 'Liste des enseignants',
+                        btn_title: 'Ajouter un enseignant',
+                        path: path('create_teacher')
+                    } %}
 
-                                            <li class="btn btn-white btn-sm btn-rounded"
-                                            >{{ enseignant.poste }} </li>
-                                        </td>
-                                        <td class="text-right">
-                                            {{ include('admin/enseignant/includes/_delete_form.html.twig') }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-5">
-                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
-                                 aria-live="polite">Showing 1 to 7 of 7 entries
-                            </div>
-                        </div>
+                    <!-- table  -->
+                    <div class="card-body">
+                        <table id="datatable" class="table table-responsive table-striped">
+                            <thead>
+                            <tr>
+                                <th >Nom</th>
+                                <th >Email</th>
+                                <th >N° CNI</th>
+                                <th >Tel</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for enseignant in enseignants %}
+                                <tr>
+                                    <td >{{ enseignant.nom }}</td>
+                                    <td >{{ enseignant.email }}</td>
+                                    <td >{{ enseignant.numeroCni }}</td>
+                                    <td >{{ enseignant.numeroTelephone }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ path('update_teacher', {id: enseignant.id}) }}"><i class="fa fa-cog"></i></a>
+                                        <a class="mx-3" href="{{ path('delete_teacher', {id: enseignant.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');"><i class="fa fa-trash text-danger"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{ include('admin/enseignant/includes/_form.html.twig') }}
 {% endblock %}

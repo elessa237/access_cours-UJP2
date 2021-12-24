@@ -1,53 +1,61 @@
 {% extends 'base/base.html.twig' %}
 
 {% block title %}Cours{% endblock %}
-{% block style %}style="min-height: 647px;"{% endblock %}
-{% block page_title %}Gestion des cours{% endblock %}
-{% block page %}cours{% endblock %}
-
-{% block add %}
-    <div class="col-auto float-right ml-auto">
-        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_cour"><i class="fa fa-plus"></i>
-            Ajouter un cour</a>
-    </div>
-{% endblock %}
 
 {% block body %}
+    <div class="bg-primary pt-10 pb-21"></div>
+    <div class="container-fluid mt-n22 px-6">
     <div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table class="table table-striped custom-table mb-0">
+        {% include 'components/_page_header.html.twig' with { title : 'Tableau de bord' } %}
+    </div>
+    <div class="row mt-6 mb-3">
+    <div class="col-md-12 col-12">
+        <!-- card  -->
+        <div class="card">
+            <!-- card header  -->
+            {% include 'components/_card_title.html.twig' with {
+                title: "Listes des Cours",
+                btn_title: 'Ajouter un cour',
+                path: path('create_cour')
+            } %}
+
+            <!-- table  -->
+            <div class="card-body">
+                <table id="datatable" class="table table-responsive table-striped">
                     <thead>
-                    <tr class="text-center">
-                        <th>Nom </th>
-                        <th>U.E</th>
-                        <th>Taille </th>
-                        <th>Filieres</th>
-                        <th>Niveau</th>
-                        <th class="text-right">Action</th>
+                    <tr>
+                        <th class="text-center">Nom </th>
+                        <th class="text-center">U.E</th>
+                        <th class="text-center">Taille </th>
+                        <th class="text-center">Filieres</th>
+                        <th class="text-center">Niveau</th>
+                        <th class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for cour in cours %}
                         <tr class="text-center">
-                            <td>{{ cour.nom }}</td>
-                            <td>{{ cour.UE }}</td>
-                            <td>{{ cour.tailleCour }}</td>
-                            <td>
-                                <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-white"></i> Filieres
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-left" style="">
+                            <td class="text-center">{{ cour.nom }}</td>
+                            <td class="text-center">{{ cour.UE }}</td>
+                            <td class="text-center">{{ cour.tailleCour }}</td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Filiere
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {% for filiere in cour.filieres  %}
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>{{filiere.nom }}</li>
+                                            <li class="dropdown-item">{{filiere.nom }}</li>
                                         {% endfor %}
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ cour.niveau }}</td>
-                            <td class="text-right">
-                                {{ include('admin/enseignement/cour/includes/_delete.html.twig') }}
+                            <td class="text-center">{{ cour.niveau }}</td>
+                            <td class="text-center">
+                                <a  href="{{ path('update_cour', {id: cour.id}) }}"><i class="fa fa-cog"></i></a>
+                                <a class="mx-3" href="{{ path('delete_cour', {id: cour.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');">
+                                    <i class="fa fa-trash text-danger"></i>
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -56,5 +64,4 @@
             </div>
         </div>
     </div>
-    {{ include('admin/enseignement/cour/includes/_form.html.twig') }}
 {% endblock %}

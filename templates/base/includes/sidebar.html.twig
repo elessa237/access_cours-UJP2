@@ -1,0 +1,59 @@
+<!-- Sidebar -->
+<nav class="navbar-vertical navbar">
+    <div class="nav-scroller">
+        <!-- Brand logo -->
+        <a class="navbar-brand" href="/index.html">
+            <img src="/assets/images/brand/logo/logo.svg" alt=""/>
+        </a>
+        <!-- Navbar nav -->
+        <ul class="navbar-nav flex-column" id="sideNavbar">
+            <li class="nav-item">
+                <a class="nav-link has-arrow" href="#" disabled>
+                    <i data-feather="home" class="nav-icon icon-xs me-2"></i> UJP2
+                </a>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <div class="navbar-heading">Dashboard</div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('dashboard') }}">Acceuil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link has-arrow" href="{{ path('show_enseignant') }}">Professeurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('unite_enseign') }}">Unité d'enseignement</a>
+                </li>
+                <!-- Dashboard -->
+
+                <!-- Info etudiant -->
+                <li class="nav-item">
+                    <div class="navbar-heading">Information etudiant</div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('niveau') }}">Niveaux</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('filiere') }}">Filières</a>
+                </li>
+                <!-- Info etudiant -->
+            {% endif %}
+            {% if is_granted('ROLE_ENSEIGNANT') %}
+                <li class="nav-item">
+                    <div class="navbar-heading">Cours</div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('gestion_cour') }}">Cours</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <div class="navbar-heading">Télécharger vos cours</div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('home') }}">Documents</a>
+            </li>
+        </ul>
+    </div>
+</nav>

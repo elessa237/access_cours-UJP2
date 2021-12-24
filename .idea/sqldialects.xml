@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211123215616.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211127205204.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211127210635.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211127225540.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211127231317.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211128143511.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211128170019.php" dialect="GenericSQL" />
+  </component>
+</project>

@@ -1,50 +1,98 @@
 {% extends 'base/base.html.twig' %}
 {% block title %}Dashboard{% endblock %}
-{% block page %}accueil{% endblock %}
-{% block page_title %}Statistique des profiles{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-user-plus"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>{{ enseignants|length }}</h3>
-                        <span>Professeurs</span>
+    <div class="bg-primary pt-10 pb-21"></div>
+    <div class="container-fluid mt-n22 px-6">
+        <div class="row">
+            {% include 'components/_page_header.html.twig' with { title : 'Dashboard' } %}
+            <div class="row">
+                <div class="col mt-6">
+                    <!-- card -->
+                    <div class="card rounded-3">
+                        <!-- card body -->
+                        <div class="card-body">
+                            <!-- heading -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h4 class="mb-0">Professeurs</h4>
+                                </div>
+                                <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                                    <i class="fa fa-user-plus"></i>
+                                </div>
+                            </div>
+                            <!-- project number -->
+                            <div>
+                                <h1 class="fw-bold">{{ enseignants|length }}</h1>
+                                <p class="mb-0"><span class="text-dark me-2"></span></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>{{ etudiants|length }}</h3>
-                        <span>Etudiants</span>
+                <div class="col mt-6">
+                    <!-- card -->
+                    <div class="card rounded-3">
+                        <!-- card body -->
+                        <div class="card-body">
+                            <!-- heading -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h4 class="mb-0">Etudiants</h4>
+                                </div>
+                                <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                                    <i class="text-dark  fa fa-users"></i>
+                                </div>
+                            </div>
+                            <!-- project number -->
+                            <div>
+                                <h1 class="fw-bold">{{ etudiants|length }}</h1>
+                                <p class="mb-0"><span class="text-dark me-2"></span></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-graduation-cap"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>{{ filieres|length }}</h3>
-                        <span>Filières</span>
+                <div class="col mt-6">
+                    <!-- card -->
+                    <div class="card rounded-3">
+                        <!-- card body -->
+                        <div class="card-body">
+                            <!-- heading -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h4 class="mb-0">Filieres</h4>
+                                </div>
+                                <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                                    <i class="text-dark  fa fa-graduation-cap"></i>
+                                </div>
+                            </div>
+                            <!-- project number -->
+                            <div>
+                                <h1 class="fw-bold">{{ filieres|length }}</h1>
+                                <p class="mb-0"><span class="text-dark me-2"></span></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
-                <div class="card-body">
-                    <span class="dash-widget-icon"><i class="fa fa-book"></i></span>
-                    <div class="dash-widget-info">
-                        <h3>{{ cours|length }}</h3>
-                        <span>Cours uploader</span>
+                <div class="col mt-6">
+                    <!-- card -->
+                    <div class="card rounded-3">
+                        <!-- card body -->
+                        <div class="card-body">
+                            <!-- heading -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h4 class="mb-0">Cours ajouter</h4>
+                                </div>
+                                <div class="icon-shape icon-md bg-light-primary text-primary rounded-1">
+                                    <i class="text-dark  fa fa-book"></i>
+                                </div>
+                            </div>
+                            <!-- project number -->
+                            <div>
+                                <h1 class="fw-bold">{{ cours|length }}</h1>
+                                <p class="mb-0"><span class="text-dark me-2"></span></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

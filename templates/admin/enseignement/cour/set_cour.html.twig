@@ -1,0 +1,27 @@
+{% extends 'base/base.html.twig' %}
+{% block title %}Nouveau cour{% endblock %}
+
+{% block body %}
+    <!-- Container fluid -->
+    <div class="container-fluid px-6 py-4">
+        <div class="row">
+            {% include 'components/_page_header.html.twig' with {
+                title: 'Formulaire des cours'
+            } %}
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-12">
+                <!-- card -->
+                <div class="card">
+                    <!-- card body -->
+                    <div class="card-body">
+                        {% include 'admin/enseignement/cour/includes/_form.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
