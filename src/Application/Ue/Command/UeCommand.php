@@ -44,4 +44,19 @@ class UeCommand
         $this->manager->remove($ue);
         $this->manager->flush();
     }
+
+    public function update(UeDto $ueDto)
+    {
+        $repo = $this->manager->getRepository(Ue::class);
+        $ue = $repo->findOneBy(["id"=>$ueDto->id]);
+
+        $ue->setNom($ueDto->nom)
+            ->setNiveau($ueDto->niveau);
+        foreach($ueDto->filieres as $filiere)
+        {
+            $ue->addFiliere($filiere);
+        }
+
+        $this->manager->flush();
+    }
 }

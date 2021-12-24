@@ -15,7 +15,8 @@
             <!-- card header  -->
             {% include 'components/_card_title.html.twig' with {
                 title: "Les Unités d'enseignement",
-                btn_title: 'Ajouter une U.E'
+                btn_title: 'Ajouter une U.E',
+                path: path('create_ue')
             } %}
 
             <!-- table  -->
@@ -39,7 +40,9 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
                                             Filiere
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -53,7 +56,8 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <i class="fa fa-cog"></i>
+                                <a href="{{ path('update_ue', {id: ue.id}) }}"><i class="fa fa-cog"></i></a>
+                                <a class="btn-sm btn-danger mx-3" href="{{ path('delete_ue', {id: ue.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -62,5 +66,4 @@
             </div>
         </div>
     </div>
-    {{ include('admin/enseignement/ue/includes/_form.html.twig') }}
 {% endblock %}

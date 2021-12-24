@@ -16,9 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class UniteEnseignementController
- * @package App\Controller\Dashboard
  * @author Maxime Elessa <elessamaxime@icloud.com>
  * @Route("/admin")
+ * @package App\Controller\Dashboard
  */
 class UniteEnseignementController extends AbstractController
 {
@@ -29,36 +29,50 @@ class UniteEnseignementController extends AbstractController
      * @return Response
      * @Route("/UniteEnseignement", name="unite_enseign")
      */
-    public function UniteEnseignement(Request $request,UeRepository $UeRepository, UeCommand $ueCommand) : Response
+    public function UniteEnseignement(UeRepository $UeRepository): Response
     {
-
-        $ueDto = new UeDto();
-        $form = $this->createForm(UniteEnseignementType::class, $ueDto);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $ueCommand->create($ueDto);
-            return $this->redirectToRoute('unite_enseign');
-        }
-        return $this->renderForm("admin/enseignement/ue/index.html.twig",[
-            'form' => $form,
-            'ues' => $UeRepository->findAll(),
-        ]);
+        return $this->renderForm("admin/enseignement/ue/index.html.twig", [
+                'ues' => $UeRepository->findAll(),
+            ]
+        );
     }
 
     /**
-     * @Route("/delete/ue-{id}", name="delete_ue", methods={"POST"})
+     * @Route("/ue/update/{id}", name="update_ue")
+     * @Route("/ue/create", name="create_ue")
      * @param Request $request
+     * @param UeCommand $ueCommand
+     * @param Ue|null $ue
+     * @return Response
+     */
+    public function form(Request $request, UeCommand $ueCommand, Ue $ue = null): Response
+    {
+        $ue === null ? $ueDto = new UeDto() : $ueDto = new UeDto($ue);
+        $form = $this->createForm(UniteEnseignementType::class, $ueDto);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ueDto->id === null ?
+                $ueCommand->create($ueDto) :
+                $ueCommand->update($ueDto);
+            return $this->redirectToRoute('unite_enseign');
+        }
+
+        return $this->render("admin/enseignement/ue/set_ue.html.twig", [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/ue/delete/ue-{id}", name="delete_ue")
      * @param Ue $Ue
      * @param UeCommand $ueCommand
      * @return Response
      */
-    public function delete(Request $request, Ue $Ue,UeCommand $ueCommand): Response
+    public function delete(Ue $Ue, UeCommand $ueCommand): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$Ue->getId(), $request->request->get('_token'))) {
-            $ueCommand->delete($Ue);
-        }
+        $ueCommand->delete($Ue);
         return $this->redirectToRoute('unite_enseign', [], Response::HTTP_SEE_OTHER);
     }
 }

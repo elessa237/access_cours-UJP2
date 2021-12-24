@@ -14,12 +14,14 @@ use Doctrine\Common\Collections\Collection;
  */
 class UeDto
 {
+    public ?int $id;
     public ?string $nom;
     public ?Niveau $niveau;
     public ?Collection $filieres;
 
     public function __construct(?Ue $ue = null)
     {
+        $this->id = $ue === null? null : $ue->getId();
         $this->nom = $ue === null? null : $ue->getNom();
         $this->niveau = $ue === null? null : $ue->getNiveau();
         $this->filieres = $ue === null? null : $ue->getFilieres();
