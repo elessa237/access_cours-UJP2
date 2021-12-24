@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use \App\Domain\Filiere\Entity\Filiere;
@@ -32,6 +33,7 @@ class Cour
 
     /**
      * @ORM\Column(type="string")
+     * @Groups("cour:read")
      */
     private ?string $nom = null;
 
@@ -52,11 +54,13 @@ class Cour
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("cour:read")
      */
     private ?int $tailleCour;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups("cour:read")
      */
     private ?DateTimeImmutable $publishedAt = null;
 
@@ -68,6 +72,7 @@ class Cour
     /**
      * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("cour:read")
      */
     private ?Utilisateur $professeur = null;
 

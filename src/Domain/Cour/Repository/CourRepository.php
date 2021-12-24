@@ -30,7 +30,7 @@ class CourRepository extends ServiceEntityRepository
      * @param UE $filter
      * @return Cour[] Returns an array of Cour objects
      */
-    public function findAllByFiliereAndNiveau(Niveau $niveau, Filiere $filieres, string $search, UE $filter=null)
+    public function findAllByFiliereAndNiveau(Niveau $niveau, Filiere $filieres, string $search = null, UE $filter=null)
     {
 
         $query = $this->createQueryBuilder('c')
