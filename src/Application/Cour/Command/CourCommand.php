@@ -57,4 +57,26 @@ class CourCommand
         $this->manager->remove($cour);
         $this->manager->flush();
     }
+
+    public function update(CourDto $courDto)
+    {
+        $repo = $this->manager->getRepository(Cour::class);
+
+        $cour = $repo->findOneBy(["id" => $courDto->id]);
+
+        $cour
+            ->setNom($courDto->nom)
+            ->setCour($courDto->cour)
+            ->setNiveau($courDto->niveau)
+            ->setUE($courDto->UE)
+            ->setProfesseur($courDto->professeur)
+            ->setPublishedAt(new DateTimeImmutable('now'));
+
+        foreach ($courDto->filieres as $filiere)
+        {
+            $cour->addFiliere($filiere);
+        }
+
+        $this->manager->flush();
+    }
 }

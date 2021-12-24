@@ -56,7 +56,7 @@ class CourType extends AbstractType
             ])
             ->add("cour", FileType::class, [
                 "label" => false,
-                "required" => true,
+                "required" => false,
                 "attr" => [
                     "class" => "form-control",
                 ]

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class CourDto
 {
+    public ?int $id;
     public ?string $nom;
     public ?File $cour;
     public ?DateTimeImmutable $publishedAt;
@@ -30,6 +31,7 @@ class CourDto
 
     public function __construct(?Cour $cour = null)
     {
+        $this->id = $cour === null ? null : $cour->getId();
         $this->nom = $cour === null ? null : $cour->getNom();
         $this->cour = $cour === null ? null : $cour->getCour();
         $this->publishedAt = $cour === null ? null : $cour->getPublishedAt();

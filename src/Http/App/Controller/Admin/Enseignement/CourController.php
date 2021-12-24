@@ -26,18 +26,12 @@ class CourController extends AbstractController
 {
 
     /**
-     * @param Request $request
      * @param CourRepository $courRepo
-     * @param CourCommand $courCommand
      * @return Response
      * @Route("/cour", name="gestion_cour")
      */
-    public function create(Request $request,CourRepository $courRepo,CourCommand $courCommand): Response
+    public function create(CourRepository $courRepo): Response
     {
-        $courDto = new CourDto();
-        $form = $this->createForm(CourType::class, $courDto);
-        $form->handleRequest($request);
-
         /** @var Utilisateur $professeur */
         $professeur = $this->getUser();
 
@@ -46,31 +40,52 @@ class CourController extends AbstractController
             ['publishedAt' => 'DESC']
         );
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $courCommand->create($courDto, $professeur);
-            return $this->redirectToRoute("gestion_cour");
-        }
-
-        return $this->renderForm("/admin/enseignement/cour/index.html.twig", [
-            "form" => $form,
+        return $this->render("/admin/enseignement/cour/index.html.twig", [
             "cours" => $cours,
         ]);
     }
 
     /**
+     * @Route("/cour/new", name="create_cour")
+     * @Route("/cour/update/cour-{id}", name="update_cour")
+     * @param Cour $cour|null
      * @param Request $request
+     * @param CourCommand $courCommand
+     * @return Response
+     */
+    public function form(Request $request, CourCommand $courCommand, Cour $cour = null) : Response
+    {
+        $cour === null? $courDto = new CourDto() : $courDto = new CourDto($cour);
+
+        $form = $this->createForm(CourType::class, $courDto);
+        $form->handleRequest($request);
+
+        /** @var Utilisateur $professeur */
+        $professeur = $this->getUser();
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $courDto->id === null?
+                $courCommand->create($courDto, $professeur) :
+                $courCommand->update($courDto);
+
+            return $this->redirectToRoute("gestion_cour");
+        }
+
+        return $this->render("admin/enseignement/cour/set_cour.html.twig", [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * @param Cour $cour
      * @param CourCommand $courCommand
      * @return Response
-     * @Route("/delete/cour-{id}", name="delete_cour", methods={"POST"})
+     * @Route("/delete/cour-{id}", name="delete_cour")
      */
-    public function delete(Request $request, Cour $cour, CourCommand $courCommand): Response
+    public function delete(Cour $cour, CourCommand $courCommand): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->request->get('_token'))) {
-            $courCommand->delete($cour);
-        }
-
+        $courCommand->delete($cour);
         return $this->redirectToRoute("gestion_cour");
     }
 }
