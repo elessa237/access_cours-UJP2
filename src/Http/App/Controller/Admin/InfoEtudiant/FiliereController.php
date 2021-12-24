@@ -26,43 +26,54 @@ class FiliereController extends AbstractController
 
     /**
      * @param FiliereRepository $filiereRepo
-     * @param Request $request
-     * @param FiliereCommand $filiereCommand
      * @return Response
      * @Route("/filiere", name="filiere")
      */
-    public function filiere(FiliereRepository $filiereRepo, Request $request, FiliereCommand $filiereCommand): Response
+    public function filiere(FiliereRepository $filiereRepo): Response
     {
-        $filiereDto = new FiliereDto();
-        $form = $this->createForm(FiliereType::class, $filiereDto);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $filiereCommand->create($filiereDto);
-            return $this->redirectToRoute("filiere");
-        }
-
-        return $this->renderForm("admin/infoEtudiant/filiere/index.html.twig", [
-            'form' => $form,
+        return $this->render("admin/infoEtudiant/filiere/index.html.twig", [
             'filieres' => $filiereRepo->findAll()
         ]);
     }
 
     /**
-     * @param Filiere $filiere
+     * @Route("/filiere/update/{id}", name="update_filiere")
+     * @Route("/filiere/create", name="create_filiere")
      * @param Request $request
      * @param FiliereCommand $filiereCommand
+     * @param Filiere $filiere
      * @return Response
-     * @Route("/delete/filiere-{id}", name="delete_filiere", methods={"POST"})
      */
-    public function delete(Filiere $filiere, Request $request, FiliereCommand $filiereCommand) : Response
+    public function form(Request $request, FiliereCommand $filiereCommand, Filiere $filiere = null) : Response
     {
-        if ($this->isCsrfTokenValid('delete' . $filiere->getId(), $request->request->get('_token')))
+        $filiere === null ? $filiereDto = new FiliereDto() : $filiereDto = new FiliereDto($filiere);
+        $form = $this->createForm(FiliereType::class, $filiereDto);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
         {
-            $filiereCommand->delete($filiere);
+            $filiereDto->id === null ?
+            $filiereCommand->create($filiereDto) :
+            $filiereCommand->update($filiereDto);
+
+            return $this->redirectToRoute("filiere");
         }
 
+        return $this->render("admin/infoEtudiant/filiere/set_filiere.html.twig",[
+            "form"=>$form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @param Filiere $filiere
+     * @param FiliereCommand $filiereCommand
+     * @return Response
+     * @Route("/delete/filiere-{id}", name="delete_filiere")
+     */
+    public function delete(Filiere $filiere, FiliereCommand $filiereCommand) : Response
+    {
+        $filiereCommand->delete($filiere);
         return $this->redirectToRoute("filiere");
     }
 }

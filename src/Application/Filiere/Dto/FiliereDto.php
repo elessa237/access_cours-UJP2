@@ -19,9 +19,11 @@ class FiliereDto
     public ?Collection $etudiants;
     public ?Collection $cours;
     public ?Collection $unite_enseignements;
+    public ?int $id;
 
     public function __construct(?Filiere $filiere = null)
     {
+        $this->id = $filiere === null? null : $filiere->getId();
         $this->nom = $filiere === null? null : $filiere->getNom();
         $this->alias = $filiere === null? null : $filiere->getAlias();
         $this->etudiants = $filiere === null? null : $filiere->getEtudiants();

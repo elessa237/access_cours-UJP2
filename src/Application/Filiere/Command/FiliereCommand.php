@@ -41,4 +41,15 @@ class FiliereCommand
         $this->manager->remove($filiere);
         $this->manager->flush();
     }
+
+    public function update(FiliereDto $filiereDto)
+    {
+        $repo = $this->manager->getRepository(Filiere::class);
+        $filiere = $repo->findOneBy(["id"=>$filiereDto->id]);
+
+        $filiere->setNom(strtoupper($filiereDto->nom))
+            ->setAlias(strtoupper($filiereDto->alias));
+
+        $this->manager->flush();
+    }
 }
