@@ -22,9 +22,11 @@ class UtilisateurDto
     public ?Collection $UE;
     public ?string $numero_cni;
     public ?string $poste;
+    public ?int $id;
 
     public function __construct(?Utilisateur $utilisateur = null)
     {
+        $this->id = $utilisateur === null? null : $utilisateur->getId();
         $this->nom = $utilisateur === null? null : $utilisateur->getNom();
         $this->prenom = $utilisateur === null? null : $utilisateur->getPrenom();
         $this->email = $utilisateur === null? null : $utilisateur->getEmail();

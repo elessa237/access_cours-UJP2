@@ -54,6 +54,7 @@ class RegistrationEnseignantType extends AbstractType
             ])
             ->add('password', PasswordType::class, [
                 'label' => false,
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Mot de passe'
@@ -61,6 +62,7 @@ class RegistrationEnseignantType extends AbstractType
             ])
             ->add('confirmPassword', PasswordType::class, [
                 'label' => false,
+                'required' => false,
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Confirmé'

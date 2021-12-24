@@ -26,45 +26,56 @@ class EnseignantController extends AbstractController
 
     /**
      * @param UtilisateurRepository $enseignantRepo
-     * @param Request $request
-     * @param UtilisateurCommand $utilisateurCommand
      * @return Response
      * @Route("/", name="show_enseignant")
      */
-    public function home (UtilisateurRepository $enseignantRepo,Request $request, UtilisateurCommand $utilisateurCommand) : Response
+    public function home (UtilisateurRepository $enseignantRepo) : Response
     {
-        $enseignantDto = new UtilisateurDto();
+
+
+        return $this->render('admin/Enseignant/index.html.twig', [
+            'enseignants' => $enseignantRepo->findAllByPoste("ENSEIGNANT"),
+        ]);
+    }
+
+    /**
+     * @Route("/enseignant/update/{id}", name="update_teacher")
+     * @Route("/enseignant/create", name="create_teacher")
+     * @param Request $request
+     * @param UtilisateurCommand $utilisateurCommand
+     * @param Utilisateur|null $utilisateur
+     * @return Response
+     */
+    public function form(Request $request, UtilisateurCommand $utilisateurCommand, Utilisateur $utilisateur = null) : Response
+    {
+        $utilisateur === null ? $enseignantDto = new UtilisateurDto() : $enseignantDto = new UtilisateurDto($utilisateur);
+
         $form = $this->createForm(RegistrationEnseignantType::class, $enseignantDto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $enseignantDto->id === null ?
+            $utilisateurCommand->createTeacher($enseignantDto) :
+            $utilisateurCommand->update($enseignantDto);
 
-            $utilisateurCommand->createTeacher($enseignantDto);
-            $this->addFlash('success', "L'enseignant a bien ete ajouter");
             return $this->redirectToRoute("show_enseignant");
 
         }
 
-        return $this->render('admin/Enseignant/index.html.twig', [
-            'enseignants' => $enseignantRepo->findAllByPoste("ENSEIGNANT"),
-            'form' => $form->createView(),
+        return $this->render("admin/enseignant/set_teacher.html.twig", [
+           'form' => $form->createView(),
         ]);
     }
 
-
     /**
-     * @Route("/delete/enseignant-{id}", name="delete_enseignant", methods={"POST"})
-     * @param Request $request
+     * @Route("/delete/enseignant-{id}", name="delete_teacher")
      * @param Utilisateur $enseignant
      * @param UtilisateurCommand $utilisateurCommand
      * @return Response
      */
-    public function delete(Request $request, Utilisateur $enseignant, UtilisateurCommand $utilisateurCommand): Response
+    public function delete(Utilisateur $enseignant, UtilisateurCommand $utilisateurCommand): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$enseignant->getId(), $request->request->get('_token'))) {
-           $utilisateurCommand->removeUser($enseignant);
-        }
-
+       $utilisateurCommand->removeUser($enseignant);
         return $this->redirectToRoute('show_enseignant', [], Response::HTTP_SEE_OTHER);
     }
 }

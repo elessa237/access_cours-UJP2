@@ -88,4 +88,19 @@ class UtilisateurCommand
         $this->manager->remove($utilisateur);
         $this->manager->flush();
     }
+
+    public function update(UtilisateurDto $enseignantDto)
+    {
+        $repo = $this->manager->getRepository(Utilisateur::class);
+
+        $enseignant = $repo->findOneBy(["id" => $enseignantDto->id]);
+
+        $enseignant->setNom($enseignantDto->nom)
+            ->setPrenom($enseignantDto->prenom)
+            ->setEmail($enseignantDto->email)
+            ->setNumeroTelephone($enseignantDto->numero_telephone)
+            ->setNumeroCni($enseignantDto->numero_cni);
+
+        $this->manager->flush();
+    }
 }

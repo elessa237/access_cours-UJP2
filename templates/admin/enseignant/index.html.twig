@@ -15,7 +15,8 @@
                     <!-- card header  -->
                     {% include 'components/_card_title.html.twig' with {
                         title: 'Liste des enseignants',
-                        btn_title: 'Ajouter un enseignant'
+                        btn_title: 'Ajouter un enseignant',
+                        path: path('create_teacher')
                     } %}
 
                     <!-- table  -->
@@ -38,7 +39,8 @@
                                     <td >{{ enseignant.numeroCni }}</td>
                                     <td >{{ enseignant.numeroTelephone }}</td>
                                     <td class="text-center">
-                                        <i class="fa fa-user-cog"></i>
+                                        <a href="{{ path('update_teacher', {id: enseignant.id}) }}"><i class="fa fa-cog"></i></a>
+                                        <a class="btn-sm btn-danger mx-3" href="{{ path('delete_teacher', {id: enseignant.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
