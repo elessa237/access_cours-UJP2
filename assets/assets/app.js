@@ -8,6 +8,7 @@ import 'datatables.net-responsive-bs5/js/responsive.bootstrap5.min';
 import 'select2/dist/js/select2';
 import './js/main';
 import './js/sidebarMenu';
+import './react/elements/element';
 import './app.scss';
 
 window.$ = $;

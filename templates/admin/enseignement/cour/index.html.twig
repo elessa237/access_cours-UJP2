@@ -53,8 +53,8 @@
                             <td class="text-center">{{ cour.niveau }}</td>
                             <td class="text-center">
                                 <a  href="{{ path('update_cour', {id: cour.id}) }}"><i class="fa fa-cog"></i></a>
-                                <a class="mx-3 btn-sm btn-danger" href="{{ path('delete_cour', {id: cour.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');">
-                                    <i class="fa fa-trash"></i>
+                                <a class="mx-3" href="{{ path('delete_cour', {id: cour.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');">
+                                    <i class="fa fa-trash text-danger"></i>
                                 </a>
                             </td>
                         </tr>

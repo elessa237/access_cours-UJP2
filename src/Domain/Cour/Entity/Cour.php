@@ -39,6 +39,7 @@ class Cour
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("cour:read")
      */
     private ?string $nomCour = null;
 

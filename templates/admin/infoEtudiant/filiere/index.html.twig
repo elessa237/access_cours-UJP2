@@ -36,7 +36,7 @@
                             <td class="text-center">{{ filiere.alias }}</td>
                             <td class="text-center">
                                 <a href="{{ path('update_filiere', {id: filiere.id}) }}"><i class="fa fa-cog"></i></a>
-                                <a class="btn-sm btn-danger mx-3" href="{{ path('delete_filiere', {id: filiere.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');"><i class="fa fa-trash"></i></a>
+                                <a class="mx-3" href="{{ path('delete_filiere', {id: filiere.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');"><i class="fa fa-trash text-danger"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
