@@ -19,9 +19,11 @@ class NiveauDto
     public ?Collection $etudiants;
     public ?Collection $uEs;
     public ?Collection $cours;
+    public ?int $id;
 
     public function __construct(?Niveau $niveau = null)
     {
+        $this->id = $niveau === null? null : $niveau->getId();
         $this->nom = $niveau === null? null : $niveau->getNom();
         $this->alias = $niveau === null? null : $niveau->getAlias();
         $this->etudiants = $niveau === null? null : $niveau->getEtudiants();

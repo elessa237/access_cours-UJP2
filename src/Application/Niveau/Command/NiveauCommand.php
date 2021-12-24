@@ -33,12 +33,26 @@ class NiveauCommand
     }
 
     /**
-     * @param NiveauDto $niveau
+     * @param Niveau $niveau
      * @return void
      */
     public function delete(Niveau $niveau) : void
     {
         $this->manager->remove($niveau);
+        $this->manager->flush();
+    }
+
+    /**
+     * @param NiveauDto $niveauDto
+     */
+    public function update(NiveauDto $niveauDto)
+    {
+        $repo = $this->manager->getRepository(Niveau::class);
+        $niveau = $repo->findOneBy(["id"=>$niveauDto->id]);
+
+        $niveau->setNom($niveauDto->nom)
+            ->setAlias($niveauDto->alias);
+
         $this->manager->flush();
     }
 }
