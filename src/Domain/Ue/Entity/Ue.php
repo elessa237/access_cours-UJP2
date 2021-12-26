@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use \App\Domain\Filiere\Entity\Filiere;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UeRepository::class)
@@ -20,11 +21,13 @@ class Ue
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("cour:read")
      */
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=255, name="nom_UE")
+     * @Groups("cour:read")
      */
     private ?string $nom = null;
 

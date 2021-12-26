@@ -25,22 +25,25 @@ class CourRepository extends ServiceEntityRepository
 
     /**
      * @param Niveau $niveau
-     * @param Filiere $filieres
+     * @param Filiere|null $filiere
      * @param string $search
      * @param UE $filter
      * @return Cour[] Returns an array of Cour objects
      */
-    public function findAllByFiliereAndNiveau(Niveau $niveau, Filiere $filieres, string $search = null, UE $filter=null)
+    public function findAllByFiliereAndNiveau(Niveau $niveau = null, Filiere $filiere = null, string $search = null, UE $filter=null)
     {
 
-        $query = $this->createQueryBuilder('c')
-            ->where(':filieres MEMBER OF c.filieres')
-            ->andWhere('c.niveau = :niveau')
-            ->setParameters([
-                'filieres' => $filieres,
-                'niveau'=> $niveau
-            ])
-            ->orderBy('c.publishedAt', 'DESC');
+        $query = $this->createQueryBuilder('c');
+
+            if($filiere && $niveau){
+
+                $query->where(':filieres MEMBER OF c.filieres')
+                    ->andWhere('c.niveau = :niveau')
+                    ->setParameters([
+                        'filieres' => $filiere,
+                        'niveau'=> $niveau
+                    ]);
+            }
 
         if ($search) {
 
@@ -62,38 +65,22 @@ class CourRepository extends ServiceEntityRepository
 
         return
             $query
+                ->orderBy('c.publishedAt', 'DESC')
                 ->getQuery()
                 ->getResult();
     }
 
     /**
-     * @param string $search
-     * @param UE|null $filter
+     * @param string $filter
      * @return Cour[] Returns an array of Cour objects
      */
-    public function findAllCours(string $search, UE $filter = null)
+    public function findAllCoursByFilter(string $filter)
     {
 
         $query = $this->createQueryBuilder('c')
-            ->orderBy('c.publishedAt', 'DESC');
-
-        if ($search) {
-
-            $searchTerms = $this->extractSearchTerms($search);
-
-            foreach ($searchTerms as $key => $term) {
-                $query = $query
-                    ->orWhere('c.nom LIKE :t_' . $key)
-                    ->setParameter('t_' . $key, '%' . $term . '%');
-            }
-
-        }
-        if($filter)
-        {
-            $query->andWhere('c.UE = :ue')
-                ->setParameter('ue', $filter)
-            ;
-        }
+            ->orderBy('c.publishedAt', 'DESC')
+            ->andWhere('c.UE = :ue')
+            ->setParameter('ue', $filter);
 
         return
             $query
@@ -107,7 +94,7 @@ class CourRepository extends ServiceEntityRepository
      * @param Niveau $niveau
      * @return Cour[]
      */
-    public function findLastFour(int $limit, ?Niveau $niveau = null, ?Filiere $filieres = null)
+    public function findLast(int $limit, ?Niveau $niveau = null, ?Filiere $filieres = null)
     {
         $query = $this->createQueryBuilder('c');
         if ($filieres) {
