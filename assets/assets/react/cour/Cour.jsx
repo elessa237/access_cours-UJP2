@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Card from "./Card";
 import useFetch from "../Hooks/useFetch";
 import Spinner from "../components/Spinner";
+import EmptyDoc from "./EmptyDoc";
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
@@ -36,8 +37,10 @@ function Cour() {
             <div className="row">
                 {
                     loading || loadingUe ? <Spinner/> :
+                        cours.length > 0 ?
                         cours.map((cour, key) =>
-                            <Card key={key} cour={cour}/>)
+                            <Card key={key} cour={cour}/>) :
+                            <EmptyDoc />
                 }
             </div>
         </>
