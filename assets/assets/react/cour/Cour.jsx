@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import Card from "./Card";
+import Card from "./includes/Card";
 import useFetch from "../Hooks/useFetch";
 import Spinner from "../components/Spinner";
-import EmptyDoc from "./EmptyDoc";
+import EmptyDoc from "./includes/EmptyDoc";
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
@@ -28,7 +28,7 @@ function Cour() {
 
     return (
         <>
-            <div className="col-3 offset-9 text-center">
+            <div className="col-lg-3 offset-lg-9 col-md-4 offset-md-8 col-sm offset-4 text-center">
                 <select className="form-control" onChange={handleChange} value={value}>
                     <option value="">--- Sélectionné l'U.E ---</option>
                     {ues.map((ue, key) => <option value={ue.id} key={key}>{ue.nom}</option>)}
