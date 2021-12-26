@@ -13,7 +13,7 @@ import './app.scss';
 
 window.$ = $;
 
-$('select').select2();
+// $('select').select2();
 
 let french = {
     "sEmptyTable": "Aucune donnée disponible dans le tableau",

@@ -9,7 +9,7 @@ function Card({cour}) {
         <div className="card">
             <img src="/images/img-pdf.png" className="card-img-top d-flex justify-content-center" style={{height: "100px", width: "100px"}} alt="..."/>
             <div className="card-body">
-                <h5 className="card-title">{cour.nom}</h5>
+                <h5 className="card-title">{cour.nom} | {cour.UE.nom}</h5>
                 <a className="float-end btn-lg" href={"/documents/cours/" + cour.nomCour} download><i className="fa fa-download text-secondary"/></a>
                 <p className="card-text">
                     Ajouté le {date.toLocaleString(undefined, dateFormat)} <br/>

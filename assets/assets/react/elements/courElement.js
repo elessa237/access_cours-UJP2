@@ -4,9 +4,7 @@ import Cour from '../cour/Cour';
 
 class courElement extends HTMLElement{
     connectedCallback(){
-        const user = this.getAttribute('data-user');
-
-        render(<Cour user={user}/>, this)
+        render(<Cour />, this)
     }
 
     disconnectedCallback(){

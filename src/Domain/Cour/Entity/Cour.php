@@ -86,6 +86,7 @@ class Cour
     /**
      * @ORM\ManyToOne(targetEntity=Ue::class, inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("cour:read")
      */
     private ?UE $UE = null;
 

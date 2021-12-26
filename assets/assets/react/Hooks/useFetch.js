@@ -6,23 +6,39 @@ import axios from "axios";
  */
 function UseFetch(url) {
     const [cour, setCour] = useState([]);
+    const [ue, setUe] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const load = useCallback(
+    const getAll = useCallback(
         async () => {
             setLoading(true)
             axios.get(url)
                 .then(response => {
-                    setCour(response.data)
+                    setUe(response.data.ues)
                     setLoading(false)
                 })
         },
         [url]
     );
 
+    const FilterPost = useCallback(
+        async (data) => {
+            setLoading(true)
+            axios.post(url, data).then(response => {
+                setCour(response.data)
+                setLoading(false)
+            }).catch((error) => {
+                console.error(error)
+                setLoading(false)
+            })
+        },[url]
+    )
+
     return{
         cour,
-        load,
+        ue,
+        getAll,
+        FilterPost,
         loading
     }
 }

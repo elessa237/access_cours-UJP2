@@ -5,38 +5,83 @@ namespace App\Http\Api\Controller;
 
 
 use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Cour\Entity\Cour;
 use App\Domain\Cour\Repository\CourRepository;
+use App\Domain\Ue\Repository\UeRepository;
+use JsonException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  * @package App\Http\Api\Controller
  * @Route("/api")
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
 class ApiCoursController extends AbstractController
 {
+
     /**
-     * @Route("/cour/{id}", methods={"GET"})
-     * @param CourRepository $courRepository
-     * @param Utilisateur $utilisateur
+     * @Route("/ue", methods={"GET"})
+     * @param UeRepository $ueRepository
      * @return JsonResponse
      */
-    public function index(CourRepository $courRepository, Utilisateur $utilisateur) : JsonResponse
+    public function AllUe(UeRepository $ueRepository): JsonResponse
     {
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $this->getUser();
 
         if (in_array("ROLE_ETUDIANT", $utilisateur->getRoles())) {
             $filiere = $utilisateur->getFiliere();
-            $niveau = $utilisateur->getNiveau();
-            $cour = $courRepository->findAllByFiliereAndNiveau($niveau,$filiere);
-            return $this->json($cour, 200, [], ['groups' => 'cour:read']);
+            $ues = $filiere->getUniteEnseignements();
+            return $this->json(["ues"=>$ues],200, [], ['groups' => 'cour:read']);
         }else {
-            $cour = $courRepository->findAll();
-            return $this->json($cour, 200, [], ['groups' => 'cour:read']);
+            return $this->json([
+                "ues" => $ueRepository->findAll(),
+            ], 200, [], ['groups' => 'cour:read']);
         }
-        /*$cour = $courRepository->findAll();
-        return $this->json($cour, 200, [], ['groups' => 'cour:read']);*/
+    }
+
+    /**
+     * @Route("/cour/filter", methods={"POST"})
+     * @param Request $request
+     * @param CourRepository $courRepository
+     * @return JsonResponse
+     * @throws JsonException
+     */
+    public function filter(Request $request, CourRepository $courRepository) : JsonResponse
+    {
+        $content = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        /** @var string $filter */
+        $filter = $content["id"];
+
+        strlen($filter) === 0 ?
+            $cours = $this->helps():
+            $cours = $courRepository->findAllCoursByFilter($filter) ;
+
+        return $this->json($cours, 200, [], ['groups' => 'cour:read']);
+    }
+
+    /**
+     * @return Cour[]
+     */
+    private function helps()
+    {
+        $courRepository = $this->getDoctrine()->getRepository(Cour::class);
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $this->getUser();
+
+        $niveau = $utilisateur->getNiveau();
+        $filiere = $utilisateur->getFiliere();
+
+        if (in_array("ROLE_ETUDIANT", $utilisateur->getRoles())){
+            return $courRepository->findAllByFiliereAndNiveau($niveau,$filiere);
+        }else{
+            return $courRepository->findAll();
+        }
     }
 
 }

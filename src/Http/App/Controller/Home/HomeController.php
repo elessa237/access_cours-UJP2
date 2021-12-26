@@ -48,13 +48,13 @@ class HomeController extends AbstractController
             return $this->render("home/index.html.twig", [
                 'ues' => $ues,
                 'cours' => $courRepo->findAllByFiliereAndNiveau($niveau,$filiere, $search, $filter),
-                'lastCours' => $courRepo->findLastFour(4,$niveau, $filiere)
+                'lastCours' => $courRepo->findLast(4,$niveau, $filiere)
             ]);
         }else
         {
             return $this->render("home/index.html.twig", [
-                "cours" => $courRepo->findAllCours($search, $filter),
-                "lastCours"=>$courRepo->findLastFour(4),
+                "cours" => $courRepo->findAll(),
+                "lastCours"=>$courRepo->findLast(4),
                 "ues" => $ueRepo->findAll(),
             ]);
         }
