@@ -31,7 +31,7 @@ class UniteEnseignementType extends AbstractType
                 'multiple' => false,
                 'attr' => [
                     "style" => "width: 100%",
-                    'class' => 'custom-form',
+                    'class' => 'custom-select',
                 ]
             ])
             ->add("filieres", EntityType::class, [
@@ -40,7 +40,7 @@ class UniteEnseignementType extends AbstractType
                 'multiple' => true,
                 'attr' => [
                     "style" => "width: 100%",
-                    'class' => 'custom-form',
+                    'class' => 'custom-select',
                 ]
             ])
             ;

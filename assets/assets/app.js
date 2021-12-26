@@ -9,11 +9,12 @@ import 'select2/dist/js/select2';
 import './js/main';
 import './js/sidebarMenu';
 import './react/elements/element';
+import './js/backToTopBtn';
 import './app.scss';
 
 window.$ = $;
 
-// $('select').select2();
+$('select.custom-select').select2();
 
 let french = {
     "sEmptyTable": "Aucune donnée disponible dans le tableau",

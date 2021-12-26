@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<div id="db-wrapper" class="toggled">
+<div id="db-wrapper">
     <!-- navbar vertical  -->
     {% include "base/includes/sidebar.html.twig" %}
     <!-- page content  -->
@@ -25,7 +25,14 @@
 
         {% endblock %}
     </div>
-
+    <!-- Back to top button -->
+    <button
+            type="button"
+            class="btn btn-danger"
+            id="btn-back-to-top"
+    >
+        <i class="fas fa-arrow-up"></i>
+    </button>
 </div>
 </body>
 
