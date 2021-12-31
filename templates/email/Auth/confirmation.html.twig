@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Email de confirmation</title>
+    {{ include('email/includes/_style.html.twig') }}
+</head>
+<body>
+<span class="preheader">Confirmation pour votre inscription sur la plateform UJP2</span>
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+    <tr>
+        <td>&nbsp;</td>
+        <td class="container">
+            <div class="content">
+                <div style="font-size: 22px;color: #28d778;
+                font-weight: bold;text-align: center;margin: 20px;">
+                    Université saint jean paul 2
+                </div>
+                <!-- START CENTERED WHITE CONTAINER -->
+                <table role="presentation" class="main">
+
+                    <!-- START MAIN CONTENT AREA -->
+                    <tr>
+                        <td class="wrapper">
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td>
+                                        <p>Salut,</p>
+                                        <p>
+                                            Bien vouloir activer votre compte en cliquant sur le lien<br/>
+                                        </p>
+                                        <table role="presentation" border="0"
+                                               cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                            <tr>
+                                                <td align="left">
+                                                    <table role="presentation" border="0" cellpadding="0"
+                                                           cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style="text-align: center;">
+                                                                <a class="btn-primary"
+                                                                   style="width: 80%;text-align: center"
+                                                                   href={{ absolute_url(path('validate_email', {id: user.id, token: user.registrationToken})) }}
+                                                                >
+                                                                    Activer Mon compte
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <br/>
+                                        <p>Si vous n'êtes pas l'auteur de cette opération veillez ignorer cette
+                                            E-mail</p>
+                                        <br/>
+                                        <p>Cordialement</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- END MAIN CONTENT AREA -->
+                </table>
+                <!-- END CENTERED WHITE CONTAINER -->
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+</body>
+</html>"

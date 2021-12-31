@@ -19,19 +19,23 @@ class UtilisateurCommand
 {
     private EntityManagerInterface $manager;
     private UserPasswordHasherInterface $hasher;
+    /**
+     *
+     */
+    private TokenGeneratorInterface $generator;
 
-    public function __construct(EntityManagerInterface $manager, UserPasswordHasherInterface $hasher)
+    public function __construct(EntityManagerInterface $manager, UserPasswordHasherInterface $hasher, TokenGeneratorInterface $generator)
     {
         $this->manager = $manager;
         $this->hasher = $hasher;
+        $this->generator = $generator;
     }
 
     /**
      * @param UtilisateurDto $utilisateurDto
-     * @param TokenGeneratorInterface $generator
      * @return void
      */
-    public function createStudent(UtilisateurDto $utilisateurDto, TokenGeneratorInterface $generator) : void
+    public function createStudent(UtilisateurDto $utilisateurDto) : void
     {
         $utilisateur = new Utilisateur();
 
@@ -42,7 +46,7 @@ class UtilisateurCommand
             ->setFiliere($utilisateurDto->filiere)
             ->setNiveau($utilisateurDto->niveau)
             ->setRoles(["ROLE_ETUDIANT"])
-            ->setRegistrationToken($generator->generateToken())
+            ->setRegistrationToken($this->generator->generateToken())
             ->setIsVerified(false)
             ->setPassword(
                 $this->hasher->hashPassword(
@@ -58,6 +62,7 @@ class UtilisateurCommand
 
     /**
      * @param UtilisateurDto $enseignantDto
+     * @param TokenGeneratorInterface $generator
      * @return void
      */
     public function createTeacher(UtilisateurDto $enseignantDto, TokenGeneratorInterface $generator) : void
@@ -106,6 +111,18 @@ class UtilisateurCommand
             ->setEmail($enseignantDto->email)
             ->setNumeroTelephone($enseignantDto->numero_telephone)
             ->setNumeroCni($enseignantDto->numero_cni);
+
+        $this->manager->flush();
+    }
+
+    public function activeAccount(UtilisateurDto $user)
+    {
+        $repo = $this->manager->getRepository(Utilisateur::class);
+
+        $utilisateur = $repo->findOneBy(["id" => $user->id]);
+
+        $utilisateur->setIsVerified(true)
+            ->setRegistrationToken(null);
 
         $this->manager->flush();
     }
