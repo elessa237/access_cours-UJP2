@@ -8,6 +8,7 @@ use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 /**
  * Class UtilisateurCommand
@@ -27,9 +28,10 @@ class UtilisateurCommand
 
     /**
      * @param UtilisateurDto $utilisateurDto
+     * @param TokenGeneratorInterface $generator
      * @return void
      */
-    public function createStudent(UtilisateurDto $utilisateurDto) : void
+    public function createStudent(UtilisateurDto $utilisateurDto, TokenGeneratorInterface $generator) : void
     {
         $utilisateur = new Utilisateur();
 
@@ -40,6 +42,8 @@ class UtilisateurCommand
             ->setFiliere($utilisateurDto->filiere)
             ->setNiveau($utilisateurDto->niveau)
             ->setRoles(["ROLE_ETUDIANT"])
+            ->setRegistrationToken($generator->generateToken())
+            ->setIsVerified(false)
             ->setPassword(
                 $this->hasher->hashPassword(
                     $utilisateur,
@@ -56,7 +60,7 @@ class UtilisateurCommand
      * @param UtilisateurDto $enseignantDto
      * @return void
      */
-    public function createTeacher(UtilisateurDto $enseignantDto) : void
+    public function createTeacher(UtilisateurDto $enseignantDto, TokenGeneratorInterface $generator) : void
     {
         $enseignant = new Utilisateur();
 
@@ -67,6 +71,8 @@ class UtilisateurCommand
             ->setNumeroCni($enseignantDto->numero_cni)
             ->setRoles(["ROLE_ENSEIGNANT"])
             ->setPoste("Enseignant")
+            ->setIsVerified(false)
+            ->setRegistrationToken($generator->generateToken())
             ->setPassword(
                 $this->hasher->hashPassword(
                     $enseignant,

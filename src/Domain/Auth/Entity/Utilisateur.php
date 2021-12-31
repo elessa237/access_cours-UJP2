@@ -114,6 +114,21 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private ?string $poste = null;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $registrationToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $resetPasswordToken;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $isVerified;
+
     public function __construct()
     {
         $this->UE = new ArrayCollection();
@@ -330,6 +345,63 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPoste(string $poste): self
     {
         $this->poste = $poste;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegistrationToken(): ?string
+    {
+        return $this->registrationToken;
+    }
+
+    /**
+     * @param string $registrationToken
+     * @return Utilisateur
+     */
+    public function setRegistrationToken(string $registrationToken): self
+    {
+        $this->registrationToken = $registrationToken;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    /**
+     * @param string|null $resetPasswordToken
+     * @return Utilisateur
+     */
+    public function setResetPasswordToken(?string $resetPasswordToken): self
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    /**
+     * @param bool $isVerified
+     * @return Utilisateur
+     */
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

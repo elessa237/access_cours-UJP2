@@ -7,6 +7,7 @@ namespace App\Application\Auth\Dto;
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Filiere\Entity\Filiere;
 use App\Domain\Niveau\Entity\Niveau;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 
 class UtilisateurDto
@@ -23,6 +24,10 @@ class UtilisateurDto
     public ?string $numero_cni;
     public ?string $poste;
     public ?int $id;
+    public ?DateTimeImmutable $accountMustBeVerifiedBefore;
+    public ?string $resetPasswordToken;
+    public ?string $registrationToken;
+    public ?bool $isVerified;
 
     public function __construct(?Utilisateur $utilisateur = null)
     {
@@ -38,5 +43,9 @@ class UtilisateurDto
         $this->UE = $utilisateur === null? null : $utilisateur->getUE();
         $this->numero_cni = $utilisateur === null? null : $utilisateur->getNumeroCni();
         $this->poste = $utilisateur === null? null : $utilisateur->getPoste();
+        $this->registrationToken = $utilisateur === null? null : $utilisateur->getRegistrationToken();
+        $this->resetPasswordToken = $utilisateur === null? null : $utilisateur->getResetPasswordToken();
+        $this->accountMustBeVerifiedBefore = $utilisateur === null? null : $utilisateur->getAccountMustBeVerifiedBefore();        $this->poste = $utilisateur === null? null : $utilisateur->getPoste();
+        $this->isVerified = $utilisateur === null? null : $utilisateur->getIsVerified();
     }
 }
