@@ -17,7 +17,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Domain\Auth\Authenticator\AppAuthenticator
+            custom_authenticator: App\Application\Auth\Authenticator\AppAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
