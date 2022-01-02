@@ -8,7 +8,7 @@ use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Auth\Event\CreateAccountEvent;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
@@ -22,12 +22,13 @@ class UtilisateurCommand
     private EntityManagerInterface $manager;
     private UserPasswordHasherInterface $hasher;
     private TokenGeneratorInterface $generator;
-    private EventDispatcher $dispatcher;
+    private EventDispatcherInterface $dispatcher;
 
-    public function __construct(EntityManagerInterface $manager,
+    public function __construct
+    (   EntityManagerInterface $manager,
         UserPasswordHasherInterface $hasher,
         TokenGeneratorInterface $generator,
-        EventDispatcher $dispatcher
+        EventDispatcherInterface $dispatcher
     )
     {
         $this->manager = $manager;
@@ -36,10 +37,6 @@ class UtilisateurCommand
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * @param UtilisateurDto $utilisateurDto
-     * @return void
-     */
     public function createStudent(UtilisateurDto $utilisateurDto) : void
     {
         $utilisateur = new Utilisateur();
@@ -61,17 +58,12 @@ class UtilisateurCommand
             )
         ;
 
-        $this->manager->persist($utilisateur);
-        $this->manager->flush();
+        /*$this->manager->persist($utilisateur);
+        $this->manager->flush();*/
 
         $this->dispatcher->dispatch(new CreateAccountEvent($utilisateur));
     }
 
-    /**
-     * @param UtilisateurDto $enseignantDto
-     * @param TokenGeneratorInterface $generator
-     * @return void
-     */
     public function createTeacher(UtilisateurDto $enseignantDto, TokenGeneratorInterface $generator) : void
     {
         $enseignant = new Utilisateur();
@@ -97,10 +89,6 @@ class UtilisateurCommand
         $this->manager->flush();
     }
 
-    /**
-     * @param Utilisateur $utilisateur
-     * @return void
-     */
     public function removeUser(Utilisateur $utilisateur) : void
     {
         $this->manager->remove($utilisateur);
