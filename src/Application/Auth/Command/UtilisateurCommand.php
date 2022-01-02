@@ -58,8 +58,8 @@ class UtilisateurCommand
             )
         ;
 
-        /*$this->manager->persist($utilisateur);
-        $this->manager->flush();*/
+        $this->manager->persist($utilisateur);
+        $this->manager->flush();
 
         $this->dispatcher->dispatch(new CreateAccountEvent($utilisateur));
     }
