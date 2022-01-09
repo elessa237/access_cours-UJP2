@@ -3,6 +3,8 @@
 namespace App\Application\Auth\Authenticator;
 
 use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Auth\Event\AuthSuccessEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +27,12 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    private EventDispatcherInterface $dispatcher;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator, EventDispatcherInterface $dispatcher)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->dispatcher = $dispatcher;
     }
 
     public function authenticate(Request $request): PassportInterface
@@ -47,11 +52,15 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        /** @var Utilisateur $user */
+        $user = $token->getUser();
+
+        $this->dispatcher->dispatch(new AuthSuccessEvent($user));
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        /** @var Utilisateur $user */
-        $user = $token->getUser();
+
 
         if (in_array("ROLE_ADMIN", $user->getRoles()))
         {
