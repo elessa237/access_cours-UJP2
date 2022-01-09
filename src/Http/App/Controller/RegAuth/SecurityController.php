@@ -25,6 +25,10 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+        $this->addFlash(
+           'error',
+           'identifiant invalide'
+        );
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
