@@ -74,7 +74,9 @@
 </div>
 </body>
 <script>
-    {% for label, messages in app.flashes('success') %}
+
+    {# probleme du nouvelle ajout de defer dans le fichier webpack config de symfony (voir la propriete defer en html #}
+    {% for label, messages in app.flashes %}
         {% for message in messages %}
             window.notification('{{label}}', '{{ message }}')
         {% endfor %}

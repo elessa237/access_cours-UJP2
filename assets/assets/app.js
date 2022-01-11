@@ -13,6 +13,7 @@ import './js/backToTopBtn';
 import './js/izitoast';
 import './app.scss';
 
+
 window.$ = $
 
 $('select.custom-select').select2();
@@ -48,15 +49,17 @@ let french = {
     }
 };
 
+$(document).ready(function () {
+    $('#datatable').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": french,
+        "pageLength": 20
+    });
+})
 
-$('#datatable').DataTable({
-    "paging": true,
-    "lengthChange": false,
-    "searching": true,
-    "ordering": true,
-    "info": true,
-    "autoWidth": false,
-    "responsive": true,
-    "language": french,
-    "pageLength": 20
-});
