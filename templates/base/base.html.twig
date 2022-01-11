@@ -8,9 +8,6 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
 </head>
 
 <body>
@@ -35,12 +32,15 @@
     </button>
 </div>
 </body>
+
+{{ encore_entry_script_tags('app') }}
 <script>
     {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            window.notification('{{label}}', '{{ message }}')
-        {% endfor %}
+    {% for message in messages %}
+    window.notification('{{label}}', '{{ message }}')
+    {% endfor %}
     {% endfor %}
 </script>
-
+{% block javascripts %}
+{% endblock %}
 </html>
