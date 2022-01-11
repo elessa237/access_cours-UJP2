@@ -10,6 +10,7 @@ import './js/main';
 import './js/sidebarMenu';
 import './react/elements/element';
 import './js/backToTopBtn';
+import './js/izitoast';
 import './app.scss';
 
 window.$ = $;

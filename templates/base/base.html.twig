@@ -35,5 +35,12 @@
     </button>
 </div>
 </body>
+<script>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            window.notification('{{label}}', '{{ message }}')
+        {% endfor %}
+    {% endfor %}
+</script>
 
 </html>
