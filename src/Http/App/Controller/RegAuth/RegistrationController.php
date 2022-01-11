@@ -3,6 +3,7 @@
 namespace App\Http\App\Controller\RegAuth;
 
 
+use App\Application\Auth\Command\StudentCommand;
 use App\Application\Auth\Command\UtilisateurCommand;
 use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
@@ -19,10 +20,10 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register_etudiant", name="etudiant_register")
      * @param Request $request
-     * @param UtilisateurCommand $utilisateurCommand
+     * @param StudentCommand $studentCommand
      * @return Response
      */
-    public function register_etudiant(Request $request, UtilisateurCommand $utilisateurCommand): Response
+    public function register_etudiant(Request $request, StudentCommand $studentCommand): Response
     {
         $etudiantDto = new UtilisateurDto();
         $form = $this->createForm(RegistrationEtudiantType::class, $etudiantDto);
@@ -30,7 +31,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $utilisateurCommand->createStudent($etudiantDto);
+            $studentCommand->createStudent($etudiantDto);
             return $this->redirectToRoute('app_login');
         }
 

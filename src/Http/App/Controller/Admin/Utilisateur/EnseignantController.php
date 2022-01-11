@@ -4,6 +4,7 @@
 namespace App\Http\App\Controller\Admin\Utilisateur;
 
 
+use App\Application\Auth\Command\TeacherCommand;
 use App\Application\Auth\Command\UtilisateurCommand;
 use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
@@ -42,11 +43,11 @@ class EnseignantController extends AbstractController
      * @Route("/enseignant/update/{id}", name="update_teacher")
      * @Route("/enseignant/create", name="create_teacher")
      * @param Request $request
-     * @param UtilisateurCommand $utilisateurCommand
+     * @param TeacherCommand $teacherCommand
      * @param Utilisateur|null $utilisateur
      * @return Response
      */
-    public function form(Request $request, UtilisateurCommand $utilisateurCommand, Utilisateur $utilisateur = null) : Response
+    public function form(Request $request, TeacherCommand $teacherCommand, Utilisateur $utilisateur = null) : Response
     {
         $utilisateur === null ? $enseignantDto = new UtilisateurDto() : $enseignantDto = new UtilisateurDto($utilisateur);
 
@@ -55,8 +56,8 @@ class EnseignantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $enseignantDto->id === null ?
-            $utilisateurCommand->createTeacher($enseignantDto) :
-            $utilisateurCommand->update($enseignantDto);
+            $teacherCommand->createTeacher($enseignantDto) :
+            $teacherCommand->update($enseignantDto);
 
             return $this->redirectToRoute("show_enseignant");
 
