@@ -98,7 +98,7 @@ class Message
     /**
      * @return bool
      */
-    public function isAccepted(): bool
+    public function getAccepted(): bool
     {
         return $this->accepted;
     }

@@ -124,7 +124,7 @@ class Tag
     /**
      * @return bool
      */
-    public function isVisible(): bool
+    public function getVisible(): bool
     {
         return $this->visible;
     }

@@ -8,5 +8,6 @@
     <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211127231317.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211128143511.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20211128170019.php" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/Infrastructure/migrations/Version20220112144921.php" dialect="GenericSQL" />
   </component>
 </project>

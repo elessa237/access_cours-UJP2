@@ -4,6 +4,7 @@
 namespace App\Domain\Forum\Entity;
 
 
+use App\Domain\Auth\Entity\Utilisateur;
 use App\Infrastructure\Adapter\BaseTimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -42,25 +43,32 @@ class Topic
     private ?string $content = null;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":0})
+     * @ORM\ManyToOne(targetEntity="App\Domain\Auth\Entity\Utilisateur")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private ?bool $solved = false;
+    private ?Utilisateur $author = null;
 
     /**
      * @ORM\Column(type="boolean", options={"default":0})
      */
-    private ?bool $sticky = false;
+    private ?bool $solved = false;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Domain\Forum\Entity\Tag", inversedBy="topics")
      * @Assert\NotBlank()
      * @Assert\Count(min="1", max="3")
      */
-    private Collection $tags;
+    private ?Collection $tags = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Domain\Forum\Entity\Message", mappedBy="topic")
+     */
+    private ?Collection $messages = null;
 
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     /**
@@ -129,33 +137,14 @@ class Topic
     }
 
     /**
-     * @return bool|null
-     */
-    public function getSticky(): ?bool
-    {
-        return $this->sticky;
-    }
-
-    /**
-     * @param bool|null $sticky
-     * @return self
-     */
-    public function setSticky(?bool $sticky): self
-    {
-        $this->sticky = $sticky;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Tag[]
      */
-    public function getTags(): Collection
+    public function getTags(): ?Collection
     {
         return $this->tags;
     }
 
-    public function addTag(Tag $tag): self
+    public function addTag(?Tag $tag): self
     {
         if (!$this->tags->contains($tag)) {
             $this->tags[] = $tag;
@@ -164,12 +153,39 @@ class Topic
         return $this;
     }
 
-    public function removeTag(Tag $tag): self
+    public function removeTag(?Tag $tag): self
     {
         if ($this->tags->contains($tag)) {
             $this->tags->removeElement($tag);
         }
 
         return $this;
+    }
+
+    /**
+     * @return Utilisateur
+     */
+    public function getAuthor(): ?Utilisateur
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param Utilisateur $author
+     * @return self
+     */
+    public function setAuthor(?Utilisateur $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): ?Collection
+    {
+        return $this->messages;
     }
 }
