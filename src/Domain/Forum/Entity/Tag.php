@@ -8,12 +8,14 @@ use App\Infrastructure\Adapter\BaseTimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Domain\Forum\Repository\TagRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  * @package App\Domain\Forum\Entity
  * @ORM\Entity(repositoryClass=TagRepository::class)
+ * @UniqueEntity(fields={"name"}, message="Ce tag existe deja")
  */
 class Tag
 {
