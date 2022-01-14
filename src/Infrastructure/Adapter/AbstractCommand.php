@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AbstractCommand
 {
-    private EntityManagerInterface $manager;
-    private RequestStack $requestStack;
+    protected EntityManagerInterface $manager;
+    protected RequestStack $requestStack;
 
     public function __construct(EntityManagerInterface $manager, RequestStack $requestStack)
     {
