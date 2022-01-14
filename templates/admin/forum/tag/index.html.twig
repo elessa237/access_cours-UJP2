@@ -1,0 +1,58 @@
+{% extends "base/base.html.twig" %}
+
+{% block title %}Tags{% endblock %}
+
+{% block body %}
+<div class="bg-primary pt-10 pb-21"></div>
+<div class="container-fluid mt-n22 px-6">
+	<div class="row">
+		{% include 'components/_page_header.html.twig' with { title : 'Tableau de bord' } %}
+	</div>
+	<div class="row mt-6 mb-3">
+		<div
+			class="col-md-12 col-12">
+			<!-- card  -->
+			<div
+				class="card">
+				<!-- card header  -->
+				 {% include 'components/_card_title.html.twig' with {
+                        title: 'Les Tags',
+                        btn_title: 'Ajouter un tag',
+                        path: path("create_tag")
+                    } %}
+
+				<!-- table  -->
+				<div class="card-body">
+					<table id="datatable" class="table table-responsive table-striped">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								<th>Couleur</th>
+								<th>Description</th>
+								<th class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for tag in tags %}
+								<tr>
+									<td>{{ tag.name }}</td>
+									<td>{{ tag.color }}</td>
+									<td>{{ tag.description }}</td>
+									<td class="text-center">
+										{# <a href="{{ path('update_teacher', {id: enseignant.id}) }}">
+											<i class="fa fa-cog"></i>
+										</a>
+										<a class="mx-3" href="{{ path('delete_teacher', {id: enseignant.id}) }}" onclick="return confirm('Êtes vous sûr de vouloir supprimé?');">
+											<i class="fa fa-trash text-danger"></i>
+										</a> #}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
