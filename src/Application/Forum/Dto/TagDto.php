@@ -20,7 +20,8 @@ class TagDto
     public ?string $color;
     public ?string $description;
     public ?string $name;
-    private ?bool $visible;
+    public ?bool $visible;
+    public ?int $id;
 
     /**
      * TagDto constructor.
@@ -28,6 +29,7 @@ class TagDto
      */
     public function __construct(Tag $tag = null)
     {
+        $this->id = $tag == null ? null : $tag->getId();
         $this->name = $tag == null ? null : $tag->getName();
         $this->description = $tag == null ? null : $tag->getDescription();
         $this->color = $tag == null ? null : $tag->getColor();

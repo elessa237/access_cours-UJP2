@@ -145,7 +145,7 @@ class Cour
         return $this->professeur;
     }
 
-    public function setProfesseur(Utilisateur $professeur): self
+    public function setProfesseur(?Utilisateur $professeur): self
     {
         $this->professeur = $professeur;
 

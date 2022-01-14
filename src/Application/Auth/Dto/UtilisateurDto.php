@@ -24,7 +24,6 @@ class UtilisateurDto
     public ?string $numero_cni;
     public ?string $poste;
     public ?int $id;
-    public ?DateTimeImmutable $accountMustBeVerifiedBefore;
     public ?string $resetPasswordToken;
     public ?string $registrationToken;
     public ?bool $isVerified;
@@ -45,7 +44,7 @@ class UtilisateurDto
         $this->poste = $utilisateur === null? null : $utilisateur->getPoste();
         $this->registrationToken = $utilisateur === null? null : $utilisateur->getRegistrationToken();
         $this->resetPasswordToken = $utilisateur === null? null : $utilisateur->getResetPasswordToken();
-        $this->accountMustBeVerifiedBefore = $utilisateur === null? null : $utilisateur->getAccountMustBeVerifiedBefore();        $this->poste = $utilisateur === null? null : $utilisateur->getPoste();
+        $this->poste = $utilisateur === null? null : $utilisateur->getPoste();
         $this->isVerified = $utilisateur === null? null : $utilisateur->getIsVerified();
     }
 }

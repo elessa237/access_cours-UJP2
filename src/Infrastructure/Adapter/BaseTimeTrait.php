@@ -17,17 +17,17 @@ trait BaseTimeTrait
     /**
      * @ORM\Column(type="datetime_immutable", nullable=false)
      */
-    private DateTimeImmutable $createdAt;
+    private ?DateTimeImmutable $createdAt = null;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private DateTimeImmutable $updatedAt;
+    private ?DateTimeImmutable $updatedAt = null;
 
     /**
      * @return DateTimeImmutable
      */
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -46,7 +46,7 @@ trait BaseTimeTrait
     /**
      * @return DateTimeImmutable
      */
-    public function getUpdatedAt(): DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }

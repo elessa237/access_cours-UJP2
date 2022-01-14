@@ -35,7 +35,8 @@ class TagType extends AbstractType
         ])
             ->add('description', CKEditorType::class, [
             "label" => false,
-            "required" => false
+            "required" => false,
+            "config_name" => "app_config"
         ]);
     }
 
