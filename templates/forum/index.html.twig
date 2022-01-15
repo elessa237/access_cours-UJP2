@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="ms-auto">
-                <a class="btn btn-sm btn-primary">
+                <a href="{{ path('app_create_topic') }}" class="btn btn-sm btn-primary">
                     <i class="fa fa-plus"></i>
                     Nouveau sujet
                 </a>
@@ -23,14 +23,16 @@
                     <h4 class="mb-1">Tout les sujets</h4>
                 </div>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="ms-1 badge bg-primary">Lorem ipsum dolor sit</a></li>
+                    {% for tag in tags %}
+                        <li><a href="#" class="ms-1 badge" style="background-color: {{ tag.color }}">{{ tag.name }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
 
             <div class="col-xl-10 order-xl-2 col-lg-9 order-lg-2 col-md-12 col-12 order-1">
-            
-                {% include "forum/includes/_topic.html.twig" %}
-                
+                {% for topic in topics %}
+                    {% include "forum/includes/_topic.html.twig" %}
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -2,7 +2,8 @@
 
 namespace App\Http\Form\Forum;
 
-use App\Domain\Forum\Entity\Topic;
+use App\Application\Forum\Dto\TopicDto;
+use App\Domain\Forum\Entity\Tag;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -22,8 +23,8 @@ class TopicType  extends AbstractType
                     'label' => 'form-control'
                 ]
             ])
-            ->add('tags', EntityType::class, [
-                'class' => Topic::class,
+            ->add('tag', EntityType::class, [
+                'class' => Tag::class,
                 'multiple' => true,
                 "label" => false,
                 "required" => true,
@@ -34,16 +35,16 @@ class TopicType  extends AbstractType
                 ]
             ])
             ->add('content', CKEditorType::class, [
-                'require' => true,
+                'required' => true,
                 'label' => false,
-                'config_name' => "admin_config", 
+                'config_name' => "app_config",
             ]);
    }
 
    public function configureOptions(OptionsResolver $resolver)
    {
        $resolver->setDefaults([
-           'data_class' => Topic::class
+           'data_class' => TopicDto::class
        ]);
    }
 }

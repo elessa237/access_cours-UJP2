@@ -150,4 +150,8 @@ class Tag
         return $this->topics;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

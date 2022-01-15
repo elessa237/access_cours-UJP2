@@ -22,7 +22,7 @@ class TopicCommand extends AbstractCommand
             $topic->addTag($tag);
         }
 
-        $this->add("sucess", "Votre sujet a bien été ajouter a la file de discussion", $topic);
+        $this->add("success", "Votre sujet a bien été ajouter a la file de discussion", $topic);
     }
 
     public function update(TopicDto $topicDto, Utilisateur $user)

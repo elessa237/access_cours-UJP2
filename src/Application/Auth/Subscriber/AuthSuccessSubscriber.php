@@ -44,13 +44,14 @@ class AuthSuccessSubscriber implements EventSubscriberInterface
         $userLastName = $event->getUser()->getPrenom();
         $session = $this->requestStack->getSession();
         $hour = date('H');
+
         if ($hour>= 5 && $hour<12)
             $session->getFlashBag()->add("success", "Bonjour {$userLastName} {$userFirstName}");
         elseif ($hour>=12 && $hour<17)
             $session->getFlashBag()->add("success", "Hey c'est chouette que tu sois là {$userLastName}");
-        elseif ($hour>=17 && $hour<00)
+        elseif ($hour>=17 && $hour<23)
             $session->getFlashBag()->add("success", "Bonsoir {$userLastName} {$userFirstName}");
-        elseif ($hour>=00 && $hour<5)
+        elseif ($hour>=23)
             $session->getFlashBag()->add("warning", "tu devrais être au lit tu est un titan {$userLastName}");
     }
 }

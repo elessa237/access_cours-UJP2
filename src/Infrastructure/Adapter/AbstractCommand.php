@@ -5,7 +5,7 @@ namespace App\Infrastructure\Adapter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class AbstractCommand
+abstract class AbstractCommand
 {
     protected EntityManagerInterface $manager;
     protected RequestStack $requestStack;

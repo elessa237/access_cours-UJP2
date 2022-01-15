@@ -1,0 +1,28 @@
+{{ form_start(form) }}
+<div class="row">
+	<div class="col-sm-6">
+		<div class="form-group">
+			<label class="col-form-label">Titre
+				<span class="text-danger">*</span>
+			</label>
+			{{ form_row(form.name) }}
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="form-group">
+			<label class="col-form-label">Tags
+				<span class="text-danger">*</span>
+			</label>
+			{{ form_row(form.tag) }}
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="form-group">
+			{{ form_row(form.content) }}
+		</div>
+	</div>
+</div>
+<div class="submit-section">
+	<button class="btn btn-primary submit-btn">Créer le sujet</button>
+</div>
+{{ form_end(form) }}
