@@ -6,16 +6,10 @@ namespace App\Application\Filiere\Command;
 
 use App\Application\Filiere\Dto\FiliereDto;
 use App\Domain\Filiere\Entity\Filiere;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Infrastructure\Adapter\AbstractCommand;
 
-class FiliereCommand
+class FiliereCommand extends AbstractCommand
 {
-    private EntityManagerInterface $manager;
-
-    public function __construct(EntityManagerInterface $manager)
-    {
-        $this->manager = $manager;
-    }
 
     /**
      * @param FiliereDto $filiereDto
@@ -28,8 +22,7 @@ class FiliereCommand
         $filiere->setNom(strtoupper($filiereDto->nom))
             ->setAlias(strtoupper($filiereDto->alias));
 
-        $this->manager->persist($filiere);
-        $this->manager->flush();
+        $this->add("success", "et une nouvelle filiere", $filiere);
     }
 
     /**
@@ -39,7 +32,7 @@ class FiliereCommand
     public function delete(Filiere $filiere): void
     {
         $this->manager->remove($filiere);
-        $this->manager->flush();
+        $this->add("error", "filière supprimer");
     }
 
     public function update(FiliereDto $filiereDto)
@@ -50,6 +43,6 @@ class FiliereCommand
         $filiere->setNom(strtoupper($filiereDto->nom))
             ->setAlias(strtoupper($filiereDto->alias));
 
-        $this->manager->flush();
+        $this->add("info", "modification effectuer");
     }
 }

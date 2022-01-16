@@ -6,16 +6,10 @@ namespace App\Application\Niveau\Command;
 
 use App\Application\Niveau\Dto\NiveauDto;
 use App\Domain\Niveau\Entity\Niveau;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Infrastructure\Adapter\AbstractCommand;
 
-class NiveauCommand
+class NiveauCommand extends AbstractCommand
 {
-    private EntityManagerInterface $manager;
-
-    public function __construct(EntityManagerInterface $manager)
-    {
-        $this->manager = $manager;
-    }
 
     /**
      * @param NiveauDto $niveauDto
@@ -28,8 +22,7 @@ class NiveauCommand
         $niveau->setNom($niveauDto->nom)
             ->setAlias($niveauDto->alias);
 
-        $this->manager->persist($niveau);
-        $this->manager->flush();
+        $this->add("success", "le nouveau niveau à été ajouter", $niveau);
     }
 
     /**
@@ -39,7 +32,7 @@ class NiveauCommand
     public function delete(Niveau $niveau) : void
     {
         $this->manager->remove($niveau);
-        $this->manager->flush();
+        $this->add("error", "supprimer action irreversible");
     }
 
     /**
@@ -53,6 +46,6 @@ class NiveauCommand
         $niveau->setNom($niveauDto->nom)
             ->setAlias($niveauDto->alias);
 
-        $this->manager->flush();
+        $this->add("info", "mise à jour effectué");
     }
 }

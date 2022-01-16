@@ -6,21 +6,15 @@ namespace App\Application\Auth\Command;
 
 use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Infrastructure\Adapter\AbstractCommand;
 
 /**
  * Class UtilisateurCommand
  * @package App\Application\Auth\Command
  * @author Elessa Maxime <elessamaxime@icloud.com>
  */
-class UtilisateurCommand
+class UtilisateurCommand extends AbstractCommand
 {
-    private EntityManagerInterface $manager;
-
-    public function __construct(EntityManagerInterface $manager)
-    {
-        $this->manager = $manager;
-    }
 
     public function removeUser(Utilisateur $utilisateur) : void
     {
@@ -37,6 +31,6 @@ class UtilisateurCommand
         $utilisateur->setIsVerified(true)
             ->setRegistrationToken(null);
 
-        $this->manager->flush();
+        $this->add("info", "Votre compte a bien été activé");
     }
 }
