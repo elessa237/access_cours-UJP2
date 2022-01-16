@@ -2,10 +2,10 @@
 
 namespace App\Domain\Auth\Entity;
 
+use App\Domain\Auth\Traits\SchoolInformationTrait;
+use App\Domain\Auth\Traits\UserSecurityTrait;
+use App\Domain\Auth\Traits\UserInformationTrait;
 use App\Domain\Auth\Repository\UtilisateurRepository;
-use App\Domain\Filiere\Entity\Filiere;
-use App\Domain\Niveau\Entity\Niveau;
-use App\Domain\Ue\Entity\Ue;
 use App\Domain\Cour\Entity\Cour;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Utilisateur
@@ -26,83 +24,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use UserInformationTrait;
+    use UserSecurityTrait;
+    use SchoolInformationTrait;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private ?int $id = null;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=4)
-     * @Groups("cour:read")
-     */
-    private ?string $nom = null;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=4)
-     * @Groups("cour:read")
-     */
-    private ?string $prenom = null;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    private ?string $email = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/^6[5-9][0-9]{7}$/", message="numero de telephone non valide")
-     *
-     */
-    private ?string $numero_telephone = null;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private array $roles = [];
-
-    /**
-     * @ORM\Column(type="string", length=255, name="mot_de_passe")
-     * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/^[a-zA-Z0-9]{8,}$/", message="8 caractères au minimum")
-     */
-    private ?string $password = null;
-
-    /**
-     * @var string
-     * @Assert\EqualTo(propertyPath="password", message="Les mots de passes saisie ne sont pas identique")
-     */
-    private ?string $confirmPassword = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Filiere::class, inversedBy="etudiants")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private ?Filiere $filiere = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="etudiants")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private ?Niveau $niveau = null;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Ue::class, inversedBy="etudiants")
-     */
-    private Collection $UE;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $numero_cni = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Cour::class, mappedBy="professeur")
@@ -114,24 +45,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private ?string $poste = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $registrationToken;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $resetPasswordToken;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private bool $isVerified;
-
     public function __construct()
     {
-        $this->UE = new ArrayCollection();
         $this->cours = new ArrayCollection();
     }
 
@@ -156,155 +71,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername() : string
     {
         return $this->nom;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getNumeroTelephone(): ?string
-    {
-        return $this->numero_telephone;
-    }
-
-    public function setNumeroTelephone(?string $numero_telephone): self
-    {
-        $this->numero_telephone = $numero_telephone;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPassword() : ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $mot_de_passe): self
-    {
-        $this->password = $mot_de_passe;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getConfirmPassword(): ?string
-    {
-        return $this->confirmPassword;
-    }
-
-    
-    public function getFiliere(): ?Filiere
-    {
-        return $this->filiere;
-    }
-
-    public function setFiliere(Filiere $filiere): self
-    {
-        $this->filiere = $filiere;
-
-        return $this;
-    }
-
-    public function getNiveau(): ?Niveau
-    {
-        return $this->niveau;
-    }
-
-    public function setNiveau(Niveau $niveau): self
-    {
-        $this->niveau = $niveau;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|UE[]
-     */
-    public function getUE(): Collection
-    {
-        return $this->UE;
-    }
-
-    public function addUE(UE $uE): self
-    {
-        if (!$this->UE->contains($uE)) {
-            $this->UE[] = $uE;
-        }
-
-        return $this;
-    }
-
-    public function removeUE(UE $uE): self
-    {
-        $this->UE->removeElement($uE);
-
-        return $this;
-    }
-
-    public function getNumeroCni(): ?string
-    {
-        return $this->numero_cni;
-    }
-
-    public function setNumeroCni(string $numero_cni): self
-    {
-        $this->numero_cni = $numero_cni;
-
-        return $this;
     }
 
     /**
@@ -345,63 +111,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPoste(string $poste): self
     {
         $this->poste = $poste;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRegistrationToken(): ?string
-    {
-        return $this->registrationToken;
-    }
-
-    /**
-     * @param string $registrationToken
-     * @return Utilisateur
-     */
-    public function setRegistrationToken(string $registrationToken): self
-    {
-        $this->registrationToken = $registrationToken;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getResetPasswordToken(): ?string
-    {
-        return $this->resetPasswordToken;
-    }
-
-    /**
-     * @param string|null $resetPasswordToken
-     * @return Utilisateur
-     */
-    public function setResetPasswordToken(?string $resetPasswordToken): self
-    {
-        $this->resetPasswordToken = $resetPasswordToken;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIsVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    /**
-     * @param bool $isVerified
-     * @return Utilisateur
-     */
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
 
         return $this;
     }
