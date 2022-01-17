@@ -3,9 +3,15 @@
 
 namespace App\Http\App\Controller\Forum;
 
+use App\Application\Forum\Command\MessageCommand;
 use App\Application\Forum\Command\TopicCommand;
+use App\Application\Forum\Dto\MessageDto;
 use App\Application\Forum\Dto\TopicDto;
+use App\Domain\Auth\Entity\Utilisateur;
+use App\Domain\Forum\Entity\Message;
 use App\Domain\Forum\Entity\Topic;
+use App\Domain\Forum\Repository\MessageRepository;
+use App\Http\Form\Forum\MessageType;
 use App\Http\Form\Forum\TopicType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +50,8 @@ class TopicController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $topicDto->id == null ?
+            /** @var Utilisateur $this->getUser() */
+            ($topicDto->id == null) ?
                 $topicCommand->create($topicDto, $this->getUser()):
                 $topicCommand->update($topicDto, $this->getUser());
 
@@ -59,13 +66,36 @@ class TopicController extends AbstractController
 
     /**
      * @param Topic $topic
+     * @param Request $request
+     * @param MessageCommand $messageCommand
+     * @param MessageRepository $messageRepository
      * @return Response
      * @Route("/show/topic/{id}", name="app_show_topic")
      */
-    public function show(Topic $topic) : Response
+    public function show(
+        Topic $topic,
+        Request $request,
+        MessageCommand $messageCommand,
+        MessageRepository $messageRepository
+    ) : Response
     {
+        $messageDto = new MessageDto(new Message());
+
+        $form = $this->createForm(MessageType::class, $messageDto);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $messageDto->author = $this->getUser();
+            $messageDto->topic = $topic;
+            $messageCommand->new($messageDto);
+            return $this->redirectToRoute("app_show_topic", ["id" => $topic->getId()]);
+        }
+
         return $this->render("forum/topic/show.html.twig", [
             'topic' => $topic,
+            'messages' => $messageRepository->findBy(["topic" => $topic]),
+            'form' => $form->createView(),
         ]);
     }
 

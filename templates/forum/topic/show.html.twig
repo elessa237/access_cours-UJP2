@@ -14,7 +14,7 @@
                     <h4 class="mt-3">
                         {{ topic.author }},
                         {% if topic.updatedAt is not null %}
-                           mis à jour {{ topic.updatedAt | ago }}
+                            mis à jour {{ topic.updatedAt | ago }}
                         {% else %}
                             {{ topic.createdAt | ago }}
                         {% endif %}
@@ -38,8 +38,20 @@
         <div class="container">
             {{ topic.content|raw }}
         </div>
-        <div>
-            <h3 class="divider">{{ topic.messages | length}} Réponse{% if topic.messages|length > 1 %}s{% endif %}</h3>
+        <div class="container-fluid">
+            <h3 class="divider">
+                {% if topic.messages|length == 0 %}
+                    Aucune
+                {% else %}
+                    {{ topic.messages | length }}
+                {% endif %}
+                réponse{% if topic.messages|length > 1 %}s{% endif %}</h3>
+            {% for message in messages %}
+                {% include "forum/messages/_message.html.twig" %}
+            {% endfor %}
+        </div>
+        <div class="container">
+            {% include "forum/messages/_message.form.twig" %}
         </div>
     </div>
 {% endblock body %}
