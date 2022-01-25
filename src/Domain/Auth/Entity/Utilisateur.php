@@ -70,7 +70,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername() : string
     {
-        return $this->nom;
+        return $this->nom ." ". $this->prenom;
     }
 
     /**
