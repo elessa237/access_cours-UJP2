@@ -83,6 +83,7 @@ $body-color: $gray-600 !default;
 // Typography
 // Font, line-height, and color for body text, headings, and more.
 // stylelint-disable value-keyword-case
+$font-alt: 'Inter', sans-serif;
 $font-family-sans-serif: 'Inter',
 'sans-serif' !default;
 $font-family-base: $font-family-sans-serif !default;

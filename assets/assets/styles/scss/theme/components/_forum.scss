@@ -1,0 +1,61 @@
+// Réponse acceptée
+.is-accepted{
+  border: 1px solid var(--green) !important;
+}
+
+.forum-message__meta {
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+  white-space: nowrap;
+  color: var(--color-light);
+
+  button:hover {
+    text-decoration: underline;
+  }
+
+  & > * {
+    display: block;
+    margin-left: .3em;
+  }
+
+  time-ago {
+    text-transform: lowercase;
+  }
+}
+
+.forum-message__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-right: 90px;
+  flex-wrap: wrap;
+
+  .pill {
+    margin-left: .5em;
+  }
+}
+.forum-message__author {
+  display: flex;
+  align-items: center;
+  font-family: $font-alt;
+  font-weight: 500;
+  color: var(--color-dark);
+  white-space: nowrap;
+}
+
+.forum-message.is-reply {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+
+  .forum-avatar {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.forum-message__body {
+  @include down(700) {
+    grid-column: 1 / span 2;
+  }
+}
