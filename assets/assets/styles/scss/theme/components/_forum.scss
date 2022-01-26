@@ -59,3 +59,17 @@
     grid-column: 1 / span 2;
   }
 }
+
+.forum-message__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-left: auto;
+  position: absolute;
+  top: space(-1);
+  right: 0;
+
+  @include down(700) {
+    top: 0;
+  }
+}

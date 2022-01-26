@@ -8,6 +8,7 @@ function UseFetch(url) {
     const [cour, setCour] = useState([]);
     const [ue, setUe] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [solveResponse, SetSolveResponse] = useState("")
 
     const getAll = useCallback(
         async () => {
@@ -34,11 +35,23 @@ function UseFetch(url) {
         },[url]
     )
 
+    const SetSolve = useCallback(
+        async (data) => {
+            setLoading(true)
+            axios.post(url, data).then(response => {
+                SetSolveResponse(response.data)
+                setLoading(false)
+            })
+        }, [url]
+    )
+
     return{
         cour,
         ue,
         getAll,
         FilterPost,
+        SetSolve,
+        solveResponse,
         loading
     }
 }

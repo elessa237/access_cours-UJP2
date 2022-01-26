@@ -56,6 +56,63 @@
     height: 3.36875rem;
 }
 
+.rounded-button {
+    box-sizing: content-box;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    position: relative;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    z-index: 0;
+
+    &::after {
+        content:'';
+        position: absolute;
+        top: calc(50% - 9px);
+        left: calc(50% - 9px);
+        width: 18px;
+        height: 18px;
+        z-index: -1;
+        border-radius: 50%;
+        background: var(--icon-background);
+    }
+
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: var(--icon-background);
+        content:'';
+        border-radius: 37px;
+        z-index: -1;
+        transition: transform .3s;
+        opacity: .2;
+    }
+
+    .icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    &:hover::before {
+        transform: scale(1.2);
+    }
+
+    &:disabled {
+        opacity: .4;
+    }
+}
+
+.rounded-button.success {
+    --icon-background: var(--green);
+}
+
 // btn back to top
 #btn-back-to-top {
     position: fixed;
