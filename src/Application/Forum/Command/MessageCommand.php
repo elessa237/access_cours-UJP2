@@ -29,9 +29,16 @@ class MessageCommand extends AbstractCommand
         $this->manager->flush();
     }
 
-    public function accepted(Message $message)
+    /**
+     * @param int $messageId
+     * @return string
+     */
+    public function accepted(int $messageId) : string
     {
+        $repo = $this->manager->getRepository(Message::class);
+        $message = $repo->findOneBy(["id"=>$messageId]);
         $message->setAccepted(true);
         $this->manager->flush();
+        return "Le sujet a bien été marqué comme accepté";
     }
 }
