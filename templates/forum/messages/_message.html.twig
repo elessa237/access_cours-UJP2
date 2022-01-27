@@ -29,12 +29,13 @@
                 <div class="forum-message__actions">
                     <forum-solve
                             message="{{ message.id }}"
-                            topic-author="{{ message.topic.author.id }}"
+                            topic="{{ message.topic.id }}"
                             {% if message.accepted %}
-                    disabled={{ true }}
+                                disabled={{ true }}
                             {% else %}
                                 disable={{ false }}
-                            {% endif %}/>
+                            {% endif %}
+                    />
                 </div>
             {% endif %}
         </div>

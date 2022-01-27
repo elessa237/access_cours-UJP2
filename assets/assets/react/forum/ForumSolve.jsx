@@ -11,7 +11,10 @@ function ForumSolve({message, topic, disable}) {
 
     function handleClick() {
         console.log(message)
-        SetSolve({id: message});
+        SetSolve({
+            message: message,
+            topic: topic,
+        });
         setDisabled(true);
         const messageElement = closest(button.current, '#forum-message')
         if (messageElement) {
