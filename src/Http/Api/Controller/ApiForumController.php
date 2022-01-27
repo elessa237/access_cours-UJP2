@@ -33,6 +33,6 @@ class ApiForumController extends AbstractController
         $messageId = $content["message"];
         $topicId = $content["topic"];
         $response = $messageCommand->accepted($messageId, $topicId);
-        return $this->json($response, 200);
+        return $this->json([], 200);
     }
 }

@@ -41,6 +41,9 @@ function UseFetch(url) {
             axios.post(url, data).then(response => {
                 SetSolveResponse(response.data)
                 setLoading(false)
+            }).catch((error) => {
+                console.error(error)
+                setLoading(false)
             })
         }, [url]
     )

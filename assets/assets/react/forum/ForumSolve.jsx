@@ -1,16 +1,16 @@
 import React, {useRef, useState} from 'react';
 import UseFetch from "../Hooks/useFetch";
+import {toast, ToastContainer} from "react-toastify";
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  */
 function ForumSolve({message, topic, disable}) {
     const button = useRef(null);
-    const {solveResponse,SetSolve, loading} = UseFetch("/api/solveMessage");
+    const {SetSolve, loading} = UseFetch("/api/solveMessage");
     const [disabled , setDisabled] = useState(disable);
 
     function handleClick() {
-        console.log(message)
         SetSolve({
             message: message,
             topic: topic,
@@ -20,18 +20,25 @@ function ForumSolve({message, topic, disable}) {
         if (messageElement) {
             messageElement.classList.add('is-accepted')
         }
+        toast("Le réponse a été approuvé", {
+            position: "top-right",
+            type: "success"
+        })
     }
 
     return (
-        <button
-            ref={button}
-            className='btn rounded-button success btn-sm'
-            onClick={handleClick}
-            disabled={disabled || loading}
-            title='Répond à ma question !'
-        >
-            ✓
-        </button>
+        <>
+            <button
+                ref={button}
+                className='btn rounded-button success btn-sm'
+                onClick={handleClick}
+                disabled={disabled || loading}
+                title='Répond à ma question !'
+            >
+                ✓
+            </button>
+            <ToastContainer/>
+        </>
     );
 }
 

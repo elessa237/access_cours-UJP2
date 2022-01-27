@@ -36,13 +36,12 @@ class MessageCommand extends AbstractCommand
      * @param int $topicId
      * @return string
      */
-    public function accepted(int $messageId, int $topicId) : string
+    public function accepted(int $messageId, int $topicId)
     {
         $message = $this->manager->getRepository(Message::class)->findOneBy(["id"=>$messageId]);
         $topic = $this->manager->getRepository(Topic::class)->findOneBy(['id'=>$topicId]);
         $message->setAccepted(true);
         $this->manager->flush();
         $this->dispatch(new TopicSolveEvent($topic));
-        return "Le sujet a bien été marqué comme accepté";
     }
 }
