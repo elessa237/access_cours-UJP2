@@ -25,16 +25,18 @@
                     Réponse acceptée
                 </div>
             {% endif %}
-            <div class="forum-message__actions">
-                <forum-solve
-                        message="{{ message.id }}"
-                        topic-author="{{ message.topic.author.id }}"
-                        {% if message.accepted %}
-                            disabled={{ true }}
-                        {% else %}
-                            disable={{ false }}
-                        {% endif %}/>
-            </div>
+            {% if app.user is same as message.topic.author %}
+                <div class="forum-message__actions">
+                    <forum-solve
+                            message="{{ message.id }}"
+                            topic-author="{{ message.topic.author.id }}"
+                            {% if message.accepted %}
+                    disabled={{ true }}
+                            {% else %}
+                                disable={{ false }}
+                            {% endif %}/>
+                </div>
+            {% endif %}
         </div>
         <div class="forum-message__body">
             {{ message.content | raw }}

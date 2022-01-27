@@ -49,6 +49,6 @@ class TopicCommand extends AbstractCommand
     {
         $this->manager->remove($topic);
 
-        $this->add("error", "Le sujet été supprimer");
+        $this->add("info", "Le sujet à été supprimer");
     }
 }
