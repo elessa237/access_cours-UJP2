@@ -18,172 +18,21 @@
         <div class="row align-items-center">
             <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                 <!-- Bg -->
-                <div class="pt-20 rounded-top" style="background:
-                url({{ asset("images/background/profile-cover.jpg") }}) no-repeat;
-                background-size: cover;">
-                </div>
-                <div class="bg-white rounded-bottom smooth-shadow-sm ">
-                    <div class="d-flex align-items-center justify-content-between
-                  pt-4 pb-6 px-4">
-                        <div class="d-flex align-items-center">
-                            <!-- avatar -->
-                            <div class="avatar-xxl avatar-indicators avatar-online me-2
-                      position-relative d-flex justify-content-end
-                      align-items-end mt-n10">
-                                <img src="{{ asset("images/avatar/avatar-1.jpg") }}" class="avatar-xxl
-                        rounded-circle border border-4 border-white-color-40" alt="">
-                                <a href="#!" class="position-absolute top-0 right-0 me-2" data-bs-toggle="tooltip"
-                                   data-placement="top" title="" data-original-title="Verified">
-                                    <img src="{{ asset("images/svg/checked-mark.svg") }}" alt="" height="30" width="30">
-                                </a>
-                            </div>
-                            <!-- text -->
-                            <div class="lh-1">
-                                <h2 class="mb-0">{{ app.user.username }}</h2>
-                                <p class="mb-0 d-block">{{ app.user.email }}</p>
-                            </div>
-                        </div>
-                        <div>
-                            <a href="#" class="btn btn-outline-primary
-                      d-none d-md-block">Edit Profile</a>
-                        </div>
-                    </div>
-                </div>
+                {% include "profil/_background.html.twig" %}
+
+                <!-- header -->
+                {% include "profil/_header.html.twig" %}
             </div>
         </div>
         <!-- content -->
         <div class="py-6">
             <!-- row -->
             <div class="row">
-                <div class="col-xl-6 col-lg-12 col-md-12 col-12 mb-6">
-                    <!-- card -->
-                    <div class="card">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <!-- card title -->
-                            <h4 class="card-title mb-4">A propos</h4>
-                            <span class="text-uppercase fw-medium text-dark fs-5 ls-2">Bio</span>
-                            <!-- text -->
-                            <p class="mt-2 mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspen disse
-                                var ius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros
-                                dolor interdum nulla, ut commodo diam libero vitae erat.
-                            </p>
-                            <!-- row -->
-                            <div class="row">
-                                <div class="col-12 mb-5">
-                                    <!-- text -->
-                                    <h6 class="text-uppercase fs-5 ls-2">Filiere
-                                    </h6>
-                                    <p class="mb-0">Réseaux et sécurité.| niveau</p>
-                                </div>
-                                <div class="col-6 mb-5">
-                                    <h6 class="text-uppercase fs-5 ls-2">Numero </h6>
-                                    <p class="mb-0">+32112345689</p>
-                                </div>
-                                <div class="col-6 mb-5">
-                                    <h6 class="text-uppercase fs-5 ls-2">Date de naissance </h6>
-                                    <p class="mb-0">01.10.1997</p>
-                                </div>
-                                <div class="col-6">
-                                    <h6 class="text-uppercase fs-5 ls-2">Email </h6>
-                                    <p class="mb-0">Dashui@gmail.com</p>
-                                </div>
-                                <div class="col-6">
-                                    <h6 class="text-uppercase fs-5 ls-2">Numero CNI
-                                    </h6>
-                                    <p class="mb-0">1003003002</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-12 col-md-12 col-12 mb-6">
-                    <!-- card -->
-                    <div class="card">
-                        <!-- card body -->
-                        <div class="card-body">
-                            <!-- card title -->
-                            <h4 class="card-title mb-4">Dernier cours ajouté</h4>
-                            <div class="d-md-flex justify-content-between align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <div class="icon-shape icon-lg border p-4 rounded-1">
-                                            <img src="{{ asset('images/brand/dropbox-logo.svg') }}" alt="">
-                                        </div>
-                                    </div>
-                                    <!-- text -->
-                                    <div class="ms-3 ">
-                                        <h5 class="mb-1"><a href="#" class="text-inherit">Slack Figma Design
-                                                UI</a></h5>
-                                        <p class="mb-0 fs-5 text-muted">taille: 2 Mo | il y'a 2 jours</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-md-flex justify-content-between align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <!-- icon shape -->
-                                        <div class="icon-shape icon-lg border p-4 rounded-1">
-                                            <img src="{{ asset('images/brand/dropbox-logo.svg') }}" alt="">
-                                        </div>
-                                    </div>
-                                    <!-- text -->
-                                    <div class="ms-3 ">
-                                        <h5 class="mb-1"><a href="#" class="text-inherit">Design 3d Character</a></h5>
-                                        <p class="mb-0 fs-5 text-muted">taille: 2 Mo | il y'a 2 jours</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-md-flex justify-content-between align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <div>
-                                        <!-- icon shape -->
-                                        <div class="icon-shape icon-lg border p-4 rounded-1">
-                                            <img src="{{ asset('images/brand/dropbox-logo.svg') }}" alt="">
-                                        </div>
-                                    </div>
-                                    <!-- text -->
-                                    <div class="ms-3 ">
-                                        <h5 class="mb-1"><a href="#" class="text-inherit">Github Development</a></h5>
-                                        <p class="mb-0 fs-5 text-muted">taille: 2 Mo | il y'a 2 jours</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-md-flex justify-content-between align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <!-- icon shape -->
-                                    <div>
-                                        <div class="icon-shape icon-lg border p-4 rounded-1">
-                                            <img src="{{ asset('images/brand/dropbox-logo.svg') }}" alt="">
-                                        </div>
-                                    </div>
-                                    <!-- text -->
-                                    <div class="ms-3 ">
-                                        <h5 class="mb-1"><a href="#" class="text-inherit">Dropbox Design
-                                                System</a></h5>
-                                        <p class="mb-0 fs-5 text-muted">taille: 2 Mo | il y'a 2 jours</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-md-flex justify-content-between align-items-center mb-4">
-                                <div class="d-flex align-items-center">
-                                    <!-- icon shape -->
-                                    <div>
-                                        <div class="icon-shape icon-lg border p-4 rounded-1">
-                                            <img src="{{ asset('images/brand/dropbox-logo.svg') }}" alt="">
-                                        </div>
-                                    </div>
-                                    <!-- text -->
-                                    <div class="ms-3 ">
-                                        <h5 class="mb-1"><a href="#" class="text-inherit">Dropbox Design
-                                                System</a></h5>
-                                        <p class="mb-0 fs-5 text-muted">taille: 2 Mo | il y'a 2 jours</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- About -->
+                {% include "profil/_about.html.twig" %}
+
+                <!-- Dernier cours -->
+                {% include "profil/_lastCours.html.twig" %}
             </div>
         </div>
     </div>
