@@ -1,0 +1,209 @@
+{% extends 'base/base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid px-6 py-4">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <!-- Page header -->
+                <div>
+                    <div class="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
+                        <div class="mb-2 mb-lg-0">
+                            <h3 class="mb-0 fw-bold">General</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-8">
+            <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+                <div class="mb-4 mb-lg-0">
+                    <h4 class="mb-1">Paramètre général</h4>
+                    <p class="mb-0 fs-5 text-muted">Paramètre de configuration de profil </p>
+                </div>
+
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-12 col-12">
+                <!-- card -->
+                <div class="card">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class=" mb-6">
+                            <h4 class="mb-1">General Settings</h4>
+
+                        </div>
+                        <div class="row align-items-center mb-8">
+                            <div class="col-md-3 mb-3 mb-md-0">
+                                <h5 class="mb-0">Avatar</h5>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <img src="{{ asset('images/avatar/avatar-5.jpg') }}" class="rounded-circle avatar avatar-lg" alt="">
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn btn-outline-white me-1">Change</button>
+                                        <button type="submit" class="btn btn-outline-white">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- col -->
+                        <div>
+                            <!-- border -->
+                            <div class="mb-6">
+                                <h4 class="mb-1">Informations de base</h4>
+                            </div>
+                            <form>
+                                <!-- row -->
+
+                                <div class="mb-3 row">
+                                    <label for="fullName" class="col-sm-4 col-form-label form-label">Nom complet</label>
+                                    <div class="col-sm-4 mb-3 mb-lg-0">
+                                        <input type="text" class="form-control" placeholder="Nom" id="fullName" required>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" placeholder="Prenom" id="lastName" required>
+                                    </div>
+                                </div>
+
+                                <!-- row -->
+                                <div class="mb-3 row">
+                                    <label for="email" class="col-sm-4 col-form-label form-label">Email</label>
+                                    <div class="col-md-8 col-12">
+                                        <input type="email" class="form-control" placeholder="Email" id="email" required>
+                                    </div>
+                                </div>
+                                <!-- row -->
+                                <div class="mb-3 row">
+                                    <label for="phone" class="col-sm-4 col-form-label form-label">Tel <span class="text-muted">(Optional)</span></label>
+                                    <div class="col-md-8 col-12">
+                                        <input type="text" class="form-control" placeholder="Numero telephone" id="phone" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-8">
+            <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+                <div class="mb-4 mb-lg-0">
+                    <h4 class="mb-1">Paramètre d'E-mail & Mot de passe</h4>
+                    <p class="mb-0 fs-5 text-muted">Modifier votre adresse email et votre mot de passe </p>
+                </div>
+
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-12 col-12">
+                <!-- card -->
+                <div class="card" id="edit">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="mb-6">
+                            <h4 class="mb-1">Email</h4>
+                        </div>
+                        <form>
+                            <!-- row -->
+                            <div class="mb-3 row">
+                                <!-- label -->
+                                <label for="newEmailAddress" class="col-sm-4
+                        col-form-label form-label">Nouvelle E-mail</label>
+                                <div class="col-md-8 col-12">
+                                    <!-- input -->
+                                    <input type="email" class="form-control" placeholder="Entrer votre adresse Email" id="newEmailAddress" required>
+                                </div>
+                                <!-- button -->
+                                <div class="offset-md-4 col-md-8 col-12 mt-3">
+                                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="mb-6 mt-6">
+                            <h4 class="mb-1">Modifier le mot de passe</h4>
+                        </div>
+                        <form>
+                            <!-- row -->
+                            <div class="mb-3 row">
+                                <label for="currentPassword" class="col-sm-4
+                        col-form-label form-label">Mot de passe actuel</label>
+
+                                <div class="col-md-8 col-12">
+                                    <input type="password" class="form-control" placeholder="mot de passe actuel" id="currentPassword" required>
+                                </div>
+                            </div>
+                            <!-- row -->
+                            <div class="mb-3 row">
+                                <label for="currentNewPassword" class="col-sm-4
+                        col-form-label form-label">Nouveau mot de passe</label>
+
+                                <div class="col-md-8 col-12">
+                                    <input type="password" class="form-control" placeholder="Entrer le mot de passe" id="currentNewPassword" required>
+                                </div>
+                            </div>
+                            <!-- row -->
+                            <div class="row align-items-center">
+                                <label for="confirmNewpassword" class="col-sm-4 col-form-label form-label">Confirmé le mot de passe</label>
+                                <div class="col-md-8 col-12 mb-2 mb-lg-0">
+                                    <input type="password" class="form-control" placeholder="Confirmer" id="confirmNewpassword" required>
+                                </div>
+                                <!-- list -->
+                                <div class="offset-md-4 col-md-8 col-12 mt-4">
+                                    <h6 class="mb-1">Pour la sécurité de votre compte respecter ces directives</h6>
+                                    <p>Assurer vous :</p>
+                                    <ul>
+                                        <li> D'avoir au minimum 8 caractères</li>
+                                        <li>D'avoir au moins une minuscule</li>
+                                        <li>D'avoir au moins une majuscule</li>
+                                        <li>D'avoir au moins un numero, un symbole ou un caractère special</li>
+                                    </ul>
+                                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+                <div class="mb-4 mb-lg-0">
+                    <h4 class="mb-1">Supprimer le compte</h4>
+                    <p class="mb-0 fs-5 text-muted">Cette operation est irreversible</p>
+                </div>
+
+            </div>
+
+            <div class="col-xl-9 col-lg-8 col-md-12 col-12">
+                <!-- card -->
+
+                <div class="card mb-6">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="mb-6">
+                            <h4 class="mb-1">Zone dangereuse </h4>
+
+                        </div>
+                        <div>
+                            <!-- text -->
+                            <p>Toutes vos information de compte seront complètement effacé.</p>
+                            <a href="#" class="btn btn-danger">Supprimer le compte</a>
+                            <p class="small mb-0 mt-3">Ce serai dommage de vous perdre sur cette plateforme.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
