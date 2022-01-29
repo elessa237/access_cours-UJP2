@@ -60,14 +60,14 @@ class CourController extends AbstractController
         $form = $this->createForm(CourType::class, $courDto);
         $form->handleRequest($request);
 
-        /** @var Utilisateur $professeur */
-        $professeur = $this->getUser();
-
         if ($form->isSubmitted() && $form->isValid())
         {
-            $courDto->id === null?
-                $courCommand->create($courDto, $professeur) :
+            if($courDto->id === null){
+                $courDto->professeur = $this->getUser();
+                $courCommand->create($courDto);
+            }else{
                 $courCommand->update($courDto);
+            }
 
             return $this->redirectToRoute("gestion_cour");
         }

@@ -5,7 +5,7 @@ namespace App\Domain\Forum\Entity;
 
 
 use App\Domain\Auth\Entity\Utilisateur;
-use App\Infrastructure\Adapter\BaseTimeTrait;
+use App\Infrastructure\Adapter\Traits\BaseTimeTrait;
 use App\Domain\Forum\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;

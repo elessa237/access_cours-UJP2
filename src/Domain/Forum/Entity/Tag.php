@@ -4,7 +4,7 @@
 namespace App\Domain\Forum\Entity;
 
 
-use App\Infrastructure\Adapter\BaseTimeTrait;
+use App\Infrastructure\Adapter\Traits\BaseTimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Domain\Forum\Repository\TagRepository;

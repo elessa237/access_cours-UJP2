@@ -4,9 +4,9 @@
 namespace App\Application\Cour\Command;
 
 use App\Application\Cour\Dto\CourDto;
-use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Cour\Entity\Cour;
-use App\Infrastructure\Adapter\AbstractCommand;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
+use App\Infrastructure\Adapter\Interfaces\CommandInterface;
 use DateTimeImmutable;
 
 /**
@@ -14,15 +14,14 @@ use DateTimeImmutable;
  * @package App\Application\Cour\Command
  * @author Elessa Maxime <elessamaxime@icloud.com>
  */
-class CourCommand extends AbstractCommand
+class CourCommand extends AbstractCommand implements CommandInterface
 {
 
     /**
      * @param CourDto $courDto
-     * @param Utilisateur $professeur
      * @return void
      */
-    public function create(CourDto $courDto, Utilisateur $professeur): void
+    public function create($courDto): void
     {
         $cour = new Cour();
         $cour
@@ -30,7 +29,7 @@ class CourCommand extends AbstractCommand
             ->setCour($courDto->cour)
             ->setNiveau($courDto->niveau)
             ->setUE($courDto->UE)
-            ->setProfesseur($professeur)
+            ->setProfesseur($courDto->professeur)
             ->setPublishedAt(new DateTimeImmutable('now'));
 
         foreach ($courDto->filieres as $filiere)
@@ -45,13 +44,16 @@ class CourCommand extends AbstractCommand
      * @param Cour $cour
      * @return void
      */
-    public function delete(Cour $cour): void
+    public function delete($cour): void
     {
         $this->manager->remove($cour);
         $this->add("error", "dommage qu'il est fallu le supprimer");
     }
 
-    public function update(CourDto $courDto)
+    /**
+     * @param CourDto $courDto
+     */
+    public function update($courDto)
     {
         $repo = $this->manager->getRepository(Cour::class);
 

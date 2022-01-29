@@ -2,22 +2,28 @@
 
 namespace App\Application\Forum\Command;
 
+
 use App\Domain\Forum\Entity\Tag;
 use App\Application\Forum\Dto\TagDto;
-use App\Infrastructure\Adapter\AbstractCommand;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
+use App\Infrastructure\Adapter\Interfaces\CommandInterface;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @package App\Application\Filiere\Command
  * @author Elessa Maxime <elessamaxime@icloud.com.com>
  */
-class TagCommand extends AbstractCommand
+class TagCommand extends AbstractCommand implements CommandInterface
 {
 
-    public function create(TagDto $tagDto)
+    /**
+     * @param TagDto $tagDto
+     */
+    public function create($tagDto)
     {
+        if (!$tagDto instanceof TagDto)
+            return;
+
         $tag = new Tag();
 
         $tag->setName(strtolower($tagDto->name))
@@ -27,10 +33,14 @@ class TagCommand extends AbstractCommand
             ->setCreatedAt(new DateTimeImmutable('now'))
         ;
     
-        $this->add("sucess", "Le tag {$tagDto->name} a bien été ajouté",$tag);
+        $this->add("success", "Le tag {$tagDto->name} a bien été ajouté",$tag);
     }
 
-    public function update(TagDto $tagDto)
+    /**
+     * @param TagDto $tagDto
+     * @return void
+     */
+    public function update($tagDto)
     {
         $tagRepo = $this->manager->getRepository(Tag::class);
 
@@ -45,8 +55,15 @@ class TagCommand extends AbstractCommand
         $this->add("info", "Le tag {$tagDto->name} a bien été mis a jour");
     }
 
-    public function delete(Tag $tag)
+    /**
+     * @param Tag $tag
+     * @return void
+     */
+    public function delete($tag)
     {
+        if (!$tag instanceof Tag)
+            return;
+
         $this->manager->remove($tag);
 
         $this->add("error", "Le tag a bien été supprimer");

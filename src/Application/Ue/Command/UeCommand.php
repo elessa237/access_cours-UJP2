@@ -6,7 +6,7 @@ namespace App\Application\Ue\Command;
 
 use App\Application\Ue\Dto\UeDto;
 use App\Domain\Ue\Entity\Ue;
-use App\Infrastructure\Adapter\AbstractCommand;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
 
 class UeCommand extends AbstractCommand
 {

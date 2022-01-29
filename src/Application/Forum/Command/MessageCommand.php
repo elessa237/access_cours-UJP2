@@ -8,17 +8,25 @@ use App\Application\Forum\Dto\MessageDto;
 use App\Domain\Forum\Entity\Message;
 use App\Domain\Forum\Entity\Topic;
 use App\Domain\Forum\Event\TopicSolveEvent;
-use App\Infrastructure\Adapter\AbstractCommand;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
+use App\Infrastructure\Adapter\Interfaces\CommandInterface;
 use DateTimeImmutable;
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  * @package App\Application\Forum\Command
  */
-class MessageCommand extends AbstractCommand
+class MessageCommand extends AbstractCommand implements CommandInterface
 {
-    public function new(MessageDto $messageDto)
+    /**
+     * @param $messageDto
+     * @return void
+     */
+    public function create($messageDto)
     {
+        if (!$messageDto instanceof MessageDto)
+            return;
+
         $message = new Message();
 
         $message->setAuthor($messageDto->author)
@@ -34,7 +42,6 @@ class MessageCommand extends AbstractCommand
     /**
      * @param int $messageId
      * @param int $topicId
-     * @return string
      */
     public function accepted(int $messageId, int $topicId)
     {
@@ -43,5 +50,23 @@ class MessageCommand extends AbstractCommand
         $message->setAccepted(true);
         $this->manager->flush();
         $this->dispatch(new TopicSolveEvent($topic));
+    }
+
+    /**
+     * @param $objectDto
+     * @return void
+     */
+    public function update($objectDto)
+    {
+        // TODO: Implement update() method.
+    }
+
+    /**
+     * @param $object
+     * @return void
+     */
+    public function delete($object)
+    {
+        // TODO: Implement delete() method.
     }
 }

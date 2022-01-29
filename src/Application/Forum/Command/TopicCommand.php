@@ -5,16 +5,24 @@ namespace App\Application\Forum\Command;
 use App\Application\Forum\Dto\TopicDto;
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Forum\Entity\Topic;
-use App\Infrastructure\Adapter\AbstractCommand;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
+use App\Infrastructure\Adapter\Interfaces\CommandInterface;
 use DateTimeImmutable;
 
-class TopicCommand extends AbstractCommand
+class TopicCommand extends AbstractCommand implements CommandInterface
 {
-    public function create(TopicDto $topicDto,Utilisateur $user)
+    /**
+     * @param TopicDto $topicDto
+     * @return void
+     */
+    public function create($topicDto)
     {
+        if (!$topicDto instanceof TopicDto && !$topicDto->author instanceof Utilisateur)
+            return null;
+
         $topic = new Topic();
 
-        $topic->setAuthor($user)
+        $topic->setAuthor($topicDto->author)
             ->setName($topicDto->name)
             ->setContent($topicDto->content)
             ->setCreatedAt(new DateTimeImmutable('now'));
@@ -25,13 +33,20 @@ class TopicCommand extends AbstractCommand
         $this->add("success", "Votre sujet a bien été ajouter a la file de discussion", $topic);
     }
 
-    public function update(TopicDto $topicDto, Utilisateur $user)
+    /**
+     * @param TopicDto $topicDto
+     * @return void
+     */
+    public function update($topicDto)
     {
+        if (!$topicDto instanceof TopicDto && !$topicDto->author instanceof Utilisateur)
+            return null;
+
         $topicRepo = $this->manager->getRepository(Topic::class);
 
         $topic = $topicRepo->findOneBy(["id" => $topicDto->id]);
 
-        if ($topic->getAuthor() != $user) {
+        if ($topic->getAuthor() != $topicDto->author) {
             return;
         }
 
@@ -45,10 +60,17 @@ class TopicCommand extends AbstractCommand
         $this->add("info", "Votre sujet a bien été mis a jour", $topic);
     }
 
-    public function delete(Topic $topic)
+    /**
+     * @param Topic $topic
+     */
+    public function delete($topic)
     {
+        if (!$topic instanceof Topic)
+            return;
+
         $this->manager->remove($topic);
 
         $this->add("info", "Le sujet à été supprimer");
     }
+
 }

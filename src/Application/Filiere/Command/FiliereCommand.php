@@ -6,16 +6,17 @@ namespace App\Application\Filiere\Command;
 
 use App\Application\Filiere\Dto\FiliereDto;
 use App\Domain\Filiere\Entity\Filiere;
-use App\Infrastructure\Adapter\AbstractCommand;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
+use App\Infrastructure\Adapter\Interfaces\CommandInterface;
 
-class FiliereCommand extends AbstractCommand
+class FiliereCommand extends AbstractCommand implements CommandInterface
 {
 
     /**
      * @param FiliereDto $filiereDto
      * @return void
      */
-    public function create(FiliereDto $filiereDto): void
+    public function create($filiereDto): void
     {
         $filiere = new Filiere();
 
@@ -29,13 +30,17 @@ class FiliereCommand extends AbstractCommand
      * @param Filiere $filiere
      * @return void
      */
-    public function delete(Filiere $filiere): void
+    public function delete($filiere): void
     {
         $this->manager->remove($filiere);
         $this->add("error", "filière supprimer");
     }
 
-    public function update(FiliereDto $filiereDto)
+    /**
+     * @param FiliereDto $filiereDto
+     * @return void
+     */
+    public function update($filiereDto)
     {
         $repo = $this->manager->getRepository(Filiere::class);
         $filiere = $repo->findOneBy(["id"=>$filiereDto->id]);

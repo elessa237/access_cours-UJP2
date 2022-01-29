@@ -51,9 +51,12 @@ class TopicController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var Utilisateur $this->getUser() */
-            ($topicDto->id == null) ?
-                $topicCommand->create($topicDto, $this->getUser()):
-                $topicCommand->update($topicDto, $this->getUser());
+            if($topicDto->id == null) {
+                $topicDto->author = $this->getUser();
+                $topicCommand->create($topicDto);
+            }else{
+                $topicCommand->update($topicDto);
+            }
 
             return $this->redirectToRoute('app_forum');
         }
@@ -88,7 +91,7 @@ class TopicController extends AbstractController
         {
             $messageDto->author = $this->getUser();
             $messageDto->topic = $topic;
-            $messageCommand->new($messageDto);
+            $messageCommand->create($messageDto);
             return $this->redirectToRoute("app_show_topic", ["id" => $topic->getId()]);
         }
 
