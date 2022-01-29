@@ -4,6 +4,7 @@
 namespace App\Application\Cour\Command;
 
 use App\Application\Cour\Dto\CourDto;
+use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Cour\Entity\Cour;
 use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
 use App\Infrastructure\Adapter\Interfaces\CommandInterface;
@@ -23,6 +24,9 @@ class CourCommand extends AbstractCommand implements CommandInterface
      */
     public function create($courDto): void
     {
+        if (!$courDto->professeur instanceof Utilisateur)
+            return;
+
         $cour = new Cour();
         $cour
             ->setNom($courDto->nom)

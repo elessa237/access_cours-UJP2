@@ -6,7 +6,7 @@ namespace App\Application\Auth\Command;
 
 use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
-use App\Infrastructure\Adapter\AbstractCommand;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
 
 /**
  * Class UtilisateurCommand
