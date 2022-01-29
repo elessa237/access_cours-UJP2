@@ -1,8 +1,10 @@
 <?php
 
 
-namespace App\Infrastructure\Adapter;
+namespace App\Infrastructure\Adapter\Abstracts;
 
+
+use App\Infrastructure\Adapter\ResponseCase;
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>

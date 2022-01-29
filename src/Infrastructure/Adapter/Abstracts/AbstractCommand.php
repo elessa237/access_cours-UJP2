@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Adapter;
+namespace App\Infrastructure\Adapter\Abstracts;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

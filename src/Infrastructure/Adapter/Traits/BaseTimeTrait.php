@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Infrastructure\Adapter;
+namespace App\Infrastructure\Adapter\Traits;
 
 
 use DateTimeImmutable;
