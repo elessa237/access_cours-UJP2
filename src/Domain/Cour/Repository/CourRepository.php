@@ -107,7 +107,7 @@ class CourRepository extends ServiceEntityRepository
         }
 
 
-        $query->orderBy('c.publishedAt', 'ASC')
+        $query->orderBy('c.publishedAt', 'DESC')
             ->setMaxResults($limit);
         return $query->getQuery()
             ->getResult();

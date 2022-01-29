@@ -62,10 +62,6 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         }
 
 
-        if (in_array("ROLE_ADMIN", $user->getRoles()))
-        {
-            return new RedirectResponse($this->urlGenerator->generate('dashboard'));
-        }
         if (in_array("ROLE_ENSEIGNANT", $user->getRoles()))
         {
             return new RedirectResponse($this->urlGenerator->generate('gestion_cour'));
@@ -75,7 +71,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($this->urlGenerator->generate('app_profil'));
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->urlGenerator->generate('dashboard'));
     }
 
     protected function getLoginUrl(Request $request): string

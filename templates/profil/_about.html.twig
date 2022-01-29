@@ -13,29 +13,37 @@
             </p>
             <!-- row -->
             <div class="row">
-                <div class="col-12 mb-5">
-                    <!-- text -->
-                    <h6 class="text-uppercase fs-5 ls-2">Filiere
-                    </h6>
-                    <p class="mb-0">Réseaux et sécurité.| niveau</p>
+                <div class="col-6 d-md-none d-block mb-5">
+                    <h6 class="text-uppercase fs-5 ls-2">Nom </h6>
+                    <p class="mb-0">{{ user.username }}</p>
                 </div>
                 <div class="col-6 mb-5">
+                    <h6 class="text-uppercase fs-5 ls-2">Email </h6>
+                    <p class="mb-0">{{ user.email }}</p>
+                </div>
+                {% if user.filiere and user.niveau is not null %}
+                    <div class="col-12 mb-5">
+                        <!-- text -->
+                        <h6 class="text-uppercase fs-5 ls-2">Filiere
+                        </h6>
+                        <p class="mb-0">{{ user.filiere }}.| {{ user.niveau }}</p>
+                    </div>
+                {% endif %}
+                <div class="col-6 mb-5">
                     <h6 class="text-uppercase fs-5 ls-2">Numero </h6>
-                    <p class="mb-0">+32112345689</p>
+                    <p class="mb-0">(+237) {{ user.numeroTelephone }}</p>
                 </div>
                 <div class="col-6 mb-5">
                     <h6 class="text-uppercase fs-5 ls-2">Date de naissance </h6>
                     <p class="mb-0">01.10.1997</p>
                 </div>
-                <div class="col-6">
-                    <h6 class="text-uppercase fs-5 ls-2">Email </h6>
-                    <p class="mb-0">Dashui@gmail.com</p>
-                </div>
-                <div class="col-6">
-                    <h6 class="text-uppercase fs-5 ls-2">Numero CNI
-                    </h6>
-                    <p class="mb-0">1003003002</p>
-                </div>
+                {% if user.numeroCni is not null %}
+                    <div class="col-6 mb-5">
+                        <h6 class="text-uppercase fs-5 ls-2">Numero CNI
+                        </h6>
+                        <p class="mb-0">{{ user.numeroCni }}</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
