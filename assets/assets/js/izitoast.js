@@ -4,6 +4,6 @@ window.notification =  (label, message) => {
     iziToast[label]({
         message: message,
         position: 'topRight',
-        timeout: 10000,
+        timeout: 5000,
     });
 }
