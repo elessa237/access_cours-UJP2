@@ -1,0 +1,65 @@
+<div class="row mb-8">
+    <div class="col-xl-3 col-lg-4 col-md-12 col-12">
+        <div class="mb-4 mb-lg-0">
+            <h4 class="mb-1">Paramètre général</h4>
+            <p class="mb-0 fs-5 text-muted">Paramètre de configuration de profil </p>
+        </div>
+    </div>
+    <div class="col-xl-9 col-lg-8 col-md-12 col-12">
+        <!-- card -->
+        <div class="card">
+            <!-- card body -->
+            <div class="card-body">
+                <div class=" mb-6">
+                    <h4 class="mb-1">General Settings</h4>
+
+                </div>
+                <div class="row align-items-center mb-8">
+                    <div class="col-md-3 mb-3 mb-md-0">
+                        <h5 class="mb-0">Avatar</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <img src="{{ asset('images/avatar/avatar-5.jpg') }}" class="rounded-circle avatar avatar-lg" alt="">
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-outline-white me-1">Change</button>
+                                <button type="submit" class="btn btn-outline-white">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- col -->
+                <div>
+                    <!-- border -->
+                    <div class="mb-6">
+                        <h4 class="mb-1">Informations de base</h4>
+                    </div>
+                   {{ form_start(generalSetting) }}
+                        <!-- row -->
+                        <div class="mb-3 row">
+                            <label for="fullName" class="col-sm-4 col-form-label form-label">Nom complet</label>
+                            <div class="col-sm-4 mb-3 mb-lg-0">
+                                {{ form_row(generalSetting.nom)}}
+                            </div>
+                            <div class="col-sm-4">
+                                {{ form_row(generalSetting.prenom) }}
+                            </div>
+                        </div>
+                        <!-- row -->
+                        <div class="mb-3 row">
+                            <label for="phone" class="col-sm-4 col-form-label form-label">Tel <span class="text-muted">(Optional)</span></label>
+                            <div class="col-md-8 col-12">
+                                {{ form_row(generalSetting.numero_telephone) }}
+                            </div>
+                        </div>
+                        <div class="offset-md-4 col-md-8 col-12 mt-4">
+                            <button type="submit" class="btn btn-primary">Modifier</button>
+                        </div>
+                    {{ form_end(generalSetting) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

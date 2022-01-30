@@ -6,6 +6,7 @@ namespace App\Http\App\Controller\Profil;
 
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Domain\Cour\Repository\CourRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  * @package App\Http\App\Controller\Profil
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
 class ProfilController extends AbstractController
 {
@@ -38,7 +40,8 @@ class ProfilController extends AbstractController
         }else{
             $cour  = $courRepository->findLast(5);
         }
-
+        /*$cour = $courRepository->findOneBy(["id"=>4]);
+        dd($cour->getPublishedAt()->getTimestamp());*/
         return $this->render("profil/index.html.twig", [
             "cours" => $cour,
         ]);

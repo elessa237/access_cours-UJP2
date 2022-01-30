@@ -12,7 +12,7 @@ function Card({cour}) {
                 <h5 className="card-title">{cour.nom} | {cour.UE.nom}</h5>
                 <a className="float-end btn-lg" href={"/documents/cours/" + cour.nomCour} download><i className="fa fa-download text-secondary"/></a>
                 <p className="card-text">
-                    Ajouté le {date.toLocaleString(undefined, dateFormat)} <br/>
+                    {/*<time-ago time={cour.publishedAt} />*/}  Ajouté le {date.toLocaleString(undefined, dateFormat)} <br/>
                     taille : {convertedSize(cour.tailleCour)}Mo</p>
             </div>
         </div>
