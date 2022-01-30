@@ -3,12 +3,6 @@
 {% block title %}{{ app.user.username }}{% endblock %}
 
 {% block body %}
-    {#<div class="container-fluid px-6 py-4">
-        {% include ("profil/settings/_pageHeader.hhtml.twig") %}
-        {% include ("profil/settings/_generalSetting.html.twig") %}
-        {% include ("profil/settings/_email&password.html.twig") %}
-        {% include ("profil/settings/_deleteAccount.html.twig") %}
-    </div>#}
     <profil-settings></profil-settings>
 {% endblock %}
 
