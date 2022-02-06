@@ -14,7 +14,12 @@ use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
  */
 class SettingCommand extends AbstractCommand
 {
-    public function updateGeneralSetting(UtilisateurDto $user)
+
+    /**
+     * @param UtilisateurDto $user
+     * @return string
+     */
+    public function updateGeneralSetting(UtilisateurDto $user) : string
     {
 
         $utilisateur = $this->getUser($user);
@@ -23,7 +28,7 @@ class SettingCommand extends AbstractCommand
         $utilisateur->setPrenom($user->prenom);
         $utilisateur->setNumeroTelephone($user->numero_telephone);
         $this->manager->flush();
-
+        return ("Votre compte a bien été mis à jour");
     }
 
     public function updateEmail(UtilisateurDto $user)

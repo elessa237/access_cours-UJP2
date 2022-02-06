@@ -7,11 +7,11 @@ import DeleteAccount from "./_DeleteAccount";
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  */
-function Setting() {
+function Setting({id}) {
     return (
         <div className="container-fluid px-6 py-4">
             <PageHeader />
-            <GeneralSetting />
+            <GeneralSetting id={id}/>
             <EmailPassword />
             <DeleteAccount />
         </div>

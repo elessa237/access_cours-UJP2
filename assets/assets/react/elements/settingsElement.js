@@ -5,7 +5,8 @@ import Setting from "../profil/settings/Setting";
 class settingsElement extends HTMLElement
 {
     connectedCallback(){
-        render(<Setting />, this)
+        let id = parseInt(this.getAttribute("id"), 10);
+        render(<Setting id={id}/>, this)
     }
 
     disconnectedCallback(){
