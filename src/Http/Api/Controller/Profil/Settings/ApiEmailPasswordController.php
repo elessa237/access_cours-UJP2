@@ -4,6 +4,8 @@
 namespace App\Http\Api\Controller\Profil\Settings;
 
 
+use App\Application\Auth\Command\SettingCommand;
+use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,13 +18,30 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApiEmailPasswordController extends AbstractController
 {
-    public function index(): JsonResponse
+    /**
+     * @Route("/api/profil/setting/change/email", name="app_profil_setting_email")
+     * @param Request $request
+     * @param SettingCommand $command
+     * @return JsonResponse
+     */
+    public function email(Request $request, SettingCommand $command): JsonResponse
     {
-        return $this->json([], 200);
+        $content = json_decode($request->getContent(), true);
+        $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
+
+        $id = $content["id"];
+        /** @var Utilisateur $utilisateur */
+        $utilisateur = $repo->findOneBy(["id" => $id]);
+
+        $utilisateurDto = new UtilisateurDto($utilisateur);
+        $utilisateurDto->id = $content["id"];
+        $utilisateurDto->email = $content["email"];
+        $response = $command->updateEmail($utilisateurDto);
+        return $this->json($response, 200);
     }
 
     /**
-     * @Route("/api/profil/email/items", name="api_profil_email")
+     * @Route("/api/profil/setting/email/items", name="api_profil_setting_email")
      * @param Request $request
      * @return JsonResponse
      */

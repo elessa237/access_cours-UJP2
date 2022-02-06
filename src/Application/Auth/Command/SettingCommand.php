@@ -28,7 +28,7 @@ class SettingCommand extends AbstractCommand
         $utilisateur->setPrenom($user->prenom);
         $utilisateur->setNumeroTelephone($user->numero_telephone);
         $this->manager->flush();
-        return ($utilisateur);
+        return ("Information modifier avec success");
     }
 
     public function updateEmail(UtilisateurDto $user)
@@ -36,6 +36,7 @@ class SettingCommand extends AbstractCommand
         $utilisateur = $this->getUser($user);
         $utilisateur->setEmail($user->email);
         $this->manager->flush();
+        return ("Information modifier avec success");
     }
 
     public function updatePassword(UtilisateurDto $user)

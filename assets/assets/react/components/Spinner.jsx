@@ -5,7 +5,7 @@ import React from 'react';
  */
 function Spinner() {
     return (
-        <div className="col-12 d-flex justify-content-center" style={{marginTop: "250px"}}>
+        <div className="col-12 d-flex justify-content-center">
             <div className="spinner-grow text-primary" role="status">
                 <span className="sr-only">Loading...</span>
             </div>

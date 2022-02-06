@@ -36,7 +36,10 @@ function Cour() {
             </div>
             <div className="row">
                 {
-                    loading || loadingUe ? <Spinner/> :
+                    loading || loadingUe ?
+                        <div style={{marginTop: "250px"}}>
+                        <Spinner/>
+                        </div>:
                         cours.length > 0 ?
                         cours.map((cour, key) =>
                             <Card key={key} cour={cour}/>) :
