@@ -28,7 +28,7 @@ class SettingCommand extends AbstractCommand
         $utilisateur->setPrenom($user->prenom);
         $utilisateur->setNumeroTelephone($user->numero_telephone);
         $this->manager->flush();
-        return ("Votre compte a bien été mis à jour");
+        return ($utilisateur);
     }
 
     public function updateEmail(UtilisateurDto $user)
