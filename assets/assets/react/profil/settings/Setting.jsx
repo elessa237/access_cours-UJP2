@@ -12,7 +12,7 @@ function Setting({id}) {
         <div className="container-fluid px-6 py-4">
             <PageHeader />
             <GeneralSetting id={id}/>
-            <EmailPassword />
+            <EmailPassword id={id}/>
             <DeleteAccount />
         </div>
     );
