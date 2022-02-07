@@ -13,7 +13,7 @@ abstract class AbstractCommand
     protected EntityManagerInterface $manager;
     protected RequestStack $requestStack;
     protected EventDispatcherInterface $dispatcher;
-    private UserPasswordHasherInterface $hasher;
+    protected UserPasswordHasherInterface $hasher;
 
     public function __construct(
         EntityManagerInterface $manager,

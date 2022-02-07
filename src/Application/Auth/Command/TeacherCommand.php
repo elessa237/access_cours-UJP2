@@ -6,33 +6,26 @@ namespace App\Application\Auth\Command;
 
 use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  * @package App\Application\Auth\Command
  */
-class TeacherCommand
+class TeacherCommand extends AbstractCommand
 {
-    private EntityManagerInterface $manager;
-    private UserPasswordHasherInterface $hasher;
-    private TokenGeneratorInterface $generator;
-    private EventDispatcherInterface $dispatcher;
 
-    public function __construct
-    (   EntityManagerInterface $manager,
-        UserPasswordHasherInterface $hasher,
-        TokenGeneratorInterface $generator,
-        EventDispatcherInterface $dispatcher
-    )
+    private TokenGeneratorInterface $generator;
+
+    public function __construct(
+        $manager,
+        $requestStack,
+        $dispatcher,
+        $hasher, TokenGeneratorInterface $generator)
     {
-        $this->manager = $manager;
-        $this->hasher = $hasher;
+        parent::__construct($manager, $requestStack, $dispatcher, $hasher);
         $this->generator = $generator;
-        $this->dispatcher = $dispatcher;
     }
 
     public function createTeacher(UtilisateurDto $enseignantDto) : void
@@ -49,7 +42,7 @@ class TeacherCommand
             ->setIsVerified(false)
             ->setRegistrationToken($this->generator->generateToken())
             ->setPassword(
-                $this->hasher->hashPassword(
+                $this->hasher->hash(
                     $enseignant,
                     $enseignantDto->password
                 )
