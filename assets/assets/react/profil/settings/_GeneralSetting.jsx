@@ -2,12 +2,13 @@ import React, {useCallback, useEffect, useState} from 'react';
 import useFetch from "../../Hooks/useFetch";
 import axios from "axios";
 import Spinner from "../../components/Spinner";
+import {toast, ToastContainer} from "react-toastify";
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
  */
 function GeneralSetting({id}) {
-
+    const [modify, setModify] = useState(0)
     const {postData, data: response, loading} = useFetch("/api/profil/settings/generalSetting");
     const [general, setGeneral] = useState({
         nom: "",
@@ -40,11 +41,18 @@ function GeneralSetting({id}) {
             prenom: general.prenom,
             tel: general.tel
         })
+        setModify(modify + 1);
     }
 
     useEffect(() => {
+        if (response) {
+            toast(response, {
+                position: "top-right",
+                type: "success"
+            })
+        }
         getInfo({id: id})
-    }, [response])
+    }, [response, modify])
 
     return (
         <div className="row mb-8">

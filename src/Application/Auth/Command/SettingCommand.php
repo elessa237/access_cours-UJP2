@@ -35,7 +35,7 @@ class SettingCommand extends AbstractCommand
         $utilisateur = $this->getUser($data['id']);
         $utilisateur->setEmail($data['email']);
         $this->manager->flush();
-        return ("Information modifier avec success");
+        return ("Votre adresse email a bien été modifier");
     }
 
     public function updatePassword(array $data)

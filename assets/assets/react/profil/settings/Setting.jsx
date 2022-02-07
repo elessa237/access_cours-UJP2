@@ -3,6 +3,7 @@ import PageHeader from "./_PageHeader";
 import GeneralSetting from "./_GeneralSetting";
 import EmailPassword from "./_Email&Password";
 import DeleteAccount from "./_DeleteAccount";
+import {ToastContainer} from "react-toastify";
 
 /**
  * @author Elessa Maxime <elessamaxime@icloud.com>
@@ -14,6 +15,7 @@ function Setting({id}) {
             <GeneralSetting id={id}/>
             <EmailPassword id={id}/>
             <DeleteAccount />
+            <ToastContainer/>
         </div>
     );
 }
