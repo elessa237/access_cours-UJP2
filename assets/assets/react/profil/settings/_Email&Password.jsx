@@ -8,8 +8,6 @@ import {toast} from "react-toastify";
  * @author Elessa Maxime <elessamaxime@icloud.com>
  */
 function EmailPassword({id}) {
-
-    const [modify, setModify] = useState(0)
     const {postData: postPassword, data: passwordResponse, loading: loadPassword} = useFetch("/api/profil/setting/change/password");
     const {postData: postEmail, data: emailResponse, loading: loadEmail} = useFetch("/api/profil/setting/change/email");
     const [email, setEmail] = useState("");
@@ -31,7 +29,6 @@ function EmailPassword({id}) {
             id: id,
             email: email
         })
-        setModify(modify + 1);
     }
 
     const emailChange = (e) => {
@@ -50,27 +47,38 @@ function EmailPassword({id}) {
             newPassword: password.newPassword,
             confirmPassword: password.confirmPassword
         })
-        setModify(modify + 1);
     }
 
     useEffect(() => {
-        if (emailResponse) {
-            toast(emailResponse, {
+        if (emailResponse.status === 400) {
+            toast(emailResponse.data.response, {
+                position: "top-right",
+                type: "warning"
+            })
+        }
+        if (emailResponse.status === 200) {
+            toast(emailResponse.data.response, {
                 position: "top-right",
                 type: "success"
             })
         }
         getEmail({id: id})
-    }, [emailResponse, modify])
+    }, [emailResponse])
 
     useEffect(() => {
-        if (passwordResponse) {
-            toast(passwordResponse, {
+        if (passwordResponse.status === 400) {
+            toast(passwordResponse.data.response, {
+                position: "top-right",
+                type: "warning"
+            })
+        }
+        if (passwordResponse.status === 200) {
+            toast(passwordResponse.data.response, {
                 position: "top-right",
                 type: "success"
             })
         }
-    }, [passwordResponse, modify])
+    }, [passwordResponse])
 
     return (
         <div className="row mb-8">
@@ -94,7 +102,7 @@ function EmailPassword({id}) {
                                         <label htmlFor="newEmailAddress" className="col-sm-4 col-form-label form-label">Nouvelle
                                             E-mail</label>
                                         <div className="col-md-8 col-12">
-                                            <input type="email" className="form-control"
+                                            <input  className="form-control"
                                                    placeholder="Entrer votre adresse Email" onChange={emailChange}
                                                    value={email} required/>
                                         </div>

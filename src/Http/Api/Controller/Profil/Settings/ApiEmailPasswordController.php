@@ -30,14 +30,18 @@ class ApiEmailPasswordController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $missing = CheckParameter::check($data, ['id', 'email']);
-        if ($missing['count'] > 0){
-            return $this->json([
-                'response' => "Mauvaise requête, paramètre manquant ('"
-                    . implode("', '", $missing['missing']). "')"
-            ], 406);
+        if ($missing['count'] > 0) {
+            return $this->json(
+                [
+                    'response' => "Mauvaise requête, paramètre manquant ('"
+                        .implode("', '", $missing['missing'])."')",
+                ],
+                406
+            );
         }
         $response = $command->updateEmail($data);
-        return $this->json(["response" => $response], 200);
+
+        return $this->json(["response" => $response->message], $response->statut);
     }
 
     /**
@@ -46,21 +50,21 @@ class ApiEmailPasswordController extends AbstractController
      * @param SettingCommand $command
      * @return JsonResponse
      */
-    public function password(Request $request, SettingCommand $command) : JsonResponse
+    public function password(Request $request, SettingCommand $command): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $missing = CheckParameter::check($data, ['id','newPassword', 'confirmPassword']);
-        if ($missing['count'] > 0){
-            return $this->json(["response" => "Mauvaise requête, paramètre manquant ('"
-                .implode("', '", $missing['missing'])."')"
-            ], 406);
+        $missing = CheckParameter::check($data, ['id', 'newPassword', 'confirmPassword']);
+        if ($missing['count'] > 0) {
+            return $this->json(
+                [
+                    "response" => "Mauvaise requête, paramètre manquant ('"
+                        .implode("', '", $missing['missing'])."')",
+                ],
+                400
+            );
         }
-        $response = CheckParameter::equalPassword($data['newPassword'], $data['confirmPassword']);
-        if ($response){
-            $response = $command->updatePassword($data);
-            return $this->json(["response" => $response], 200);
-        }
-        return $this->json(["response" => "les mots de passe ne sont pas identique"],400);
+        $response = $command->updatePassword($data);
+        return $this->json(["response" => $response->message], $response->statut);
     }
 
     /**
@@ -72,10 +76,14 @@ class ApiEmailPasswordController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $missing = CheckParameter::check($data, ['id']);
-        if ($missing['count'] > 0){
-            return $this->json(["response" => "Mauvaise requête, paramètre manquant ('"
-                .implode(", ", $missing['missing'])."')"
-            ], 406);
+        if ($missing['count'] > 0) {
+            return $this->json(
+                [
+                    "response" => "Mauvaise requête, paramètre manquant ('"
+                        .implode(", ", $missing['missing'])."')",
+                ],
+                406
+            );
         }
         $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
         $utilisateur = $repo->findOneBy(["id" => $data["id"]]);
@@ -88,11 +96,12 @@ class ApiEmailPasswordController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function test(Request $request) : JsonResponse
+    public function test(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $required = ['id', 'test', 'email', 'contain'];
-        $data = CheckParameter::check($data,$required);
+        $data = CheckParameter::check($data, $required);
+
         return $this->json($data);
     }
 }

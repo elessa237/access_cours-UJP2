@@ -7,7 +7,6 @@ namespace App\Http\Api\Controller\Profil\Settings;
 use App\Application\Auth\Command\SettingCommand;
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Infrastructure\Adapter\Validator\CheckParameter;
-use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +23,10 @@ class ApiGeneralSettingController extends AbstractController
      * @param Request $request
      * @param SettingCommand $command
      * @return JsonResponse
-     * @throws JsonException
      */
     public function index(Request $request, SettingCommand $command) : JsonResponse
     {
-        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $data = json_decode($request->getContent(), true);
         $missing = CheckParameter::check($data, ['id', 'nom', 'tel', 'prenom']);
 
         if ($missing['count'] > 0){
@@ -38,7 +36,7 @@ class ApiGeneralSettingController extends AbstractController
         }
 
         $response = $command->updateGeneralSetting($data);
-        return $this->json(["response" => $response], 200);
+        return $this->json(["response" => $response->message], $response->statut);
     }
 
     /**

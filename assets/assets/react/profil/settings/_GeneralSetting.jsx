@@ -8,7 +8,6 @@ import {toast, ToastContainer} from "react-toastify";
  * @author Elessa Maxime <elessamaxime@icloud.com>
  */
 function GeneralSetting({id}) {
-    const [modify, setModify] = useState(0)
     const {postData, data: response, loading} = useFetch("/api/profil/settings/generalSetting");
     const [general, setGeneral] = useState({
         nom: "",
@@ -41,18 +40,23 @@ function GeneralSetting({id}) {
             prenom: general.prenom,
             tel: general.tel
         })
-        setModify(modify + 1);
     }
 
     useEffect(() => {
-        if (response) {
-            toast(response, {
+        if (response.status === 400) {
+            toast(response.data.response, {
+                position: "top-right",
+                type: "warning"
+            })
+        }
+        if (response.status === 200){
+            toast(response.data.response, {
                 position: "top-right",
                 type: "success"
             })
         }
         getInfo({id: id})
-    }, [response, modify])
+    }, [response])
 
     return (
         <div className="row mb-8">

@@ -52,10 +52,10 @@ function UseFetch(url) {
         async (data) => {
             setLoading(true)
             axios.post(url, data).then(response => {
-                setData(response.data.response)
+                setData(response)
                 setLoading(false)
             }).catch((error) => {
-                console.error(error)
+                setData(error.response)
                 setLoading(false)
             })
         }, [url]
