@@ -22,7 +22,7 @@ class SettingCommand extends AbstractCommand
     public function updateGeneralSetting(UtilisateurDto $user) : string
     {
 
-        $utilisateur = $this->getUser($user);
+        $utilisateur = $this->getUser($user->id);
 
         $utilisateur->setNom($user->nom);
         $utilisateur->setPrenom($user->prenom);
@@ -33,21 +33,25 @@ class SettingCommand extends AbstractCommand
 
     public function updateEmail(UtilisateurDto $user)
     {
-        $utilisateur = $this->getUser($user);
+        $utilisateur = $this->getUser($user->id);
         $utilisateur->setEmail($user->email);
         $this->manager->flush();
         return ("Information modifier avec success");
     }
 
-    public function updatePassword(UtilisateurDto $user)
+    public function updatePassword(array $data)
     {
-
+        $user = $this->getUser($data['id']);
+        $newPassword = $this->hash($user, $data['newPassword']);
+        $user->setPassword($newPassword);
+        $this->manager->flush();
+        return ("mot de passe modifier avec success");
     }
 
-    private function getUser(UtilisateurDto $user) : Utilisateur
+    private function getUser($id) : Utilisateur
     {
         $repo = $this->manager->getRepository(Utilisateur::class);
 
-        return $repo->findOneBy(["id" => $user->id]);
+        return $repo->findOneBy(["id" => $id]);
     }
 }
