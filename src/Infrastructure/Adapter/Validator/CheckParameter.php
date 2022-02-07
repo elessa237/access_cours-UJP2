@@ -8,7 +8,7 @@ namespace App\Infrastructure\Adapter\Validator;
  * @author Elessa Maxime <elessamaxime@icloud.com>
  * @package App\Infrastructure\Adapter\Validator
  */
-final class CheckParameter
+Abstract class CheckParameter
 {
     static function check(array $data, array $required): array
     {
@@ -24,10 +24,4 @@ final class CheckParameter
             'count' => count($missingData),
         ];
     }
-
-    static function equalPassword(string $param1, $param2): bool
-    {
-       return $param1 === $param2;
-    }
-
 }

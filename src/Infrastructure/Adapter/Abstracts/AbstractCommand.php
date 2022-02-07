@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Adapter\Abstracts;
 
 use App\Domain\Auth\Entity\Utilisateur;
+use App\Infrastructure\Adapter\Responses\ResponseApi;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -59,5 +60,10 @@ abstract class AbstractCommand
     protected function hash(Utilisateur $user, string $plainPassword)
     {
        return $this->hasher->hashPassword($user, $plainPassword);
+    }
+
+    protected function response(string $message, int $statut = 200) : ResponseApi
+    {
+        return new ResponseApi($message, $statut);
     }
 }
