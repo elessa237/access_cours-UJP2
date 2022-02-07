@@ -16,7 +16,7 @@ function GeneralSetting({id}) {
     });
     const getInfo = useCallback(async (data) => {
         axios.post("/api/profil/generalSetting/items", data).then(response => {
-            const UserInfo = response.data
+            const UserInfo = response.data.response
             setGeneral({
                 nom: UserInfo.nom,
                 prenom: UserInfo.prenom,

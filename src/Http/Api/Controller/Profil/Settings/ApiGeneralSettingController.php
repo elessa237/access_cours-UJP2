@@ -5,8 +5,8 @@ namespace App\Http\Api\Controller\Profil\Settings;
 
 
 use App\Application\Auth\Command\SettingCommand;
-use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
+use App\Infrastructure\Adapter\Validator\CheckParameter;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,20 +28,17 @@ class ApiGeneralSettingController extends AbstractController
      */
     public function index(Request $request, SettingCommand $command) : JsonResponse
     {
-        $content = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
-        $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $utilisateur = $repo->findOneBy(["id" => $content["id"]]);
+        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $missing = CheckParameter::check($data, ['id', 'nom', 'tel', 'prenom']);
 
-        $utilisateurDto = new UtilisateurDto($utilisateur);
+        if ($missing['count'] > 0){
+            return $this->json(["response" => "Mauvaise requête, paramètre manquant ('"
+                .implode(", ", $missing['missing'])."')"
+            ], 406);
+        }
 
-        $utilisateurDto->id = $content["id"];
-        $utilisateurDto->nom = $content["nom"];
-        $utilisateurDto->prenom = $content["prenom"];
-        $utilisateurDto->numero_telephone = $content["tel"];
-
-        $response = $command->updateGeneralSetting($utilisateurDto);
-
-        return $this->json($response, 200);
+        $response = $command->updateGeneralSetting($data);
+        return $this->json(["response" => $response], 200);
     }
 
     /**
@@ -51,16 +48,23 @@ class ApiGeneralSettingController extends AbstractController
      */
     public function items(Request $request): JsonResponse
     {
-        $content = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
+        $missing = CheckParameter::check($data, ['id']);
+
+        if ($missing['count'] > 0){
+            return $this->json(["response" => "Mauvaise requête, paramètre manquant ('"
+                .implode(", ", $missing['missing'])."')"
+            ], 406);
+        }
+
         $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $id = $content["id"];
-        $utilisateur = $repo->findOneBy(["id" => $id]);
+        $utilisateur = $repo->findOneBy(["id" => $data['id']]);
         $user = [
             "nom" => $utilisateur->getNom(),
             "prenom" => $utilisateur->getPrenom(),
             "tel" => $utilisateur->getNumeroTelephone()
         ];
 
-        return $this->json($user, 200);
+        return $this->json(["response" => $user], 200);
     }
 }

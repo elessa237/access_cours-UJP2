@@ -4,7 +4,6 @@
 namespace App\Application\Auth\Command;
 
 
-use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
 use App\Infrastructure\Adapter\Abstracts\AbstractCommand;
 
@@ -16,25 +15,25 @@ class SettingCommand extends AbstractCommand
 {
 
     /**
-     * @param UtilisateurDto $user
+     * @param array $data
      * @return string
      */
-    public function updateGeneralSetting(UtilisateurDto $user) : string
+    public function updateGeneralSetting(array $data) : string
     {
 
-        $utilisateur = $this->getUser($user->id);
+        $utilisateur = $this->getUser($data['id']);
 
-        $utilisateur->setNom($user->nom);
-        $utilisateur->setPrenom($user->prenom);
-        $utilisateur->setNumeroTelephone($user->numero_telephone);
+        $utilisateur->setNom($data['nom']);
+        $utilisateur->setPrenom($data['prenom']);
+        $utilisateur->setNumeroTelephone($data['tel']);
         $this->manager->flush();
         return ("Information modifier avec success");
     }
 
-    public function updateEmail(UtilisateurDto $user)
+    public function updateEmail(array $data)
     {
-        $utilisateur = $this->getUser($user->id);
-        $utilisateur->setEmail($user->email);
+        $utilisateur = $this->getUser($data['id']);
+        $utilisateur->setEmail($data['email']);
         $this->manager->flush();
         return ("Information modifier avec success");
     }

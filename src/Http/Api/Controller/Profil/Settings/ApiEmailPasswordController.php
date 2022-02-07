@@ -5,8 +5,8 @@ namespace App\Http\Api\Controller\Profil\Settings;
 
 
 use App\Application\Auth\Command\SettingCommand;
-use App\Application\Auth\Dto\UtilisateurDto;
 use App\Domain\Auth\Entity\Utilisateur;
+use App\Infrastructure\Adapter\Validator\CheckParameter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,17 +29,15 @@ class ApiEmailPasswordController extends AbstractController
     public function email(Request $request, SettingCommand $command): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
-
-        $id = $data["id"];
-        /** @var Utilisateur $utilisateur */
-        $utilisateur = $repo->findOneBy(["id" => $id]);
-
-        $utilisateurDto = new UtilisateurDto($utilisateur);
-        $utilisateurDto->id = $data["id"];
-        $utilisateurDto->email = $data["email"];
-        $response = $command->updateEmail($utilisateurDto);
-        return $this->json($response, 200);
+        $missing = CheckParameter::check($data, ['id', 'email']);
+        if ($missing['count'] > 0){
+            return $this->json([
+                'response' => "Mauvaise requête, paramètre manquant ('"
+                    . implode("', '", $missing['missing']). "')"
+            ], 406);
+        }
+        $response = $command->updateEmail($data);
+        return $this->json(["response" => $response], 200);
     }
 
     /**
@@ -51,12 +49,18 @@ class ApiEmailPasswordController extends AbstractController
     public function password(Request $request, SettingCommand $command) : JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $response = $this->checkPassword($data);
+        $missing = CheckParameter::check($data, ['id','newPassword', 'confirmPassword']);
+        if ($missing['count'] > 0){
+            return $this->json(["response" => "Mauvaise requête, paramètre manquant ('"
+                .implode("', '", $missing['missing'])."')"
+            ], 406);
+        }
+        $response = CheckParameter::equalPassword($data['newPassword'], $data['confirmPassword']);
         if ($response){
             $response = $command->updatePassword($data);
-            return $this->json($response, 200);
+            return $this->json(["response" => $response], 200);
         }
-        return $this->json("les mots de passe ne sont pas identique",400);
+        return $this->json(["response" => "les mots de passe ne sont pas identique"],400);
     }
 
     /**
@@ -67,24 +71,28 @@ class ApiEmailPasswordController extends AbstractController
     public function items(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        $missing = CheckParameter::check($data, ['id']);
+        if ($missing['count'] > 0){
+            return $this->json(["response" => "Mauvaise requête, paramètre manquant ('"
+                .implode(", ", $missing['missing'])."')"
+            ], 406);
+        }
         $repo = $this->getDoctrine()->getRepository(Utilisateur::class);
-        $id = $data["id"];
-        $utilisateur = $repo->findOneBy(["id" => $id]);
-        $email = [
-          "email" => $utilisateur->getEmail(),
-        ];
-        return $this->json($email, 200);
+        $utilisateur = $repo->findOneBy(["id" => $data["id"]]);
+
+        return $this->json(["response" => $utilisateur->getEmail()], 200);
     }
 
-    private function checkPassword(array $data): bool {
-        $newPassword = $data['newPassword'];
-        $confirmPassword = $data['confirmPassword'];
-
-        if ($newPassword === $confirmPassword)
-        {
-            return true;
-        }
-
-        return false;
+    /**
+     * @Route("/test")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function test(Request $request) : JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $required = ['id', 'test', 'email', 'contain'];
+        $data = CheckParameter::check($data,$required);
+        return $this->json($data);
     }
 }
